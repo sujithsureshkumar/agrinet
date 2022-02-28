@@ -2,6 +2,7 @@
 my second commit test
 commit from 2nd users
 
+my feature commit from sujith STUDIO 2
 College Project
 
 ## Getting Started
