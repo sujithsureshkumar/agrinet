@@ -1,4 +1,5 @@
 import 'package:AgriNet/FarmHome.dart';
+import 'package:AgriNet/ServiceCatalogue.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -72,7 +73,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
         body: TabBarView(
           children: <Widget>[
             FarmHome(),
-            FarmHome(),
+            ServiceCatalogue(),
             FarmHome(),
             FarmHome(),
             FarmHome(),
