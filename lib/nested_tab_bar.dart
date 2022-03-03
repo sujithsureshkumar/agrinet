@@ -12,20 +12,22 @@ class _nested_tab_barState extends State<nested_tab_bar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 5,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.green,
             title: Padding(
               padding: EdgeInsets.only(top: 8.0),
-              child: Cutom_App_bar(),
+              child:Center(
+              child:Text("AgriNet")
+              ),
             ),
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
                   child: Container(
                     child: Text(
-                      'Home',
+                      'Farmer',
                       style: TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
                   ),
@@ -33,7 +35,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                 Tab(
                   child: Container(
                     child: Text(
-                      'Game',
+                      'Service Provider',
                       style: TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
                   ),
@@ -41,23 +43,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                 Tab(
                   child: Container(
                     child: Text(
-                      'Music',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Container(
-                    child: Text(
-                      'Book',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Container(
-                    child: Text(
-                      'Movie',
+                      'Labour',
                       style: TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
                   ),
@@ -65,10 +51,9 @@ class _nested_tab_barState extends State<nested_tab_bar> {
               ],
             ),
           ),
+
           body: TabBarView(
             children: <Widget>[
-              HomeTopTabs(),
-              HomeTopTabs(),
               HomeTopTabs(),
               HomeTopTabs(),
               HomeTopTabs(),
@@ -77,121 +62,73 @@ class _nested_tab_barState extends State<nested_tab_bar> {
         ));
   }
 
-  Cutom_App_bar() {
-    return Container(
-      color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            child: IconButton(
-              icon: Icon(Icons.horizontal_split),
-              color: Colors.blueGrey,
-              onPressed: () {},
-            ),
-          ),
-          Container(
-              child: Text(
-                'Google Play',
-                style: TextStyle(color: Colors.grey),
-              )),
-          Container(
-            child: IconButton(
-              icon: Icon(Icons.mic),
-              color: Colors.blueGrey,
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   HomeTopTabs() {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          bottom: TabBar(
-            isScrollable: true,
-            indicatorWeight: 6.0,
-            indicatorColor: Colors.red,
-            unselectedLabelColor: Colors.black,
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(
-                  Icons.trending_up,
-                  color: Colors.green,
-                ),
-                child: Text(
-                  'Trending',
-                  style: TextStyle(color: Colors.black),
-                ),
+        bottomNavigationBar:Container(
+        padding: EdgeInsets.all(16.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(
+            Radius.circular(50.0),
+          ),
+          child: Container(
+            color: Colors.black26,
+            child: TabBar(
+              labelColor: Color(0xFFC41A3B),
+              unselectedLabelColor: Colors.white,
+              labelStyle: TextStyle(fontSize: 10.0),
+              indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(color: Colors.black54, width: 0.0),
+                insets: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 40.0),
               ),
-              Tab(
-                icon: Icon(
-                  Icons.assessment,
-                  color: Colors.green,
+              //For Indicator Show and Customization
+              indicatorColor: Colors.black54,
+              tabs: <Widget>[
+                Tab(
+                  icon: Icon(
+                    Icons.home,
+                    size: 24.0,
+                  ),
+                  text: 'Home',
                 ),
-                child: Text(
-                  'Top Chart',
-                  style: TextStyle(color: Colors.black),
+                Tab(
+                  icon: Icon(
+                    Icons.category,
+                    size: 24.0,
+                  ),
+                  text: 'Department',
                 ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.add_circle_outline,
-                  color: Colors.green,
+                Tab(
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    size: 24.0,
+                  ),
+                  text: 'Cart',
                 ),
-                child: Text(
-                  'New',
-                  style: TextStyle(color: Colors.black),
+                Tab(
+                  icon: Icon(
+                    Icons.search,
+                    size: 24.0,
+                  ),
+                  text: 'Search',
                 ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.category,
-                  color: Colors.green,
+                Tab(
+                  icon: Icon(
+                    Icons.more,
+                    size: 24.0,
+                  ),
+                  text: 'More',
                 ),
-                child: Text(
-                  'Category',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.monetization_on,
-                  color: Colors.green,
-                ),
-                child: Text(
-                  'Monrtization',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ],
+              ],
+
+            ),
           ),
         ),
-        body: TabBarView(
-          children: <Widget>[
-            Container(
-              color: Colors.purple,
-            ),
-            Container(
-              color: Colors.red,
-            ),
-            Container(
-              color: Colors.yellow,
-            ),
-            Container(
-              color: Colors.green,
-            ),
-            Container(
-              color: Colors.black,
-            ),
-          ],
-        ),
       ),
+    ),
     );
   }
 }
