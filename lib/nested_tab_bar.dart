@@ -1,3 +1,4 @@
+import 'package:AgriNet/FarmHome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -68,6 +69,19 @@ class _nested_tab_barState extends State<nested_tab_bar> {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
+        body: TabBarView(
+          children: <Widget>[
+            FarmHome(),
+            FarmHome(),
+            FarmHome(),
+            FarmHome(),
+            FarmHome(),
+
+          ],
+          // If you want to disable swiping in tab the use below code
+          physics: NeverScrollableScrollPhysics(),
+
+        ),
         bottomNavigationBar:Container(
         padding: EdgeInsets.all(16.0),
         child: ClipRRect(
