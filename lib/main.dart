@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'MyHomePage.dart';
+import 'nested_tab_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColorLight: Color(0xFFFBE0E6),
         accentColor: Color(0xFF1B1F32),
       ),
-      home: MyHomePage(),
+      home: nested_tab_bar(),
     );
   }
 }
