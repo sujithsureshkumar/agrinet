@@ -69,8 +69,10 @@ class _nested_tab_barState extends State<nested_tab_bar> {
   HomeTopTabs() {
     return DefaultTabController(
       length: 5,
-      child: Scaffold(
-        body: TabBarView(
+
+      child: Stack(
+          children: <Widget>[
+            TabBarView(
           children: <Widget>[
             FarmHome(),
             ServiceCatalogue(),
@@ -83,7 +85,10 @@ class _nested_tab_barState extends State<nested_tab_bar> {
           physics: NeverScrollableScrollPhysics(),
 
         ),
-        bottomNavigationBar:Container(
+            Positioned(
+              bottom:20,
+        child:Container(
+          width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(16.0),
         child: ClipRRect(
           borderRadius: BorderRadius.all(
@@ -143,7 +148,13 @@ class _nested_tab_barState extends State<nested_tab_bar> {
           ),
         ),
       ),
-    ),
+        ),
+
+    ],
+      ),
     );
+
+
+
   }
 }
