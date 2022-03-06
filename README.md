@@ -27,4 +27,4 @@ new branch create test
 
 New branch named "Anonymus_login" created
 
-file missed during commit is rectified,Test run successfull
+file missed during commit is rectified,Test run successful
