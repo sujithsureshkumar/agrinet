@@ -1,15 +1,25 @@
-
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:AgriNet/screens/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'MyHomePage.dart';
 import 'nested_tab_bar.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+  //initilization of Firebase app
+
+  // other Firebase service initialization
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // Initialize FlutterFire
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -17,9 +27,10 @@ class MyApp extends StatelessWidget {
         primaryColorLight: Color(0xFFFBE0E6),
         accentColor: Color(0xFF1B1F32),
       ),
-      home: nested_tab_bar(),
+      home: Wrapper(),
     );
   }
+
 }
 
 
