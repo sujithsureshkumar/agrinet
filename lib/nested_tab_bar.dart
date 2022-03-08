@@ -1,5 +1,6 @@
 import 'package:AgriNet/FarmHome.dart';
 import 'package:AgriNet/ServiceCatalogue.dart';
+import 'package:AgriNet/navBar/signOut.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,8 +38,8 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                 Tab(
                   child: Container(
                     child: Text(
-                      'Service Provider',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
+                      'ServiceProvider',
+                      style: TextStyle(color: Colors.white, fontSize: 14.0),
                     ),
                   ),
                 ),
@@ -78,7 +79,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
             ServiceCatalogue(),
             FarmHome(),
             FarmHome(),
-            FarmHome(),
+            SignOut(),
 
           ],
           // If you want to disable swiping in tab the use below code
@@ -119,7 +120,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                     Icons.category,
                     size: 24.0,
                   ),
-                  text: 'Department',
+                  text: 'Catalogue',
                 ),
                 Tab(
                   icon: Icon(
@@ -140,7 +141,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                     Icons.more,
                     size: 24.0,
                   ),
-                  text: 'More',
+                  text: 'LogOut',
                 ),
               ],
 
