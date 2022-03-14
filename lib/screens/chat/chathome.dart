@@ -13,7 +13,11 @@ class _ChatHomeState extends State<ChatHome>
         return new Scaffold(
           body: Center(
               child: Container(
-                  child: Center(child: Text("Chat Section"))
+                  child: Center(child: Text("Chat Section")),
+                decoration: BoxDecoration(
+                  image:DecorationImage(
+                      image:NetworkImage('https://images.pexels.com/photos/462118/pexels-photo-462118.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'))
+                ),
               )
 
           ),
