@@ -12,7 +12,9 @@ class _ChatHomeState extends State<ChatHome>
       Widget build(BuildContext context) {
         return new Scaffold(
           body: Center(
-              child: Text("Chat Section")
+              child: Container(
+                  child: Center(child: Text("Chat Section"))
+              )
 
           ),
         );//Scaffold
