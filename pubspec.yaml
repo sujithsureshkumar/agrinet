@@ -34,6 +34,8 @@ dependencies:
   cloud_firestore: ^3.1.10
   provider: ^6.0.2
 
+  carousel_pro: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -79,3 +81,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  assets:
+    - images/

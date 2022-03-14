@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'MyHomePage.dart';
 import 'nested_tab_bar.dart';
+import 'package:AgriNet/screens/pages/homepage.dart';
+import 'package:AgriNet/providers/product_provider.dart';
+import 'package:AgriNet/providers/category_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,19 +25,31 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<Users>.value(
-      value: AuthService().user,
-      child: MaterialApp(
-        // Initialize FlutterFire
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primaryColor: Color(0xFFC41A3B),
-          primaryColorLight: Color(0xFFFBE0E6),
-          accentColor: Color(0xFF1B1F32),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CategoryProvider>(
+          create: (context) => CategoryProvider(),
         ),
-        home: UsersPage(),
-      ),
+        ChangeNotifierProvider<ProductProvider>(
+          create: (context) => ProductProvider(),
+        ),
+        StreamProvider<Users>.value(
+            value: AuthService().user),
+      ],
+      //child: StreamProvider<Users>.value(
+       // value: AuthService().user,
+        child: MaterialApp(
+          // Initialize FlutterFire
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primaryColor: Color(0xFFC41A3B),
+            primaryColorLight: Color(0xFFFBE0E6),
+            accentColor: Color(0xFF1B1F32),
+          ),
+          home: HomePage(),
+        ),
+     // ),
     );
   }
 
