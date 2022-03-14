@@ -10,11 +10,11 @@ class FarmHome extends StatefulWidget {
 class _FarmHomeState extends State<FarmHome> {
   @override
   Widget build(BuildContext context) {
-        return new Scaffold(
-          body: Center(
-              child: Text("Hello")
+    return new Scaffold(
+      body: Center(
+          child: Text("Hello Home")
 
-          ),
-        );//Scaffold
+      ),
+    );//Scaffold
   }
-  }
+}
