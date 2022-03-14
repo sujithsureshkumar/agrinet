@@ -100,6 +100,88 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildFeature() {
+    List<Product> featureProduct;
+
+    featureProduct = productProvider.getFeatureList;
+
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              "Featured",
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (ctx) => ListProduct(
+                      name: "Featured",
+                      isCategory: false,
+                      snapShot: featureProduct,
+                    ),
+                  ),
+                );
+              },
+              child: Text(
+                "View more",
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              ),
+            )
+          ],
+        ),
+        Row(
+          children: productProvider.getHomeFeatureList.map((e) {
+            return Expanded(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (ctx) => DetailScreen(
+                              image: e.image,
+                              price: e.price,
+                              name: e.name,
+                            ),
+                          ),
+                        );
+                      },
+                      child: SingleProduct(
+                        image: e.image,
+                        price: e.price,
+                        name: e.name,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (ctx) => DetailScreen(
+                              image: e.image, price: e.price, name: e.name),
+                        ),
+                      );
+                    },
+                    child: SingleProduct(
+                      image: e.image,
+                      price: e.price,
+                      name: e.name,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
   Widget _buildImageSlider() {
     return Container(
       height: height * 0.3,
