@@ -265,7 +265,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 20,
                   ),
-                  //_buildFeature(),
+                  _buildFeature(),
                   //_buildNewAchives()
                 ],
               ),

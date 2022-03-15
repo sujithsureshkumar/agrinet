@@ -55,7 +55,7 @@ class ProductProvider with ChangeNotifier {
     List<Product> newList = [];
     QuerySnapshot featureSnapShot = await FirebaseFirestore.instance
         .collection("products")
-        .doc("hfPmMokn0tbAuGZvRMy1")
+        .doc("product1")
         .collection("featureproduct")
         .get();
     featureSnapShot.docs.forEach(
@@ -126,7 +126,7 @@ class ProductProvider with ChangeNotifier {
     List<Product> newList = [];
     QuerySnapshot achivesSnapShot = await FirebaseFirestore.instance
         .collection("products")
-        .doc("hfPmMokn0tbAuGZvRMy1")
+        .doc("product1")
         .collection("newachives")
         .get();
     achivesSnapShot.docs.forEach(
