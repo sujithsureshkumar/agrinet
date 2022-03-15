@@ -5,6 +5,8 @@ import 'package:AgriNet/models/categoryicon.dart';
 import 'package:AgriNet/models/product.dart';
 import 'package:provider/provider.dart';
 import 'package:AgriNet/screens/pages/listproduct.dart';
+import 'package:AgriNet/screens/pages/detailscreen.dart';
+import 'package:AgriNet/widget/singleproduct.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
 
@@ -205,10 +207,10 @@ class _HomePageState extends State<HomePage> {
     //categoryProvider.getPantData();
    // categoryProvider.getTieData();
     //categoryProvider.getDressIconData();
-   // productProvider.getNewAchiveData();
-   // productProvider.getFeatureData();
-   // productProvider.getHomeFeatureData();
-   // productProvider.getHomeAchiveData();
+    productProvider.getNewAchiveData();
+    productProvider.getFeatureData();
+    productProvider.getHomeFeatureData();
+    productProvider.getHomeAchiveData();
     //categoryProvider.getShirtIcon();
     //categoryProvider.getshoesIconData();
     //categoryProvider.getPantIconData();
