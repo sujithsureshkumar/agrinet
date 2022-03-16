@@ -3,9 +3,14 @@ import 'package:AgriNet/providers/product_provider.dart';
 import 'package:AgriNet/providers/category_provider.dart';
 import 'package:AgriNet/models/categoryicon.dart';
 import 'package:AgriNet/models/product.dart';
+import 'package:AgriNet/models/usermodel.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:AgriNet/screens/pages/listproduct.dart';
 import 'package:AgriNet/screens/pages/detailscreen.dart';
+import 'package:AgriNet/screens/pages/about.dart';
+import 'package:AgriNet/screens/pages/contactus.dart';
+import 'package:AgriNet/screens/pages/checkout.dart';
 import 'package:AgriNet/widget/singleproduct.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
@@ -15,15 +20,15 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-//Product menData;
+Product menData;
 CategoryProvider categoryProvider;
 ProductProvider productProvider;
 
-//Product womenData;
+Product womenData;
 
-//Product bulbData;
+Product bulbData;
 
-//Product smartPhoneData;
+Product smartPhoneData;
 
 class _HomePageState extends State<HomePage> {
 
@@ -31,11 +36,24 @@ class _HomePageState extends State<HomePage> {
     return CircleAvatar(
       maxRadius: height * 0.1 / 2.1,
       backgroundColor: Color(color),
-      child: Container(
+      //backgroundImage:AssetImage("images/man.jpg")
+      /*child: Container(
         height: 40,
-        child:
-        Image.network(image),
+        child:Image(
+          color: Colors.white,
+          image: NetworkImage(image),
         ),
+
+        ),*/
+      child: Container(
+        //width: 160,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            //fit: BoxFit.fill,
+            image: NetworkImage(image),
+          ),
+        ),
+      ),
     );
   }
 
@@ -49,6 +67,126 @@ class _HomePageState extends State<HomePage> {
   bool contactUsColor = false;
   bool profileColor = false;
   MediaQueryData mediaQuery;
+
+  Widget _buildUserAccountsDrawerHeader() {
+    List<UserModel> userModel = productProvider.userModelList;
+    return Column(
+        children: userModel.map((e) {
+          return UserAccountsDrawerHeader(
+            accountName: Text(
+              e.userName,
+              style: TextStyle(color: Colors.black),
+            ),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: e.userImage == null
+                  ? AssetImage("images/man.jpg")
+                  : NetworkImage(e.userImage),
+            ),
+            decoration: BoxDecoration(color: Color(0xfff2f2f2)),
+            accountEmail: Text(e.userEmail, style: TextStyle(color: Colors.black)),
+          );
+        }).toList());
+  }
+
+  Widget _buildMyDrawer() {
+    return Drawer(
+      child: ListView(
+        children: <Widget>[
+          _buildUserAccountsDrawerHeader(),
+          ListTile(
+            selected: homeColor,
+            onTap: () {
+              setState(() {
+                homeColor = true;
+                contactUsColor = false;
+                checkoutColor = false;
+                aboutColor = false;
+                profileColor = false;
+              });
+            },
+            leading: Icon(Icons.home),
+            title: Text("Home"),
+          ),
+          ListTile(
+            selected: checkoutColor,
+            onTap: () {
+              setState(() {
+                checkoutColor = true;
+                contactUsColor = false;
+                homeColor = false;
+                profileColor = false;
+                aboutColor = false;
+              });
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (ctx) => CheckOut()));
+            },
+            leading: Icon(Icons.shopping_cart),
+            title: Text("Checkout"),
+          ),
+          ListTile(
+            selected: aboutColor,
+            onTap: () {
+              setState(() {
+                aboutColor = true;
+                contactUsColor = false;
+                homeColor = false;
+                profileColor = false;
+                checkoutColor = false;
+              });
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (ctx) => About()));
+            },
+            leading: Icon(Icons.info),
+            title: Text("About"),
+          ),
+          ListTile(
+            selected: profileColor,
+            onTap: () {
+              setState(() {
+                aboutColor = false;
+                contactUsColor = false;
+                homeColor = false;
+                profileColor = true;
+                checkoutColor = false;
+              });
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                 // builder: (ctx) => ProfileScreen(),
+                ),
+              );
+            },
+            leading: Icon(Icons.info),
+            title: Text("Profile"),
+          ),
+          ListTile(
+            selected: contactUsColor,
+            onTap: () {
+              setState(() {
+                contactUsColor = true;
+                checkoutColor = false;
+                profileColor = false;
+                homeColor = false;
+                aboutColor = false;
+              });
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (ctx) => ContactUs()));
+            },
+            leading: Icon(Icons.phone),
+            title: Text("Contact Us"),
+          ),
+          ListTile(
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
+            leading: Icon(Icons.exit_to_app),
+            title: Text("Logout"),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   Widget _buildDressIcon() {
     List<CategoryIcon> dressIcon = categoryProvider.getDressIcon;
@@ -199,6 +337,101 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildNewAchives() {
+    List<Product> newAchivesProduct = productProvider.getNewAchiesList;
+    return Column(
+      children: <Widget>[
+        Container(
+          height: height * 0.1 - 30,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "New Achives",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (ctx) => ListProduct(
+                            name: "NewAchvies",
+                            isCategory: false,
+                            snapShot: newAchivesProduct,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "View more",
+                      style:
+                      TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+        Row(
+            children: productProvider.getHomeAchiveList.map((e) {
+              return Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (ctx) => DetailScreen(
+                                          image: e.image,
+                                          price: e.price,
+                                          name: e.name,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: SingleProduct(
+                                      image: e.image, price: e.price, name: e.name),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (ctx) => DetailScreen(
+                                        image: e.image,
+                                        price: e.price,
+                                        name: e.name,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: SingleProduct(
+                                    image: e.image, price: e.price, name: e.name),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }).toList()),
+      ],
+    );
+  }
+
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   void getCallAllFunction() {
     //CategoryProvider.getShirtData();
@@ -215,7 +448,7 @@ class _HomePageState extends State<HomePage> {
     //categoryProvider.getshoesIconData();
     //categoryProvider.getPantIconData();
     //categoryProvider.getTieIconData();
-    //productProvider.getUserData();
+    productProvider.getUserData();
   }
 
   @override
@@ -228,7 +461,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       key: _key,
-      //drawer: _buildMyDrawer(),
+      drawer: _buildMyDrawer(),
       appBar: AppBar(
         title: Text(
           "HomePage",
@@ -266,7 +499,7 @@ class _HomePageState extends State<HomePage> {
                     height: 20,
                   ),
                   _buildFeature(),
-                  //_buildNewAchives()
+                  _buildNewAchives()
                 ],
               ),
             )

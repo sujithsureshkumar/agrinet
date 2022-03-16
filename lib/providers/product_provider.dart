@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:AgriNet/models/cartmodel.dart';
 import 'package:AgriNet/models/product.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:AgriNet/models/usermodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductProvider with ChangeNotifier {
@@ -10,8 +11,35 @@ class ProductProvider with ChangeNotifier {
 
   List<CartModel> checkOutModelList = [];
   CartModel checkOutModel;
-  //List<UserModel> userModelList = [];
-  //UserModel userModel;
+  List<UserModel> userModelList = [];
+  UserModel userModel;
+
+
+  Future<void> getUserData() async {
+    List<UserModel> newList = [];
+    User currentUser = FirebaseAuth.instance.currentUser;
+    QuerySnapshot userSnapShot =
+    await FirebaseFirestore.instance.collection("User").get();
+    userSnapShot.docs.forEach(
+          (element) {
+        if (currentUser.uid == element.get("UserId")) {
+          userModel = UserModel(
+              userAddress: element.get("UserAddress"),
+              userImage: element.get("UserImage"),
+              userEmail: element.get("UserEmail"),
+              userGender: element.get("UserGender"),
+              userName: element.get("UserName"),
+              userPhoneNumber: element.get("UserNumber"));
+          newList.add(userModel);
+        }
+        userModelList = newList;
+      },
+    );
+  }
+
+  List<UserModel> get getUserModelList {
+    return userModelList;
+  }
 
   void deleteCheckoutProduct(int index) {
     checkOutModelList.removeAt(index);

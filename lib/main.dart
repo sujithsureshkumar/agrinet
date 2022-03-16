@@ -1,7 +1,9 @@
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/screens/page/users_page.dart';
+import 'package:AgriNet/screens/pages/login.dart';
 import 'package:AgriNet/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:AgriNet/screens/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +49,16 @@ class MyApp extends StatelessWidget {
             primaryColorLight: Color(0xFFFBE0E6),
             accentColor: Color(0xFF1B1F32),
           ),
-          home: HomePage(),
+          home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return HomePage();
+              } else {
+                return Login();
+              }
+            },
+          ),
         ),
      // ),
     );
