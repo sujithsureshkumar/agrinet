@@ -50,6 +50,9 @@ class _ListViewWidgetState extends State<ListViewWidget> {
         title: Text(user.name),
         leading: CircleAvatar(
           backgroundImage: NetworkImage(user.imageUrl),
+          /*child:Text(
+            user.name[0].toUpperCase(),
+          ),*/
         ),
       ))
           .toList(),
