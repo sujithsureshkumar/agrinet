@@ -37,23 +37,15 @@ class _HomePageState extends State<HomePage> {
       maxRadius: height * 0.1 / 2.1,
       backgroundColor: Color(color),
       //backgroundImage:AssetImage("images/man.jpg")
-      /*child: Container(
+      child: Container(
         height: 40,
         child:Image(
           color: Colors.white,
           image: NetworkImage(image),
         ),
 
-        ),*/
-      child: Container(
-        //width: 160,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            //fit: BoxFit.fill,
-            image: NetworkImage(image),
-          ),
         ),
-      ),
+
     );
   }
 
@@ -70,23 +62,34 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildUserAccountsDrawerHeader() {
     List<UserModel> userModel = productProvider.userModelList;
-    return Column(
-        children: userModel.map((e) {
-          return UserAccountsDrawerHeader(
+    return UserAccountsDrawerHeader(
             accountName: Text(
-              e.userName,
-              style: TextStyle(color: Colors.black),
+              userModel[1].userName,
+              style: TextStyle(backgroundColor: Colors.black),
             ),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: e.userImage == null
-                  ? AssetImage("images/man.jpg")
-                  : NetworkImage(e.userImage),
+            accountEmail: Text(
+              userModel[1].userEmail,
+              style: TextStyle(backgroundColor: Colors.black),
             ),
-            decoration: BoxDecoration(color: Color(0xfff2f2f2)),
-            accountEmail: Text(e.userEmail, style: TextStyle(color: Colors.black)),
+            currentAccountPicture: GestureDetector(
+              onTap: () => showDialog(
+                context: context,
+
+              ),
+              child: CircleAvatar(
+                backgroundColor: Colors.black,
+                backgroundImage: NetworkImage(
+                    userModel[1].userImage),
+              ),
+            ),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    'https://himdeve.eu/wp-content/uploads/2019/04/himdeve_beach.jpg'),
+              ),
+            ),
           );
-        }).toList());
   }
 
   Widget _buildMyDrawer() {

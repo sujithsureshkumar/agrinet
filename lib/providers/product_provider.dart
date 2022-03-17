@@ -38,6 +38,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   List<UserModel> get getUserModelList {
+    print(userModelList.length.toString());
     return userModelList;
   }
 
