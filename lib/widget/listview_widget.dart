@@ -15,14 +15,69 @@ class ListViewWidget extends StatefulWidget {
 
 class _ListViewWidgetState extends State<ListViewWidget> {
   final scrollController = ScrollController();
+  //UsersProvider usersProvider;
+
+  Widget personDetailCard(person) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        height: 200,
+        child: Card(
+          color: Colors.grey[800],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      width: 150.0,
+                      height: 150.0,
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          image: new DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(person.imageUrl)
+                          )
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(person.name,
+                        style: TextStyle (
+                            color: Colors.white,
+                            fontSize: 18
+                        ),
+                      ),
+                      Text(person.name,
+                        style: TextStyle (
+                            color: Colors.white,
+                            fontSize: 12
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
 
     scrollController.addListener(scrollListener);
-    widget.usersProvider.fetchNextUsers();
+     widget.usersProvider.fetchNextUsers();
+    //usersProvider.fetchNextUsers();
   }
+
 
   @override
   void dispose() {
@@ -41,7 +96,42 @@ class _ListViewWidgetState extends State<ListViewWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => ListView(
+  Widget build(BuildContext context){
+    return Scaffold(
+      backgroundColor: Colors.grey[900],
+      body: ListView(
+        controller: scrollController,
+        padding: EdgeInsets.all(12),
+        children: [
+          Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+          child: Column(
+            children: <Widget>[
+
+              Column(
+                  children: widget.usersProvider.users.map((p) {
+                    return personDetailCard(p);
+                  }).toList()
+              ),
+              if (widget.usersProvider.hasNext)
+                Center(
+                  child: GestureDetector(
+                    onTap: widget.usersProvider.fetchNextUsers,
+                    child: Container(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        ],
+      ),
+    );
+
+  } /*=> ListView(
     controller: scrollController,
     padding: EdgeInsets.all(12),
     children: [
@@ -68,5 +158,5 @@ class _ListViewWidgetState extends State<ListViewWidget> {
           ),
         ),
     ],
-  );
+  );*/
 }
