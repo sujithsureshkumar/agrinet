@@ -1,19 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:AgriNet/data.dart';
 
 class FirebaseApi {
-  static Future uploadUsers() async {
-    final currentUsers = await getUsers(1);
-
-    if (currentUsers.docs.isEmpty) {
-      final refUsers = FirebaseFirestore.instance.collection('users');
-
-      for (final user in List.of(users)) {
-        await refUsers.add(user);
-      }
-    }
-  }
-
   static Future<QuerySnapshot> getUsers(
       int limit, {
         DocumentSnapshot startAfter,

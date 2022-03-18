@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:AgriNet/services/firebase_api.dart';
-import 'package:AgriNet/models/user.dart';
+import 'package:AgriNet/models/service.dart';
 import 'package:flutter/material.dart';
 
 class UsersProvider extends ChangeNotifier {
@@ -14,10 +14,10 @@ class UsersProvider extends ChangeNotifier {
 
   bool get hasNext => _hasNext;
 
-  List<User> get users => _usersSnapshot.map((snap) {
+  List<Service> get serviceList => _usersSnapshot.map((snap) {
    // final user = snap.data();
 
-    return User(
+    return Service(
       name: snap.get('name'),
       imageUrl: snap.get('imageUrl'),
     );

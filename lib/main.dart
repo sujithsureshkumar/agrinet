@@ -1,4 +1,5 @@
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/providers/users_provider.dart';
 import 'package:AgriNet/screens/page/users_page.dart';
 import 'package:AgriNet/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';

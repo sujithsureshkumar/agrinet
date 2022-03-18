@@ -1,4 +1,6 @@
 import 'package:AgriNet/providers/users_provider.dart';
+import 'package:AgriNet/screens/home/home.dart';
+import 'package:AgriNet/screens/page/detailscreen.dart';
 import 'package:flutter/material.dart';
 
 class ListViewWidget extends StatefulWidget {
@@ -17,51 +19,60 @@ class _ListViewWidgetState extends State<ListViewWidget> {
   final scrollController = ScrollController();
   //UsersProvider usersProvider;
 
-  Widget personDetailCard(person) {
+  Widget catalogueCard(service) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Container(
-        height: 200,
-        child: Card(
-          color: Colors.grey[800],
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                      width: 150.0,
-                      height: 150.0,
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: new DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(person.imageUrl)
-                          )
-                      )),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(person.name,
-                        style: TextStyle (
-                            color: Colors.white,
-                            fontSize: 18
-                        ),
-                      ),
-                      Text(person.name,
-                        style: TextStyle (
-                            color: Colors.white,
-                            fontSize: 12
-                        ),
-                      )
-                    ],
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (ctx) => DetailScreen(image:service.imageUrl ,name:service.name ,price: service.price,),
+            ),
+          );
+        },
+        child: Container(
+          height: 200,
+          child: Card(
+            color: Colors.grey[800],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        width: 150.0,
+                        height: 150.0,
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            image: new DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(service.imageUrl)
+                            )
+                        )),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(service.name,
+                          style: TextStyle (
+                              color: Colors.white,
+                              fontSize: 18
+                          ),
+                        ),
+                        Text(service.name,
+                          style: TextStyle (
+                              color: Colors.white,
+                              fontSize: 12
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -75,7 +86,6 @@ class _ListViewWidgetState extends State<ListViewWidget> {
 
     scrollController.addListener(scrollListener);
      widget.usersProvider.fetchNextUsers();
-    //usersProvider.fetchNextUsers();
   }
 
 
@@ -109,8 +119,8 @@ class _ListViewWidgetState extends State<ListViewWidget> {
             children: <Widget>[
 
               Column(
-                  children: widget.usersProvider.users.map((p) {
-                    return personDetailCard(p);
+                  children: widget.usersProvider.serviceList.map((p) {
+                    return catalogueCard(p);
                   }).toList()
               ),
               if (widget.usersProvider.hasNext)
