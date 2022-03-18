@@ -1,11 +1,9 @@
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:AgriNet/screens/wrapper.dart';
+import 'package:AgriNet/providers/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'MyHomePage.dart';
-import 'nested_tab_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

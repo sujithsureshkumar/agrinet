@@ -1,18 +1,14 @@
-import 'package:AgriNet/FarmHome.dart';
-import 'package:AgriNet/MyHomePage.dart';
-import 'package:AgriNet/ServiceCatalogue.dart';
-import 'package:AgriNet/navBar/signOut.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:AgriNet/screens/pages/service_catalogue.dart';
 import 'package:flutter/material.dart';
 
-class nested_tab_bar extends StatefulWidget {
+class Home extends StatefulWidget {
   //const nested_tab_bar({Key key}) : super(key: key);
 
   @override
-  _nested_tab_barState createState() => _nested_tab_barState();
+  _HomeState createState() => _HomeState();
 }
 
-class _nested_tab_barState extends State<nested_tab_bar> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -100,7 +96,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (ctx) => MyHomePage(),
+                                //builder: (ctx) => MyHomePage(),
                               ),
                             );
                           },
@@ -132,9 +128,9 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                         child: IconButton(
 
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (ctx) => MyHomePage(),
+                                builder: (ctx) => ServiceCatalogue(),
                               ),
                             );
                           },
@@ -168,7 +164,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (ctx) => MyHomePage(),
+                                //builder: (ctx) => MyHomePage(),
                               ),
                             );
                           },
@@ -202,7 +198,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (ctx) => MyHomePage(),
+                                //builder: (ctx) => MyHomePage(),
                               ),
                             );
                           },
