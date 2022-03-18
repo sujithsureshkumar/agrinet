@@ -8,6 +8,15 @@ class ServiceCatalogue extends StatelessWidget {
   Widget build(BuildContext context) => ChangeNotifierProvider(
     create: (context) => UsersProvider(),
     child: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xff6d8000),
+        title: Padding(
+          padding: EdgeInsets.only(top: 4.0),
+          child:Center(
+              child:Text("Services")
+          ),
+        ),
+      ),
       body: Consumer<UsersProvider>(
         builder: (context, usersProvider, _) => ListViewWidget(
           usersProvider: usersProvider,

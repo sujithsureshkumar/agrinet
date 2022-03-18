@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:AgriNet/providers/users_provider.dart';
-//import 'package:AgriNet/screens/pages/homepage.dart';
+import 'package:AgriNet/screens/pages/home.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -143,7 +143,7 @@ class _DetailScreenState extends State<DetailScreen> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  //builder: (ctx) => HomePage(),
+                  builder: (ctx) => Home(),
                 ),
               );
             },

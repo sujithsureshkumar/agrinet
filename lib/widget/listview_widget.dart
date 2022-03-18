@@ -22,7 +22,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
       padding: const EdgeInsets.all(10.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (ctx) => DetailScreen(
                 image:service.imageUrl ,
