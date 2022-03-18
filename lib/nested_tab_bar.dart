@@ -1,4 +1,5 @@
 import 'package:AgriNet/FarmHome.dart';
+import 'package:AgriNet/MyHomePage.dart';
 import 'package:AgriNet/ServiceCatalogue.dart';
 import 'package:AgriNet/navBar/signOut.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,19 +74,7 @@ class _nested_tab_barState extends State<nested_tab_bar> {
 
       child: Stack(
           children: <Widget>[
-            TabBarView(
-          children: <Widget>[
-            FarmHome(),
-            ServiceCatalogue(),
-            FarmHome(),
-            FarmHome(),
-            SignOut(),
 
-          ],
-          // If you want to disable swiping in tab the use below code
-          physics: NeverScrollableScrollPhysics(),
-
-        ),
             Positioned(
               bottom:20,
         child:Container(
@@ -97,54 +86,145 @@ class _nested_tab_barState extends State<nested_tab_bar> {
           ),
           child: Container(
             color: Colors.black26,
-            child: TabBar(
-              labelColor: Color(0xFFC41A3B),
-              unselectedLabelColor: Colors.white,
-              labelStyle: TextStyle(fontSize: 10.0),
-              indicator: UnderlineTabIndicator(
-                borderSide: BorderSide(color: Colors.black54, width: 0.0),
-                insets: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 40.0),
-              ),
-              //For Indicator Show and Customization
-              indicatorColor: Colors.black54,
-              tabs: <Widget>[
-                Tab(
-                  icon: Icon(
-                    Icons.home,
-                    size: 24.0,
-                  ),
-                  text: 'Home',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.category,
-                    size: 24.0,
-                  ),
-                  text: 'Catalogue',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    size: 24.0,
-                  ),
-                  text: 'Cart',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.search,
-                    size: 24.0,
-                  ),
-                  text: 'Search',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.more,
-                    size: 24.0,
-                  ),
-                  text: 'LogOut',
-                ),
-              ],
+            child: Row(
+              children:<Widget> [
+                Container(
+                  padding: EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 2.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: IconButton(
 
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (ctx) => MyHomePage(),
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.schema, size: 44.0 ,),
+                          //label: Text('Home')
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
+                        child: Text(
+                          "Join",
+                          style: TextStyle(
+                            color: Colors.yellow,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 2.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: IconButton(
+
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (ctx) => MyHomePage(),
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.category, size: 44.0 ,),
+                          //label: Text('Home')
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
+                        child: Text(
+                          "Catalogue",
+                          style: TextStyle(
+                            color: Colors.yellow,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 2.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: IconButton(
+
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (ctx) => MyHomePage(),
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.assignment, size: 44.0 ,),
+                          //label: Text('Home')
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
+                        child: Text(
+                          "Booking",
+                          style: TextStyle(
+                            color: Colors.yellow,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 2.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: IconButton(
+
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (ctx) => MyHomePage(),
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.favorite, size: 44.0 ,),
+                          //label: Text('Home')
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
+                        child: Text(
+                          "Fav",
+                          style: TextStyle(
+                            color: Colors.yellow,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+
+              ],
             ),
           ),
         ),
