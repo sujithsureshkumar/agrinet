@@ -17,7 +17,6 @@ class ListViewWidget extends StatefulWidget {
 
 class _ListViewWidgetState extends State<ListViewWidget> {
   final scrollController = ScrollController();
-  //UsersProvider usersProvider;
 
   Widget catalogueCard(service) {
     return Padding(
@@ -26,7 +25,11 @@ class _ListViewWidgetState extends State<ListViewWidget> {
         onTap: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (ctx) => DetailScreen(image:service.imageUrl ,name:service.name ,price: service.price,),
+              builder: (ctx) => DetailScreen(
+                image:service.imageUrl ,
+                name:service.name ,
+                price: service.price,
+              ),
             ),
           );
         },
@@ -141,32 +144,5 @@ class _ListViewWidgetState extends State<ListViewWidget> {
       ),
     );
 
-  } /*=> ListView(
-    controller: scrollController,
-    padding: EdgeInsets.all(12),
-    children: [
-      ...widget.usersProvider.users
-          .map((user) => ListTile(
-        title: Text(user.name),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(user.imageUrl),
-          /*child:Text(
-            user.name[0].toUpperCase(),
-          ),*/
-        ),
-      ))
-          .toList(),
-      if (widget.usersProvider.hasNext)
-        Center(
-          child: GestureDetector(
-            onTap: widget.usersProvider.fetchNextUsers,
-            child: Container(
-              height: 25,
-              width: 25,
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        ),
-    ],
-  );*/
+  }
 }

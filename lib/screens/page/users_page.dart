@@ -8,9 +8,6 @@ class UsersPage extends StatelessWidget {
   Widget build(BuildContext context) => ChangeNotifierProvider(
     create: (context) => UsersProvider(),
     child: Scaffold(
-      appBar: AppBar(
-        title: Text('Users'),
-      ),
       body: Consumer<UsersProvider>(
         builder: (context, usersProvider, _) => ListViewWidget(
           usersProvider: usersProvider,
