@@ -13,7 +13,13 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
   TextEditingController location = TextEditingController();
   TextEditingController phone_number = TextEditingController();
   TextEditingController pincode = TextEditingController();
-  TextEditingController address = TextEditingController();
+  TextEditingController address= TextEditingController();
+  TextEditingController service_type = TextEditingController();
+  TextEditingController sp_id = TextEditingController();
+  TextEditingController holder_name = TextEditingController();
+  TextEditingController acc_number = TextEditingController();
+  TextEditingController ifs_code= TextEditingController();
+  TextEditingController bank_name= TextEditingController();
   List<Step> stepList() => [
         Step(
           state: _activeStepIndex <= 0 ? StepState.editing : StepState.complete,
@@ -33,10 +39,30 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                   height: 12,
                 ),
                 TextField(
+                  controller: sp_id,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Service Provider ID ',
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                TextField(
                   controller: company_name,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Company Name',
+                  ),
+                ),const SizedBox(
+                  height: 12,
+                ),
+                TextField(
+                  controller: service_type,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Type Of Service',
                   ),
                 ),
                 const SizedBox(
@@ -54,6 +80,19 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                   height: 12,
                 ),
                 TextField(
+                  controller: pincode,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Pincode',
+                  ),
+                ),
+
+
+                const SizedBox(
+                  height: 12,
+                ),
+                TextField(
                   controller: phone_number,
                   obscureText: true,
                   decoration: const InputDecoration(
@@ -61,17 +100,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                     labelText: 'Phone Number',
                   ),
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
-                TextField(
-                  controller: pincode,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Pin Code ',
-                  ),
-                ),
+
               ],
             ),
           ),
@@ -80,28 +109,49 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
             state:
                 _activeStepIndex <= 1 ? StepState.editing : StepState.complete,
             isActive: _activeStepIndex >= 1,
-            title: const Text('Address'),
+            title: const Text('Bank Details'),
             content: Container(
               child: Column(
                 children: [
+
                   const SizedBox(
-                    height: 8,
+                    height: 12,
                   ),
                   TextField(
-                    controller: address,
+                    controller: holder_name,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Full House Address',
+                      labelText: 'A/c Holder Name',
                     ),
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 12,
                   ),
                   TextField(
-                    controller: pincode,
+                    controller: acc_number,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Pin Code',
+                      labelText: 'A/c Number',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextField(
+                    controller: ifs_code,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'IFS Code',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextField(
+                    controller: bank_name,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Bank Name',
                     ),
                   ),
                 ],
@@ -117,10 +167,16 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Name: ${name.text}'),
+                Text('Service Provider ID : ${sp_id.text}'),
                 Text('Company Name: ${company_name.text}'),
-                //const Text('Password: *****'),
-                Text('Address : ${address.text}'),
-                //Text('PinCode : ${pincode.text}'),
+                Text('Type Of Service: ${service_type.text}'),
+                Text('Location : ${location.text}'),
+                Text('PinCode : ${pincode.text}'),
+                Text('Phone Number: ${phone_number.text}'),
+                Text('A/c Holder Name: ${holder_name.text}'),
+                Text('A/c Number : ${acc_number.text}'),
+                Text('IFS Code: ${ifs_code.text}'),
+                Text('Bank Name : ${bank_name.text}'),
               ],
             )))
       ];
@@ -176,6 +232,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                         : const Text('Next'),
                   ),
                 ),
+                if (_activeStepIndex > 0)
                 const SizedBox(
                   width: 10,
                 ),
