@@ -80,18 +80,18 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
             state:
                 _activeStepIndex <= 1 ? StepState.editing : StepState.complete,
             isActive: _activeStepIndex >= 1,
-            title: const Text('Address'),
+            title: const Text('Details'),
             content: Container(
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 8,
+                    height: 12,
                   ),
                   TextField(
                     controller: address,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Full House Address',
+                      labelText: 'Type Of Service',
                     ),
                   ),
                   const SizedBox(
