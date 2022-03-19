@@ -31,14 +31,6 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                   child: Container(
                     child: Text(
                       'Farmer',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Container(
-                    child: Text(
-                      'ServiceProvider',
                       style: TextStyle(color: Colors.white, fontSize: 14.0),
                     ),
                   ),
@@ -46,8 +38,16 @@ class _nested_tab_barState extends State<nested_tab_bar> {
                 Tab(
                   child: Container(
                     child: Text(
+                      'ServiceProvider',
+                      style: TextStyle(color: Colors.white, fontSize: 13.0),
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Container(
+                    child: Text(
                       'Labour',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
+                      style: TextStyle(color: Colors.white, fontSize: 14.0),
                     ),
                   ),
                 ),

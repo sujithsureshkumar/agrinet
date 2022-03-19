@@ -16,8 +16,8 @@ class _FarmHomeState extends State<FarmHome> {
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child:ElevatedButton(
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
           ),
           onPressed: () {
             Navigator.push(

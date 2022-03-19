@@ -9,10 +9,11 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
 
   int _activeStepIndex = 0;
   TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController pass = TextEditingController();
-  TextEditingController address = TextEditingController();
+  TextEditingController company_name = TextEditingController();
+  TextEditingController location = TextEditingController();
+  TextEditingController phone_number = TextEditingController();
   TextEditingController pincode = TextEditingController();
+  TextEditingController address = TextEditingController();
   List<Step> stepList() => [
         Step(
           state: _activeStepIndex <= 0 ? StepState.editing : StepState.complete,
@@ -29,24 +30,46 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                   ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 12,
                 ),
                 TextField(
-                  controller: email,
+                  controller: company_name,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
+                    labelText: 'Company Name',
                   ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 12,
                 ),
                 TextField(
-                  controller: pass,
+                  controller: location,
                   obscureText: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Password',
+                    labelText: 'Location',
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                TextField(
+                  controller: phone_number,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Phone Number',
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                TextField(
+                  controller: pincode,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Pin Code ',
                   ),
                 ),
               ],
@@ -94,10 +117,10 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Name: ${name.text}'),
-                Text('Email: ${email.text}'),
-                const Text('Password: *****'),
+                Text('Company Name: ${company_name.text}'),
+                //const Text('Password: *****'),
                 Text('Address : ${address.text}'),
-                Text('PinCode : ${pincode.text}'),
+                //Text('PinCode : ${pincode.text}'),
               ],
             )))
       ];
@@ -107,9 +130,11 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
    return Scaffold(
       appBar: AppBar(
         title: const Text('Service Provider Onboarding '),
+
+        backgroundColor:Colors.green,
       ),
       body: Stepper(
-        type: StepperType.vertical,
+        type: StepperType.horizontal,
         currentStep: _activeStepIndex,
         steps: stepList(),
         onStepContinue: () {
@@ -141,6 +166,10 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
               children: [
                 Expanded(
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                      //foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                    ),
                     onPressed: details.onStepContinue,
                     child: (isLastStep)
                         ? const Text('Submit')
@@ -153,6 +182,10 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                 if (_activeStepIndex > 0)
                   Expanded(
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                        //foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                      ),
                       onPressed: details.onStepCancel,
                       child: const Text('Back'),
                     ),
