@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage>
         centerTitle: true,
       ),
       body: Center(
-          child: Text("Hello")
+          child: Text("Hello2")
 
       ),
       bottomNavigationBar: Container(
