@@ -1,14 +1,5 @@
 # AgriNet
-my second commit test
-commit from 2nd users
-4th feature test commit
-
-two file created
-
-my feature commit from sujith STUDIO
 College Project
-
-feature2
 
 ## Getting Started
 
@@ -22,9 +13,3 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-
-new branch create test
-
-New branch named "Anonymus_login" created
-
-file missed during commit is rectified,Test run successful
