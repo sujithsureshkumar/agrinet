@@ -1,6 +1,8 @@
 import 'package:AgriNet/screens/pages/service_catalogue.dart';
 import 'package:flutter/material.dart';
 
+import '../../imageTesting/homepage.dart';
+
 class Home extends StatefulWidget {
   //const nested_tab_bar({Key key}) : super(key: key);
 
@@ -96,7 +98,7 @@ class _HomeState extends State<Home> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                //builder: (ctx) => MyHomePage(),
+                                builder: (ctx) => HomePage(),
                               ),
                             );
                           },
@@ -164,7 +166,8 @@ class _HomeState extends State<Home> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                //builder: (ctx) => MyHomePage(),
+                                builder: (ctx) => HomePage()
+                                ,
                               ),
                             );
                           },
@@ -198,7 +201,7 @@ class _HomeState extends State<Home> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                //builder: (ctx) => MyHomePage(),
+                                builder: (ctx) => HomePage(),
                               ),
                             );
                           },

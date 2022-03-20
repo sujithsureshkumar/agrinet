@@ -6,12 +6,12 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on firebase user
-  Users _userFromFirebaseUser(User user) {
+  Users? _userFromFirebaseUser(User? user) {
     return user != null ? Users(uid: user.uid) : null;
   }
 
   // auth change user stream
-  Stream<Users> get user {
+  Stream<Users?> get user {
     return _auth.authStateChanges()
     //.map((User user) => _userFromFirebaseUser(user));
     .map(_userFromFirebaseUser);
@@ -21,7 +21,7 @@ class AuthService {
   Future signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
-      User user = result.user;
+      User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -33,7 +33,7 @@ class AuthService {
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      User user = result.user;
+      User? user = result.user;
       return user;
     } catch (error) {
       print(error.toString());
@@ -46,7 +46,7 @@ class AuthService {
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      User user = result.user;
+      User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

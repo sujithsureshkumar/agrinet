@@ -6,8 +6,8 @@ class ListViewWidget extends StatefulWidget {
   final UsersProvider usersProvider;
 
   const ListViewWidget({
-    @required this.usersProvider,
-    Key key,
+    required this.usersProvider,
+    Key? key,
   }) : super(key: key);
 
   @override

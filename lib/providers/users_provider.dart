@@ -20,6 +20,8 @@ class UsersProvider extends ChangeNotifier {
     return Service(
       name: snap.get('name'),
       imageUrl: snap.get('imageUrl'),
+      owner: snap.get('name'),
+      price: snap.get('price')
     );
   }).toList();
 
@@ -34,6 +36,7 @@ class UsersProvider extends ChangeNotifier {
         documentLimit,
         startAfter: _usersSnapshot.isNotEmpty ? _usersSnapshot.last : null,
       );
+      print(_usersSnapshot.isNotEmpty ? _usersSnapshot.last : null);
       _usersSnapshot.addAll(snap.docs);
 
       if (snap.docs.length < documentLimit) _hasNext = false;

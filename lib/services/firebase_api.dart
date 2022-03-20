@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseApi {
   static Future<QuerySnapshot> getUsers(
       int limit, {
-        DocumentSnapshot startAfter,
+       DocumentSnapshot? startAfter,
       }) async {
     final refUsers = FirebaseFirestore.instance
         .collection('users')
@@ -11,7 +11,7 @@ class FirebaseApi {
         .limit(limit);
 
     if (startAfter == null) {
-      return refUsers.get();
+      return refUsers.startAfterDocument(startAfter!).get();
     } else {
       return refUsers.startAfterDocument(startAfter).get();
     }

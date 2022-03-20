@@ -4,11 +4,13 @@ import 'package:AgriNet/providers/users_provider.dart';
 import 'package:AgriNet/screens/pages/home.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 
+import '../../imageTesting/homepage.dart';
+
 class DetailScreen extends StatefulWidget {
   final String image;
   final String name;
   final int price;
-  DetailScreen({this.image, this.name, this.price});
+  DetailScreen({required this.image, required this.name, required this.price});
   @override
   _DetailScreenState createState() => _DetailScreenState();
 }
@@ -16,9 +18,9 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   int count = 1;
   // ProductProvider productProvider;
-  UsersProvider usersProvider;
+  late UsersProvider usersProvider;
 
-  Widget _buildColorProduct({Color color}) {
+  Widget _buildColorProduct({required Color color}) {
     return Container(
       height: 40,
       width: 40,
@@ -109,7 +111,7 @@ class _DetailScreenState extends State<DetailScreen> {
         onPressed: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              //builder: (ctx) => CheckOut(),
+              builder: (ctx) => HomePage(),
             ),
           );
         },
@@ -118,60 +120,53 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
 
+
+
   @override
   Widget build(BuildContext context) {
     //usersProvider = Provider.of<UsersProvider>(context);
-    return WillPopScope(
-      onWillPop: () async {
-        return Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            //builder: (ctx) => HomePage(),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Detail Page", style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
           ),
-        );
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("Detail Page", style: TextStyle(color: Colors.black)),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (ctx) => Home(),
-                ),
-              );
-            },
-          ),
-          actions: <Widget>[
-            //NotificationButton(),
-          ],
-        ),
-        body: Container(
-          child: ListView(
-            children: <Widget>[
-              _buildImage(),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildNameToDescriptionPart(),
-                    _buildDiscription(),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    _buildButtonPart(),
-                  ],
-                ),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => Home(),
               ),
-            ],
-          ),
+            );
+          },
+        ),
+        actions: <Widget>[
+          //NotificationButton(),
+        ],
+      ),
+      body: Container(
+        child: ListView(
+          children: <Widget>[
+            _buildImage(),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildNameToDescriptionPart(),
+                  _buildDiscription(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildButtonPart(),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
