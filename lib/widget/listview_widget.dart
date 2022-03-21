@@ -112,15 +112,16 @@ class _ListViewWidgetState extends State<ListViewWidget> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       body: ListView(
+        scrollDirection:Axis.horizontal,
         controller: scrollController,
         padding: EdgeInsets.all(12),
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-            child: Column(
+            child: Row(
               children: <Widget>[
 
-                Column(
+                Row(
                     children: widget.usersProvider.serviceList.map((p) {
                       return catalogueCard(p);
                     }).toList()
