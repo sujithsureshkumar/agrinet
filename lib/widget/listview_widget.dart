@@ -1,6 +1,7 @@
 import 'package:AgriNet/providers/users_provider.dart';
-import 'package:AgriNet/screens/pages/detailscreen.dart';
 import 'package:flutter/material.dart';
+
+import '../services/img_picker.dart';
 
 class ListViewWidget extends StatefulWidget {
   final UsersProvider usersProvider;
@@ -16,6 +17,72 @@ class ListViewWidget extends StatefulWidget {
 
 class _ListViewWidgetState extends State<ListViewWidget> {
   final scrollController = ScrollController();
+  ImgPicker ImgPick;
+
+  Widget addImageCard() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              /* builder: (ctx) => DetailScreen(
+                image:service.imageUrl ,
+                name:service.name ,
+                price: service.price,
+              ),*/
+            ),
+          );
+        },
+        child: Container(
+          height: 200,
+          width: 150.0,
+          child: Card(
+            color: Colors.grey[800],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        width: 100.0,
+                        height: 100.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: IconButton(
+
+                            onPressed: () {
+                              ImgPick.uploadImage();
+                            },
+                            icon: Icon(Icons.category, size: 44.0 ,),
+                            //label: Text('Home')
+                          ),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("Add Image",
+                          style: TextStyle (
+                              color: Colors.white,
+                              fontSize: 18
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget catalogueCard(service) {
     return Padding(
@@ -24,11 +91,11 @@ class _ListViewWidgetState extends State<ListViewWidget> {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (ctx) => DetailScreen(
+             /* builder: (ctx) => DetailScreen(
                 image:service.imageUrl ,
                 name:service.name ,
                 price: service.price,
-              ),
+              ),*/
             ),
           );
         },
@@ -43,7 +110,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                        width: 150.0,
+                        width: 200.0,
                         height: 150.0,
                         decoration: new BoxDecoration(
                             shape: BoxShape.rectangle,
@@ -53,26 +120,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                             )
                         )),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(service.name,
-                          style: TextStyle (
-                              color: Colors.white,
-                              fontSize: 18
-                          ),
-                        ),
-                        Text(service.name,
-                          style: TextStyle (
-                              color: Colors.white,
-                              fontSize: 12
-                          ),
-                        )
-                      ],
-                    ),
-                  )
+
                 ],
               ),
             ),
@@ -111,38 +159,41 @@ class _ListViewWidgetState extends State<ListViewWidget> {
   Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      body: ListView(
-        scrollDirection:Axis.horizontal,
-        controller: scrollController,
-        padding: EdgeInsets.all(12),
-        children: [
-          Padding(
+      body: Container(
+        child: SingleChildScrollView(
+          scrollDirection:Axis.horizontal,
+          controller: scrollController,
+          padding: EdgeInsets.all(12),
+          child: Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
             child: Row(
-              children: <Widget>[
+          children: <Widget>[
+            Row(
+                children:[addImageCard()]
+            ),
 
                 Row(
                     children: widget.usersProvider.serviceList.map((p) {
                       return catalogueCard(p);
-                    }).toList()
+                    }).toList(),
                 ),
                 if (widget.usersProvider.hasNext)
-                  Center(
-                    child: GestureDetector(
-                      onTap: widget.usersProvider.fetchNextUsers,
-                      child: Container(
-                        height: 25,
-                        width: 25,
-                        child: CircularProgressIndicator(),
-                      ),
+                  GestureDetector(
+                    onTap: widget.usersProvider.fetchNextUsers,
+                    child: Container(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(),
                     ),
                   ),
               ],
             ),
           ),
-        ],
+            ),
       ),
-    );
+
+
+      );
 
   }
 }
