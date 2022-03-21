@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:AgriNet/services/service_provider.dart';
 
 class SPOnBoarding extends StatefulWidget {
   @override
@@ -199,7 +200,11 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
               _activeStepIndex += 1;
             });
           } else {
-            print('Submited');
+            sp_onboarding(name.text,service_type.text,location.text,
+                phone_number.text,holder_name.text,acc_number.text,ifs_code.text,bank_name.text,pincode.text)
+                .then((value) => {
+                  Navigator.pop(context)
+            });
           }
         },
         onStepCancel: () {
