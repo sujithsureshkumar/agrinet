@@ -5,7 +5,6 @@ import 'package:AgriNet/providers/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'imageslidetest/image_slide.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
           primaryColorLight: Color(0xFFFBE0E6),
           accentColor: Color(0xFF1B1F32),
         ),
-        home: ImageSlide(),
+        home: Wrapper(),
       ),
     );
   }
