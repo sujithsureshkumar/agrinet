@@ -21,7 +21,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Multi Selection ListView"),
+        title: Text("Profile Selection"),
         centerTitle: true,
         backgroundColor: Colors.green[700],
       ),
@@ -71,7 +71,84 @@ class _ProfileSelectionState extends State<ProfileSelection > {
     );
   }
 
-  Widget ProfileItem(
+
+  Widget ProfileItem(String name, String image, bool isSelected, int index) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        height: 200,
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              profiles[index].isSelected = !profiles[index].isSelected;
+              if (profiles[index].isSelected == true) {
+                selectedProfiles.add(Profile(name, image, true));
+              } else if (profiles[index].isSelected == false) {
+                selectedProfiles
+                    .removeWhere((element) => element.name == profiles[index].name);
+              }
+            });
+          },
+
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+
+
+            child: Stack(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                      //width: 150.0,
+                      //height: 150.0,
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          image: new DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage('https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80')
+                          )
+                      )),
+                ),
+                Positioned(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(name,
+                          style: TextStyle (
+                              color: Colors.white,
+                              fontSize: 18
+                          ),
+                        ),
+
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: isSelected
+                                ? Icon(
+                              Icons.check_circle,
+                              color: Colors.green[700],
+                            )
+                                : Icon(
+                              Icons.check_circle_outline,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /* Widget ProfileItem(
       String name, String image, bool isSelected, int index) {
     return ListTile(
       title: Text(
@@ -101,5 +178,5 @@ class _ProfileSelectionState extends State<ProfileSelection > {
         });
       },
     );
-  }
+  }*/
 }
