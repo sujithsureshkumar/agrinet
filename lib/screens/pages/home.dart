@@ -10,57 +10,129 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin{
+
+  TabController _tabController;
+
+  @override
+  void initState() {
+    _selectedTab = getTabs();
+    _tabController = getTabController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  bool farmer = false;
+  bool serviceProvider = true;
+  bool labour = true;
+
+  List<Widget> _selectedWidgets = [];
+
+  List<Tab> _selectedTab = [];
+
+  List<Tab> _tabs = [
+    Tab(
+      child: Container(
+        child: Text(
+          'Farmer',
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
+        ),
+      ),
+    ),
+
+    Tab(
+      child: Container(
+        child: Text(
+          'ServiceProvider',
+          style: TextStyle(color: Colors.white, fontSize: 14.0),
+        ),
+      ),
+    ),
+
+    Tab(
+      child: Container(
+        child: Text(
+          'Labour',
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
+        ),
+      ),
+    ),
+
+  ];
+
+  List<Widget> _allWidgets = [
+    FarmHome(),
+    FarmHome(),
+    FarmHome(),
+  ];
+
+  List<Widget> getWidgets() {
+    _selectedWidgets.clear();
+    if(farmer){
+      _selectedWidgets.add(_allWidgets[0]);
+    }
+
+    if(serviceProvider){
+      _selectedWidgets.add(_allWidgets[1]);
+    }
+
+    if(labour){
+      _selectedWidgets.add(_allWidgets[2]);
+    }
+
+    return _selectedWidgets;
+  }
+
+  List<Tab> getTabs() {
+    _selectedTab.clear();
+    if(farmer){
+      _selectedTab.add(_tabs[0]);
+    }
+
+    if(serviceProvider){
+      _selectedTab.add(_tabs[1]);
+    }
+
+    if(labour){
+      _selectedTab.add(_tabs[2]);
+    }
+    return _selectedTab;
+  }
+
+  TabController getTabController() {
+    return TabController(length: _selectedTab.length, vsync: this)..addListener(_updatePage);
+  }
+
+  void _updatePage() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.green,
-            title: Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child:Center(
-              child:Text("AgriNet")
-              ),
-            ),
-            bottom: TabBar(
-              tabs: <Widget>[
-                Tab(
-                  child: Container(
-                    child: Text(
-                      'Farmer',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Container(
-                    child: Text(
-                      'ServiceProvider',
-                      style: TextStyle(color: Colors.white, fontSize: 14.0),
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Container(
-                    child: Text(
-                      'Labour',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Padding(
+          padding: EdgeInsets.only(top: 8.0),
+          child:Center(
+          child:Text("AgriNet")
           ),
+        ),
+        bottom: TabBar(
+          tabs: _selectedTab,
+          controller: _tabController,
+        ),
+      ),
 
-          body: TabBarView(
-            children: <Widget>[
-              FarmHome(),
-              FarmHome(),
-              FarmHome(),
-            ],
-          ),
-        ));
+      body: TabBarView(
+        children: getWidgets(),
+        controller: _tabController,
+      ),
+    );
   }
 }
