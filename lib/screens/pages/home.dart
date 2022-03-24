@@ -1,5 +1,7 @@
+import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/screens/pages/service_catalogue.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'FarmHome.dart';
 
@@ -48,11 +50,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     Tab(
       child: Container(
         child: Text(
-          'ServiceProvider',
-          style: TextStyle(color: Colors.white, fontSize: 14.0),
+          'Service Provider',
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
       ),
-    ),
+      ),
+
 
     Tab(
       child: Container(
@@ -73,6 +76,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
 
   List<Widget> getWidgets() {
     _selectedWidgets.clear();
+    ProfileData provider =Provider.of<ProfileData>(context, listen: false);
+      var i=0;
+     while(i<3){
+       if(provider.getProfile[i]){
+         _selectedWidgets.add(_allWidgets[i]);
+       }
+       i++;
+     }
+
+    return _selectedWidgets;
+  }
+
+ /* List<Widget> getWidgets() {
+    _selectedWidgets.clear();
     if(farmer){
       _selectedWidgets.add(_allWidgets[0]);
     }
@@ -86,9 +103,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     }
 
     return _selectedWidgets;
-  }
+  }*/
 
   List<Tab> getTabs() {
+    _selectedTab.clear();
+    ProfileData provider =Provider.of<ProfileData>(context, listen: false);
+      var i = 0;
+      while (i < 3) {
+        if (provider.getProfile[i]) {
+          _selectedTab.add(_tabs[i]);
+        }
+        i++;
+      }
+
+    return _selectedTab;
+  }
+
+
+  /*List<Tab> getTabs() {
     _selectedTab.clear();
     if(farmer){
       _selectedTab.add(_tabs[0]);
@@ -102,7 +134,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
       _selectedTab.add(_tabs[2]);
     }
     return _selectedTab;
-  }
+  }*/
 
   TabController getTabController() {
     return TabController(length: _selectedTab.length, vsync: this)..addListener(_updatePage);

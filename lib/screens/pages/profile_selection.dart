@@ -1,6 +1,9 @@
+import 'package:AgriNet/providers/profile_data.dart';
+import 'package:AgriNet/screens/pages/home.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/profile.dart';
+import 'package:provider/provider.dart';
 
 class ProfileSelection extends StatefulWidget {
   @override
@@ -10,9 +13,9 @@ class ProfileSelection extends StatefulWidget {
 class _ProfileSelectionState extends State<ProfileSelection > {
 
   List<Profile> profiles = [
-    Profile("Farmer", "0778979454", false),
-    Profile("Service Provider", "0766223795", false),
-    Profile("Labour", "0749112016", false),
+    Profile("Farmer", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCtIuT92c5b4YgL4lqKnww5Gn12arzdaARA&usqp=CAU", false),
+    Profile("Service Provider", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFMyf6QUQof7CNOUniNSeEU-EE0a8DgQZAaQ&usqp=CAU", false),
+    Profile("Labour", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_oUHRKOiReFYPu9v4ZWyARmtRv4oaEgkbw&usqp=CAU", false),
   ];
 
   List<Profile> selectedProfiles = [];
@@ -59,7 +62,9 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                       ),
                     ),
                     onPressed: () {
-                      print("Delete List Lenght: ${selectedProfiles.length}");
+                      //print("Delete List Lenght: ${selectedProfiles.length}");
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (ctx) => Home()));
                     },
                   ),
                 ),
@@ -81,6 +86,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
           onTap: () {
             setState(() {
               profiles[index].isSelected = !profiles[index].isSelected;
+              Provider.of<ProfileData>(context, listen: false).setProfile(index);
               if (profiles[index].isSelected == true) {
                 selectedProfiles.add(Profile(name, image, true));
               } else if (profiles[index].isSelected == false) {
@@ -104,7 +110,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                           shape: BoxShape.rectangle,
                           image: new DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage('https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80')
+                              image: NetworkImage(image)
                           )
                       )),
                 ),
