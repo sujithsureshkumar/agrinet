@@ -29,9 +29,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     super.dispose();
   }
 
-  bool farmer = false;
-  bool serviceProvider = true;
-  bool labour = true;
+ // bool farmer = false;
+  //bool serviceProvider = true;
+  //bool labour = true;
 
   List<Widget> _selectedWidgets = [];
 
