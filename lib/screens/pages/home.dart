@@ -3,6 +3,7 @@ import 'package:AgriNet/screens/pages/service_catalogue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/profile.dart';
 import 'FarmHome.dart';
 
 class Home extends StatefulWidget {
@@ -18,8 +19,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
 
   @override
   void initState() {
-    _selectedTab = getTabs();
-    _tabController = getTabController();
+    //_selectedTab = getTabs();
+    //_tabController = getTabController();
     super.initState();
   }
 
@@ -79,7 +80,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     ProfileData provider =Provider.of<ProfileData>(context, listen: false);
       var i=0;
      while(i<3){
-       if(provider.getProfile[i]){
+       if(provider.profiles[i].isSelected){
          _selectedWidgets.add(_allWidgets[i]);
        }
        i++;
@@ -88,29 +89,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     return _selectedWidgets;
   }
 
- /* List<Widget> getWidgets() {
-    _selectedWidgets.clear();
-    if(farmer){
-      _selectedWidgets.add(_allWidgets[0]);
-    }
-
-    if(serviceProvider){
-      _selectedWidgets.add(_allWidgets[1]);
-    }
-
-    if(labour){
-      _selectedWidgets.add(_allWidgets[2]);
-    }
-
-    return _selectedWidgets;
-  }*/
 
   List<Tab> getTabs() {
     _selectedTab.clear();
     ProfileData provider =Provider.of<ProfileData>(context, listen: false);
       var i = 0;
       while (i < 3) {
-        if (provider.getProfile[i]) {
+        if (provider.profiles[i].isSelected) {
           _selectedTab.add(_tabs[i]);
         }
         i++;
@@ -120,22 +105,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
   }
 
 
-  /*List<Tab> getTabs() {
-    _selectedTab.clear();
-    if(farmer){
-      _selectedTab.add(_tabs[0]);
-    }
-
-    if(serviceProvider){
-      _selectedTab.add(_tabs[1]);
-    }
-
-    if(labour){
-      _selectedTab.add(_tabs[2]);
-    }
-    return _selectedTab;
-  }*/
-
   TabController getTabController() {
     return TabController(length: _selectedTab.length, vsync: this)..addListener(_updatePage);
   }
@@ -144,9 +113,94 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     setState(() {});
   }
 
-  @override
+  Widget ProfileItem(Profile data) {
+    return ListTile(
+      title: Text(
+        data.name,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      trailing: data.isSelected
+          ? Icon(
+        Icons.check_circle,
+        color: Colors.green[700],
+      )
+          : Icon(
+        Icons.check_circle_outline,
+        color: Colors.grey,
+      ),
+      onTap: () {
+        ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
+        setState(() {
+          data.isSelected = !data.isSelected;
+          if (data.isSelected) {
+            profileProvider.incCount();
+          } else {
+            profileProvider.decCount();
+          }
+
+        });
+      },
+    );
+  }
+
+  Widget _buildMyDrawer() {
+    ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
+    return Drawer(
+      child:  SafeArea(
+        child: Container(
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                    itemCount: profileProvider.profiles.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // return item
+                      return ProfileItem(
+                        profileProvider.profiles[index]
+                      );
+                    }),
+              ),
+              profileProvider.count> 0 ? Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 10,
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: RaisedButton(
+                    color: Colors.green[700],
+                    child: Text(
+                      "Proceed (${profileProvider.count})",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                    onPressed: () {
+                      //print("Delete List Lenght: ${selectedProfiles.length}");
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (ctx) => Home()));
+                    },
+                  ),
+                ),
+              ): Container(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+
+@override
   Widget build(BuildContext context) {
+  _selectedTab = getTabs();
+  _tabController = getTabController();
     return Scaffold(
+      drawer: _buildMyDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: Padding(
@@ -156,6 +210,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
           ),
         ),
         bottom: TabBar(
+          //isScrollable: true,
           tabs: _selectedTab,
           controller: _tabController,
         ),
@@ -167,4 +222,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
       ),
     );
   }
+
+
 }

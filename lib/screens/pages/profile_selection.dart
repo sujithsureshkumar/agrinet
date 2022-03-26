@@ -12,16 +12,18 @@ class ProfileSelection extends StatefulWidget {
 
 class _ProfileSelectionState extends State<ProfileSelection > {
 
-  List<Profile> profiles = [
+ /* List<Profile> profiles = [
     Profile("Farmer", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCtIuT92c5b4YgL4lqKnww5Gn12arzdaARA&usqp=CAU", false),
     Profile("Service Provider", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFMyf6QUQof7CNOUniNSeEU-EE0a8DgQZAaQ&usqp=CAU", false),
     Profile("Labour", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_oUHRKOiReFYPu9v4ZWyARmtRv4oaEgkbw&usqp=CAU", false),
-  ];
+  ]; */
 
-  List<Profile> selectedProfiles = [];
+
+  //List<Profile> selectedProfiles = [];
 
   @override
   Widget build(BuildContext context) {
+    ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile Selection"),
@@ -34,18 +36,16 @@ class _ProfileSelectionState extends State<ProfileSelection > {
             children: [
               Expanded(
                 child: ListView.builder(
-                    itemCount: profiles.length,
+
+                    itemCount: profileProvider.profiles.length,
                     itemBuilder: (BuildContext context, int index) {
                       // return item
                       return ProfileItem(
-                        profiles[index].name,
-                        profiles[index].image,
-                        profiles[index].isSelected,
-                        index,
+                        profileProvider.profiles[index]
                       );
                     }),
               ),
-              selectedProfiles.length > 0 ? Padding(
+              profileProvider.count > 0 ? Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 25,
                   vertical: 10,
@@ -54,15 +54,18 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Colors.green[700],
-                    child: Text(
-                      "Proceed (${selectedProfiles.length})",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
+                    child: Consumer<ProfileData>(builder: (context, data, child){
+                      return Text(
+                        "Proceed (${profileProvider.count})",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      );
+                    }),
                     onPressed: () {
                       //print("Delete List Lenght: ${selectedProfiles.length}");
+                      //profileProvider.assignSelectProfile();
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (ctx) => Home()));
                     },
@@ -77,7 +80,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
   }
 
 
-  Widget ProfileItem(String name, String image, bool isSelected, int index) {
+  Widget ProfileItem(Profile data) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -85,13 +88,12 @@ class _ProfileSelectionState extends State<ProfileSelection > {
         child: GestureDetector(
           onTap: () {
             setState(() {
-              profiles[index].isSelected = !profiles[index].isSelected;
-              Provider.of<ProfileData>(context, listen: false).setProfile(index);
-              if (profiles[index].isSelected == true) {
-                selectedProfiles.add(Profile(name, image, true));
-              } else if (profiles[index].isSelected == false) {
-                selectedProfiles
-                    .removeWhere((element) => element.name == profiles[index].name);
+              ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
+              data.isSelected = !data.isSelected;
+              if (data.isSelected) {
+                profileProvider.incCount();
+              } else {
+                profileProvider.decCount();
               }
             });
           },
@@ -110,7 +112,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                           shape: BoxShape.rectangle,
                           image: new DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(image)
+                              image: NetworkImage(data.image)
                           )
                       )),
                 ),
@@ -120,7 +122,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(name,
+                        Text(data.name,
                           style: TextStyle (
                               color: Colors.white,
                               fontSize: 18
@@ -130,7 +132,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                         Expanded(
                           child: Align(
                             alignment: Alignment.centerRight,
-                            child: isSelected
+                            child: data.isSelected
                                 ? Icon(
                               Icons.check_circle,
                               color: Colors.green[700],
@@ -153,36 +155,4 @@ class _ProfileSelectionState extends State<ProfileSelection > {
       ),
     );
   }
-
-  /* Widget ProfileItem(
-      String name, String image, bool isSelected, int index) {
-    return ListTile(
-      title: Text(
-        name,
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      trailing: isSelected
-          ? Icon(
-        Icons.check_circle,
-        color: Colors.green[700],
-      )
-          : Icon(
-        Icons.check_circle_outline,
-        color: Colors.grey,
-      ),
-      onTap: () {
-        setState(() {
-          profiles[index].isSelected = !profiles[index].isSelected;
-          if (profiles[index].isSelected == true) {
-            selectedProfiles.add(Profile(name, image, true));
-          } else if (profiles[index].isSelected == false) {
-            selectedProfiles
-                .removeWhere((element) => element.name == profiles[index].name);
-          }
-        });
-      },
-    );
-  }*/
 }
