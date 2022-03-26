@@ -11,10 +11,18 @@ class ProfileData extends ChangeNotifier{
   //List<bool> get getProfile => _setProfile;
 
   int _count=0;
+  int _x=0;
+  int _profileSetCount=0;
 
   //List<bool> get getTempProfile => _tempSetProfile;
 
   List<Profile> _profiles = [
+    Profile("Farmer", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCtIuT92c5b4YgL4lqKnww5Gn12arzdaARA&usqp=CAU", true),
+    Profile("Service Provider", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFMyf6QUQof7CNOUniNSeEU-EE0a8DgQZAaQ&usqp=CAU", true),
+    Profile("Labour", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_oUHRKOiReFYPu9v4ZWyARmtRv4oaEgkbw&usqp=CAU", true),
+  ];
+
+  List<Profile> _profileSelect = [
     Profile("Farmer", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCtIuT92c5b4YgL4lqKnww5Gn12arzdaARA&usqp=CAU", false),
     Profile("Service Provider", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFMyf6QUQof7CNOUniNSeEU-EE0a8DgQZAaQ&usqp=CAU", false),
     Profile("Labour", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_oUHRKOiReFYPu9v4ZWyARmtRv4oaEgkbw&usqp=CAU", false),
@@ -23,10 +31,24 @@ class ProfileData extends ChangeNotifier{
   List<Profile> _selectedProfiles = [];
 
   List<Profile> get profiles => _profiles;
+  List<Profile> get profileSelect => _profileSelect;
 
   List<Profile> get selectedProfiles => _selectedProfiles;
 
   int get count => _count;
+  int get x => _x;
+
+  int get profileSetCount => _profileSetCount;
+
+   getProfileSetCount() {
+    _profileSetCount=0;
+    for (var i = 0; i < 3; i++) {
+      if (_profiles[i].isSelected) {
+        _profileSetCount++;
+      }
+    }
+    notifyListeners();
+  }
 
   void incCount(){
     _count++;
@@ -48,20 +70,31 @@ class ProfileData extends ChangeNotifier{
       notifyListeners();
     }
 
-  Future<void> getFirebaseProfile() async {
-    List<String> newList = [];
+  Future<void> setFirebaseProfileCheck() async {
     DocumentSnapshot featureSnapShot =
     await FirebaseFirestore.instance
         .collection('Users')
-        .doc('userId')
+        .doc('97Yzq9x3K3PWUE4GduDy')
         .get();
 
     //Map<String, dynamic> data = featureSnapShot.data.data() as Map<String, dynamic>;
         _profiles[0].isSelected=featureSnapShot.get("farmer");
+    _profiles[1].isSelected=featureSnapShot.get("serviceProvider");
+    _profiles[2].isSelected=featureSnapShot.get("labour");
 
 
     notifyListeners();
   }
+  Future<void> updateFirebaseProfile(bool farmer, bool service , bool labour) async {
+    FirebaseFirestore.instance.collection('Users')
+        .doc("97Yzq9x3K3PWUE4GduDy")
+        .update({
+      'farmer': farmer,
+      'serviceProvider' :service,
+      'labour' : labour
+    });
+  }
+
 
   Future<void> getHomeFeatureData() async {
     //List<Product> newList = [];

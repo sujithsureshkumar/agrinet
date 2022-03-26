@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             primaryColorLight: Color(0xFFFBE0E6),
             accentColor: Color(0xFF1B1F32),
           ),
-          home: ProfileSelection(),
+          home: Wrapper(),
         ),
 
     );

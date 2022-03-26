@@ -41,7 +41,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                     itemBuilder: (BuildContext context, int index) {
                       // return item
                       return ProfileItem(
-                        profileProvider.profiles[index]
+                        profileProvider.profileSelect[index]
                       );
                     }),
               ),
@@ -66,6 +66,11 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                     onPressed: () {
                       //print("Delete List Lenght: ${selectedProfiles.length}");
                       //profileProvider.assignSelectProfile();
+                      profileProvider.updateFirebaseProfile(
+                          profileProvider.profileSelect[0].isSelected,
+                          profileProvider.profileSelect[1].isSelected,
+                          profileProvider.profileSelect[2].isSelected
+                      );
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (ctx) => Home()));
                     },

@@ -133,11 +133,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
       onTap: () {
         ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
         setState(() {
-          data.isSelected = !data.isSelected;
-          if (data.isSelected) {
-            profileProvider.incCount();
-          } else {
-            profileProvider.decCount();
+          profileProvider.getProfileSetCount();
+          if (profileProvider.profileSetCount<2){
+            data.isSelected = true;
+          profileProvider.updateFirebaseProfile(
+              profileProvider.profiles[0].isSelected,
+              profileProvider.profiles[1].isSelected,
+              profileProvider.profiles[2].isSelected
+          );
+        }else{
+            data.isSelected = !data.isSelected;
+            profileProvider.updateFirebaseProfile(
+                profileProvider.profiles[0].isSelected,
+                profileProvider.profiles[1].isSelected,
+                profileProvider.profiles[2].isSelected
+            );
           }
 
         });
