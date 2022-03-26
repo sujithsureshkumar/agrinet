@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/profile.dart';
@@ -46,6 +47,35 @@ class ProfileData extends ChangeNotifier{
       _profiles=_selectedProfiles;
       notifyListeners();
     }
+
+  Future<void> getFirebaseProfile() async {
+    List<String> newList = [];
+    DocumentSnapshot featureSnapShot =
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc('userId')
+        .get();
+
+    //Map<String, dynamic> data = featureSnapShot.data.data() as Map<String, dynamic>;
+        _profiles[0].isSelected=featureSnapShot.get("farmer");
+
+
+    notifyListeners();
+  }
+
+  Future<void> getHomeFeatureData() async {
+    //List<Product> newList = [];
+    QuerySnapshot featureSnapShot =
+    await FirebaseFirestore.instance.collection("homefeature").where('uid', isEqualTo: '111').get();
+    featureSnapShot.docs.forEach(
+          (element) {
+            _profiles[0].isSelected=element.get("image");
+
+      },
+    );
+    notifyListeners();
+  }
+
   /*void setProfile(int index){
     _setProfile[index] =!_setProfile[index];
     notifyListeners();
