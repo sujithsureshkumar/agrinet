@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../../models/profile.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/wrapper.dart';
+
 class ProfileSelection extends StatefulWidget {
   @override
   _ProfileSelectionState createState() => _ProfileSelectionState();
@@ -72,7 +74,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                           profileProvider.profileSelect[2].isSelected
                       );
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (ctx) => Home()));
+                          MaterialPageRoute(builder: (ctx) => Wrapper()));
                     },
                   ),
                 ),

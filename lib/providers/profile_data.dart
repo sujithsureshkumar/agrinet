@@ -50,6 +50,7 @@ class ProfileData extends ChangeNotifier{
     notifyListeners();
   }
 
+
   void incCount(){
     _count++;
     notifyListeners();
@@ -85,6 +86,8 @@ class ProfileData extends ChangeNotifier{
 
     notifyListeners();
   }
+
+ 
   Future<void> updateFirebaseProfile(bool farmer, bool service , bool labour) async {
     FirebaseFirestore.instance.collection('Users')
         .doc("97Yzq9x3K3PWUE4GduDy")
