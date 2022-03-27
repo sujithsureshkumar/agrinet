@@ -1,4 +1,5 @@
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/profile%20test/profilepage.dart';
 import 'package:AgriNet/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:AgriNet/screens/wrapper.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
           primaryColorLight: Color(0xFFFBE0E6),
           accentColor: Color(0xFF1B1F32),
         ),
-        home: Wrapper(),
+        home: ProfilePage(),
       ),
     );
   }
