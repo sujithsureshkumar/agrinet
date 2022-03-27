@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/profile.dart';
 import 'FarmHome.dart';
+import 'drawerProfileSelection.dart';
 
 class Home extends StatefulWidget {
   //const nested_tab_bar({Key key}) : super(key: key);
@@ -158,48 +159,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
   Widget _buildMyDrawer() {
     ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
     return Drawer(
-      child:  SafeArea(
-        child: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                    itemCount: profileProvider.profiles.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      // return item
-                      return ProfileItem(
-                        profileProvider.profiles[index]
-                      );
-                    }),
-              ),
-              profileProvider.count> 0 ? Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                  vertical: 10,
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: RaisedButton(
-                    color: Colors.green[700],
-                    child: Text(
-                      "Proceed (${profileProvider.count})",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                    onPressed: () {
-                      //print("Delete List Lenght: ${selectedProfiles.length}");
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (ctx) => Home()));
-                    },
-                  ),
-                ),
-              ): Container(),
-            ],
-          ),
-        ),
+      child: ListView(
+          children: <Widget>[
+      ListTile(
+        onTap: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (ctx) => DrawerprofileSelection()));
+        },
+        leading: Icon(Icons.home),
+        title: Text("Profile"),
       ),
+      ]
+    ),
     );
   }
 
