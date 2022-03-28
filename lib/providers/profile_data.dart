@@ -13,6 +13,7 @@ class ProfileData extends ChangeNotifier{
   int _count=0;
   int _x=0;
   int _profileSetCount=0;
+  bool _profileStatus = false;
 
   //List<bool> get getTempProfile => _tempSetProfile;
 
@@ -34,6 +35,8 @@ class ProfileData extends ChangeNotifier{
   List<Profile> get profileSelect => _profileSelect;
 
   List<Profile> get selectedProfiles => _selectedProfiles;
+
+  bool get profileStatus => _profileStatus;
 
   int get count => _count;
   int get x => _x;
@@ -109,6 +112,17 @@ class ProfileData extends ChangeNotifier{
 
       },
     );
+    notifyListeners();
+  }
+
+
+  Future<bool> spFormFillCheck(String uid) async {
+    DocumentSnapshot featureSnapShot =
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .get();
+   _profileStatus = featureSnapShot.get("spFormFill");
     notifyListeners();
   }
 

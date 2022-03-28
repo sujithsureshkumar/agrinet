@@ -10,6 +10,7 @@ class UsersProvider extends ChangeNotifier {
   bool _hasNext = true;
   bool _isFetchingUsers = false;
 
+
   String get errorMessage => _errorMessage;
 
   bool get hasNext => _hasNext;
