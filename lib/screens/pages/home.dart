@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/profile.dart';
+import '../../models/users.dart';
 import 'FarmHome.dart';
 import 'drawerProfileSelection.dart';
 
@@ -21,8 +22,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
 
   @override
   void initState() {
-    //_selectedTab = getTabs();
-    //_tabController = getTabController();
+    _selectedTab = getTabs();
+    _selectedWidgets =getWidgets();
+    _tabController = getTabController();
     super.initState();
   }
 
@@ -116,6 +118,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
   }
 
   Widget ProfileItem(Profile data) {
+    final user = Provider.of<Users>(context);
     return ListTile(
       title: Text(
         data.name,
@@ -138,14 +141,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
           profileProvider.getProfileSetCount();
           if (profileProvider.profileSetCount<2){
             data.isSelected = true;
-          profileProvider.updateFirebaseProfile(
+          profileProvider.updateFirebaseProfile(user.uid,
               profileProvider.profiles[0].isSelected,
               profileProvider.profiles[1].isSelected,
               profileProvider.profiles[2].isSelected
           );
         }else{
             data.isSelected = !data.isSelected;
-            profileProvider.updateFirebaseProfile(
+            profileProvider.updateFirebaseProfile(user.uid,
                 profileProvider.profiles[0].isSelected,
                 profileProvider.profiles[1].isSelected,
                 profileProvider.profiles[2].isSelected
@@ -179,8 +182,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
 
 @override
   Widget build(BuildContext context) {
-  _selectedTab = getTabs();
-  _tabController = getTabController();
+  //_selectedTab = getTabs();
+  //_tabController = getTabController();
     return Scaffold(
       drawer: _buildMyDrawer(),
       appBar: AppBar(
@@ -199,7 +202,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
       ),
 
       body: TabBarView(
-        children: getWidgets(),
+        children: _selectedWidgets,
         controller: _tabController,
       ),
     );

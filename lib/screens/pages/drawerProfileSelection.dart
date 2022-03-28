@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/profile.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/users.dart';
 import '../../providers/wrapper.dart';
 
 class DrawerprofileSelection extends StatefulWidget {
@@ -15,6 +16,7 @@ class DrawerprofileSelection extends StatefulWidget {
 class _DrawerprofileSelectionState extends State<DrawerprofileSelection> {
 
   Widget ProfileItem(Profile data) {
+    final user = Provider.of<Users>(context);
     return ListTile(
       title: Text(
         data.name,
@@ -33,18 +35,19 @@ class _DrawerprofileSelectionState extends State<DrawerprofileSelection> {
       ),
       onTap: () {
         ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
+
         setState(() {
           profileProvider.getProfileSetCount();
           if (profileProvider.profileSetCount<2){
             data.isSelected = true;
-            profileProvider.updateFirebaseProfile(
+            profileProvider.updateFirebaseProfile(user.uid,
                 profileProvider.profiles[0].isSelected,
                 profileProvider.profiles[1].isSelected,
                 profileProvider.profiles[2].isSelected
             );
           }else{
             data.isSelected = !data.isSelected;
-            profileProvider.updateFirebaseProfile(
+            profileProvider.updateFirebaseProfile(user.uid,
                 profileProvider.profiles[0].isSelected,
                 profileProvider.profiles[1].isSelected,
                 profileProvider.profiles[2].isSelected

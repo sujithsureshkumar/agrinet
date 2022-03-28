@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/profile.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/users.dart';
 import '../../providers/wrapper.dart';
 
 class ProfileSelection extends StatefulWidget {
@@ -25,6 +26,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Users>(context);
     ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
@@ -56,19 +58,17 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Colors.green[700],
-                    child: Consumer<ProfileData>(builder: (context, data, child){
-                      return Text(
+                    child: Text(
                         "Proceed (${profileProvider.count})",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                         ),
-                      );
-                    }),
+                      ),
                     onPressed: () {
                       //print("Delete List Lenght: ${selectedProfiles.length}");
                       //profileProvider.assignSelectProfile();
-                      profileProvider.updateFirebaseProfile(
+                      profileProvider.updateFirebaseProfile(user.uid,
                           profileProvider.profileSelect[0].isSelected,
                           profileProvider.profileSelect[1].isSelected,
                           profileProvider.profileSelect[2].isSelected

@@ -17,9 +17,9 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
-    ProfileData profile =Provider.of<ProfileData>(context, listen: false);
+    ProfileData profile =Provider.of<ProfileData>(context, listen: true);
 
-    //profile.spFormFillCheck(user.uid);
+    profile.spFormFillCheck(user.uid);
     print(profile.profileStatus);
     return Scaffold(
         //backgroundColor: Colors.grey[900],

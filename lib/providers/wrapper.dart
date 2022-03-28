@@ -14,7 +14,7 @@ class Wrapper extends StatelessWidget {
     ProfileData profile =Provider.of<ProfileData>(context);
     profile.getProfileSetCount();
     print(user);
-    profile.setFirebaseProfileCheck();
+    profile.setFirebaseProfileCheck(user.uid);
     // return either the Home or Authenticate widget
     if (user == null ){
       return Authenticate();

@@ -50,7 +50,7 @@ class ProfileData extends ChangeNotifier{
         _profileSetCount++;
       }
     }
-    notifyListeners();
+    //notifyListeners();
   }
 
 
@@ -74,11 +74,11 @@ class ProfileData extends ChangeNotifier{
       notifyListeners();
     }
 
-  Future<void> setFirebaseProfileCheck() async {
+  Future<void> setFirebaseProfileCheck(String uid) async {
     DocumentSnapshot featureSnapShot =
     await FirebaseFirestore.instance
         .collection('Users')
-        .doc('97Yzq9x3K3PWUE4GduDy')
+        .doc(uid)
         .get();
 
     //Map<String, dynamic> data = featureSnapShot.data.data() as Map<String, dynamic>;
@@ -87,13 +87,12 @@ class ProfileData extends ChangeNotifier{
     _profiles[2].isSelected=featureSnapShot.get("labour");
 
 
-    notifyListeners();
   }
 
  
-  Future<void> updateFirebaseProfile(bool farmer, bool service , bool labour) async {
+  Future<void> updateFirebaseProfile(String uid,bool farmer, bool service , bool labour) async {
     FirebaseFirestore.instance.collection('Users')
-        .doc("97Yzq9x3K3PWUE4GduDy")
+        .doc(uid)
         .update({
       'farmer': farmer,
       'serviceProvider' :service,
