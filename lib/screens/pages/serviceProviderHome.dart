@@ -20,7 +20,7 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
     ProfileData profile =Provider.of<ProfileData>(context, listen: false);
 
     //profile.spFormFillCheck(user.uid);
-    print(profile.profileStatus);
+    //print(profile.profileStatus);
     return Scaffold(
         //backgroundColor: Colors.grey[900],
 

@@ -56,15 +56,14 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Colors.green[700],
-                    child: Consumer<ProfileData>(builder: (context, data, child){
-                      return Text(
+                    child:  Text(
                         "Proceed (${profileProvider.count})",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                         ),
-                      );
-                    }),
+                      ),
+
                     onPressed: () {
                       //print("Delete List Lenght: ${selectedProfiles.length}");
                       //profileProvider.assignSelectProfile();

@@ -21,8 +21,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
 
   @override
   void initState() {
-    //_selectedTab = getTabs();
-    //_tabController = getTabController();
+    _selectedTab = getTabs();
+    _tabController = getTabController();
     super.initState();
   }
 
@@ -179,8 +179,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
 
 @override
   Widget build(BuildContext context) {
-  _selectedTab = getTabs();
-  _tabController = getTabController();
+  //_selectedTab = getTabs();
+  //_tabController = getTabController();
     return Scaffold(
       drawer: _buildMyDrawer(),
       appBar: AppBar(
