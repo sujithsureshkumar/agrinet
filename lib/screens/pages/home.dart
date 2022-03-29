@@ -1,8 +1,10 @@
+
 import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
 import 'package:AgriNet/screens/pages/service_catalogue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:AgriNet/services/auth.dart';
 
 import '../../models/profile.dart';
 import '../../models/users.dart';
@@ -17,6 +19,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin{
+  final AuthService _auth =AuthService();
 
   TabController _tabController;
 
@@ -117,6 +120,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     setState(() {});
   }
 
+
   Widget ProfileItem(Profile data) {
     final user = Provider.of<Users>(context);
     return ListTile(
@@ -173,11 +177,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
         leading: Icon(Icons.home),
         title: Text("Profile"),
       ),
+            ListTile(
+              onTap: () async{
+                await _auth.signOut();
+              },
+              leading: Icon(Icons.logout),
+              title: Text("Logout"),
+            ),
       ]
     ),
     );
   }
-
 
 
 @override

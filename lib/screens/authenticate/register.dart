@@ -1,5 +1,9 @@
 import 'package:AgriNet/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/users.dart';
+import '../../services/firebase_api_methods.dart';
 
 
 class Register extends StatefulWidget {
@@ -68,6 +72,8 @@ class _RegisterState extends State<Register> {
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
                       dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                      //final user = Provider.of<Users>(context);
+                      //setUserProfile(user.uid,false,false,false,true);
                       if(result == null) {
                         setState(() {
                           error = 'Please supply a valid email';

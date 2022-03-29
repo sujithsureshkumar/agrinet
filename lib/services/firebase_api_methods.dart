@@ -5,12 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/users.dart';
 
 
-final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('service_providers');
+//final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+//final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('service_providers');
 
 Future sp_onboarding(String uid,String service_provider_name,String service_type,
     String location,String phone_number,String account_holder_name,
     String account_number,String ifs_code,String bank_name,String pincode ) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('service_providers');
   return serviceProvidersCollectionReference
       .doc(uid)
       .set({
@@ -35,6 +37,23 @@ Future<void> updateFirebaseProfileFillStatus(String uid, bool formStatus) async 
     'spFormFill': formStatus,
   });
 }
+Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour,bool spFormFill) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Users');
+  serviceProvidersCollectionReference
+      .doc(uid)
+      .set({
+    'farmer': farmer, // John Doe
+    'labour': serviceProvider, // Stokes and Sons
+    'serviceProvider': labour,
+    'spFormFill': spFormFill,
+
+  });
+}
+
+
+/// Check If Document Exists
+
 
 
 

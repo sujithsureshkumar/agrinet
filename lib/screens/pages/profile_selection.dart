@@ -74,8 +74,8 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                           profileProvider.profileSelect[2].isSelected
                       );
                       profileProvider.getProfileSetCount();
-                      return profileProvider.profileSetCount ;
-                      //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => Wrapper()));
+                      //return Wrapper() ;
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => Wrapper()));
                     },
                   ),
                 ),
@@ -112,18 +112,16 @@ class _ProfileSelectionState extends State<ProfileSelection > {
 
             child: Stack(
               children: <Widget>[
-                Expanded(
-                  child: Container(
-                      //width: 150.0,
-                      //height: 150.0,
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: new DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(data.image)
-                          )
-                      )),
-                ),
+                Container(
+                    //width: 150.0,
+                    //height: 150.0,
+                    decoration: new BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: new DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(data.image)
+                        )
+                    )),
                 Positioned(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),

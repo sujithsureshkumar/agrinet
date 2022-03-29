@@ -9,11 +9,11 @@ class ProfileData extends ChangeNotifier{
   //List<bool> _tempSetProfile=[false, false, false];
 
   //List<bool> get getProfile => _setProfile;
-
   int _count=0;
   int _x=0;
   int _profileSetCount=0;
   bool _profileStatus = false;
+  bool _userExist;
 
   //List<bool> get getTempProfile => _tempSetProfile;
 
@@ -42,6 +42,7 @@ class ProfileData extends ChangeNotifier{
   int get x => _x;
 
   int get profileSetCount => _profileSetCount;
+  bool get userExist => _userExist;
 
    getProfileSetCount() {
     _profileSetCount=0;
@@ -74,20 +75,16 @@ class ProfileData extends ChangeNotifier{
       notifyListeners();
     }
 
-  Future<void> setFirebaseProfileCheck(String uid) async {
+  Future<void> fetchFirebaseProfile(String uid) async {
     DocumentSnapshot featureSnapShot =
     await FirebaseFirestore.instance
         .collection('Users')
         .doc(uid)
         .get();
-
-    //Map<String, dynamic> data = featureSnapShot.data.data() as Map<String, dynamic>;
-        _profiles[0].isSelected=featureSnapShot.get("farmer");
+    _profiles[0].isSelected=featureSnapShot.get("farmer");
     _profiles[1].isSelected=featureSnapShot.get("serviceProvider");
     _profiles[2].isSelected=featureSnapShot.get("labour");
-
-
-  }
+   }
 
  
   Future<void> updateFirebaseProfile(String uid,bool farmer, bool service , bool labour) async {
@@ -122,6 +119,20 @@ class ProfileData extends ChangeNotifier{
         .doc(uid)
         .get();
    _profileStatus = featureSnapShot.get("spFormFill");
+    notifyListeners();
+  }
+
+  Future<bool> checkIfDocExists(String docId) async {
+    try {
+      // Get reference to Firestore collection
+      var collectionRef = FirebaseFirestore.instance.collection('Users');
+
+      var doc = await collectionRef.doc(docId).get();
+      //return doc.exists;
+      _userExist=doc.exists;
+    } catch (e) {
+      throw e;
+    }
     notifyListeners();
   }
 
