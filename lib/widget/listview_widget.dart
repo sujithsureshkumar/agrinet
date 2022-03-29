@@ -69,7 +69,8 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                               color: Colors.white,
                               fontSize: 12
                           ),
-                        )
+                        ),
+
                       ],
                     ),
                   )

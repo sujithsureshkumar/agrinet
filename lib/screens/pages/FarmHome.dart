@@ -44,7 +44,10 @@ class _FarmHomeState extends State<FarmHome> {
                                   ),
                                 );
                               },
-                              icon: Icon(Icons.schema, size: 44.0 ,),
+                              icon: Icon(Icons.schema,
+                                size: 44.0 ,
+                                color: Color(0xffedf1f0)
+                              ),
                               //label: Text('Home')
                             ),
                           ),
@@ -78,7 +81,10 @@ class _FarmHomeState extends State<FarmHome> {
                                   ),
                                 );
                               },
-                              icon: Icon(Icons.category, size: 44.0 ,),
+                              icon: Icon(Icons.category,
+                                size: 44.0 ,
+                                  color: Color(0xffedf1f0)
+                              ),
                               //label: Text('Home')
                             ),
                           ),
@@ -112,7 +118,10 @@ class _FarmHomeState extends State<FarmHome> {
                                   ),
                                 );
                               },
-                              icon: Icon(Icons.assignment, size: 44.0 ,),
+                              icon: Icon(Icons.assignment,
+                                size: 44.0 ,
+                                  color: Color(0xffedf1f0)
+                              ),
                               //label: Text('Home')
                             ),
                           ),
@@ -146,7 +155,10 @@ class _FarmHomeState extends State<FarmHome> {
                                   ),
                                 );
                               },
-                              icon: Icon(Icons.favorite, size: 44.0 ,),
+                              icon: Icon(Icons.favorite,
+                                size: 44.0 ,
+                                  color: Color(0xffedf1f0)
+                              ),
                               //label: Text('Home')
                             ),
                           ),
