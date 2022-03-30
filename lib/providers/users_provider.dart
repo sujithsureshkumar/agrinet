@@ -21,6 +21,7 @@ class UsersProvider extends ChangeNotifier {
     return Service(
       name: snap.get('name'),
       imageUrl: snap.get('imageUrl'),
+      price:snap.get('price'),
     );
   }).toList();
 

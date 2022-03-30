@@ -53,25 +53,57 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                             )
                         )),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(service.name,
-                          style: TextStyle (
-                              color: Colors.white,
-                              fontSize: 18
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(service.name,
+                            style: TextStyle (
+                                color: Colors.white,
+                                fontSize: 18
+                            ),
                           ),
-                        ),
-                        Text(service.name,
-                          style: TextStyle (
-                              color: Colors.white,
-                              fontSize: 12
+                          Expanded(
+                            child: Text(service.name,
+                              style: TextStyle (
+                                  color: Colors.white,
+                                  fontSize: 12
+                              ),
+                            ),
                           ),
-                        ),
 
-                      ],
+
+                          Expanded(
+                            child: Text("Price: "+service.price.toString(),
+                              style: TextStyle (
+                                  color: Colors.white,
+                                  fontSize: 12
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    //builder: (ctx) => MyHomePage(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.favorite,
+                                  size: 22.0 ,
+                                  color: Color(0xffedf1f0)
+                              ),
+                              //label: Text('Home')
+                            ),
+                          ),
+
+                        ],
+                      ),
                     ),
                   )
                 ],
