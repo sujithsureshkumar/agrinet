@@ -80,6 +80,7 @@ class ProfileData extends ChangeNotifier{
     }
 
   Future<void> fetchFirebaseProfile(String uid) async {
+    //_loading=true;
     DocumentSnapshot featureSnapShot =
     await FirebaseFirestore.instance
         .collection('Users')
@@ -130,6 +131,7 @@ class ProfileData extends ChangeNotifier{
   }
 
   Future<bool> checkIfDocExists(String docId) async {
+    //_loading2=true;
     try {
       // Get reference to Firestore collection
       var collectionRef = FirebaseFirestore.instance.collection('Users');

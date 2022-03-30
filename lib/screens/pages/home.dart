@@ -190,10 +190,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
       ),
             ListTile(
               onTap: () async{
-
-                deleteAppDir();
-                deleteCacheDir();
-
                 await _auth.signOut();
               },
               leading: Icon(Icons.logout),
