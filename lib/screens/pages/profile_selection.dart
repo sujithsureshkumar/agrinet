@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/users.dart';
 import '../../providers/wrapper.dart';
+import '../../services/firebase_api_methods.dart';
 
 class ProfileSelection extends StatefulWidget {
   @override
@@ -68,13 +69,20 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                     onPressed: () {
                       //print("Delete List Lenght: ${selectedProfiles.length}");
                       //profileProvider.assignSelectProfile();
-                      profileProvider.updateFirebaseProfile(user.uid,
+                     /* profileProvider.updateFirebaseProfile(user.uid,
                           profileProvider.profileSelect[0].isSelected,
                           profileProvider.profileSelect[1].isSelected,
                           profileProvider.profileSelect[2].isSelected
-                      );
-                      profileProvider.getProfileSetCount();
+                      );*/
+                      //profileProvider.getProfileSetCount();
                       //return Wrapper() ;
+                      setUserProfile(user.uid,
+                          profileProvider.profileSelect[0].isSelected,
+                          profileProvider.profileSelect[1].isSelected,
+                          profileProvider.profileSelect[2].isSelected,
+                          true
+                      );
+
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => Wrapper()));
                     },
                   ),

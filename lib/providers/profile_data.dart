@@ -14,6 +14,8 @@ class ProfileData extends ChangeNotifier{
   int _profileSetCount=0;
   bool _profileStatus = false;
   bool _userExist;
+  bool _loading=true;
+  bool _loading2=true;
 
   //List<bool> get getTempProfile => _tempSetProfile;
 
@@ -37,6 +39,8 @@ class ProfileData extends ChangeNotifier{
   List<Profile> get selectedProfiles => _selectedProfiles;
 
   bool get profileStatus => _profileStatus;
+  bool get loading => _loading;
+  bool get loading2 => _loading2;
 
   int get count => _count;
   int get x => _x;
@@ -81,9 +85,12 @@ class ProfileData extends ChangeNotifier{
         .collection('Users')
         .doc(uid)
         .get();
+     print("1");
     _profiles[0].isSelected=featureSnapShot.get("farmer");
     _profiles[1].isSelected=featureSnapShot.get("serviceProvider");
     _profiles[2].isSelected=featureSnapShot.get("labour");
+     _loading=false;
+    notifyListeners();
    }
 
  
@@ -130,10 +137,16 @@ class ProfileData extends ChangeNotifier{
       var doc = await collectionRef.doc(docId).get();
       //return doc.exists;
       _userExist=doc.exists;
+      _loading2=false;
     } catch (e) {
       throw e;
     }
     notifyListeners();
+  }
+
+  setloadingtrue(){
+    _loading=true;
+   _loading2=true;
   }
 
   /*void setProfile(int index){

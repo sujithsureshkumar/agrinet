@@ -10,6 +10,7 @@ import '../../models/profile.dart';
 import '../../models/users.dart';
 import 'FarmHome.dart';
 import 'drawerProfileSelection.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 
 class Home extends StatefulWidget {
   //const nested_tab_bar({Key key}) : super(key: key);
@@ -28,7 +29,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     _selectedTab = getTabs();
     _selectedWidgets =getWidgets();
     _tabController = getTabController();
+    //_selectedTab = getTabs();
+    //_selectedWidgets =getWidgets();
+    //_tabController = getTabController();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -179,6 +190,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
       ),
             ListTile(
               onTap: () async{
+
+                deleteAppDir();
+                deleteCacheDir();
+
                 await _auth.signOut();
               },
               leading: Icon(Icons.logout),
@@ -192,6 +207,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
 
 @override
   Widget build(BuildContext context) {
+
   //_selectedTab = getTabs();
   //_tabController = getTabController();
     return Scaffold(
