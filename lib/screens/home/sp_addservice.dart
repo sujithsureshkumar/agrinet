@@ -4,6 +4,7 @@ import 'dart:io';
 //import 'package:blogapp/Pages/HomePage.dart';
 //import 'package:blogapp/Screen/HomeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:AgriNet/services/addservice.dart';
 //import 'package:image_picker/image_picker.dart';
 
 class CreatProfile extends StatefulWidget {
@@ -68,11 +69,11 @@ class _CreatProfileState extends State<CreatProfile> {
                 });
                 if (_globalkey.currentState.validate()) {
                   Map<String, String> data = {
-                    "name": _servicename.text,
-                    "profession": _category.text,
-                    "DOB": _price.text,
-                    "titleline": _no_of_service.text,
-                    "about": _description.text,
+                    "service_name": _servicename.text,
+                    "category": _category.text,
+                    "price_per_unit": _price.text,
+                    "no_of_service": _no_of_service.text,
+                    "description": _description.text,
                   };
                   // var response =
                   // await networkHandler.post("/profile/add", data);
