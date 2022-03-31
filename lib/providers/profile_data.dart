@@ -91,7 +91,7 @@ class ProfileData extends ChangeNotifier{
     _profiles[1].isSelected=featureSnapShot.get("serviceProvider");
     _profiles[2].isSelected=featureSnapShot.get("labour");
      _loading=false;
-    notifyListeners();
+    //notifyListeners();
    }
 
  
