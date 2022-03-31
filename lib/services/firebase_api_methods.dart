@@ -1,7 +1,6 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../models/users.dart';
 
@@ -54,21 +53,9 @@ Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour,bo
 
 
 /// Check If Document Exists
-Future<void> deleteCacheDir() async {
-  final cacheDir = await getTemporaryDirectory();
 
-  if (cacheDir.existsSync()) {
-    cacheDir.deleteSync(recursive: true);
-  }
-}
 
-Future<void> deleteAppDir() async {
-  final appDir = await getApplicationSupportDirectory();
 
-  if(appDir.existsSync()){
-    appDir.deleteSync(recursive: true);
-  }
-}
 
 
 

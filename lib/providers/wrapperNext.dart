@@ -11,8 +11,7 @@ import '../widget/loading.dart';
 
 class WrapperNext extends StatefulWidget {
   //const nested_tab_bar({Key key}) : super(key: key);
-  final String uid;
-  WrapperNext({this.uid});
+
   @override
   _WrapperNextState createState() => _WrapperNextState();
 }
@@ -27,42 +26,39 @@ class _WrapperNextState extends State<WrapperNext> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
 
-    super.didChangeDependencies();
-  }
 
 
   @override
   Widget build(BuildContext context) {
-    //final user = Provider.of<Users>(context);
+    final user = Provider.of<Users>(context);
     //return Home();
+    //print(user);
 
 
     ProfileData profile = Provider.of<ProfileData>(context);
 
-    profile.checkIfDocExists(widget.uid);
-    if(!profile.loading2) {
+  if(user==null) {
+    return Authenticate();
+  }else{
+    profile.checkIfDocExists(user.uid);
+    if (!profile.loading2) {
       if (!profile.userExist) {
         return ProfileSelection();
         //setUserProfile(user.uid,false,false,false,true);
       }
-      else{
-        profile.fetchFirebaseProfile(widget.uid);
-        if(!profile.loading){
+      else {
+        profile.fetchFirebaseProfile(user.uid);
+        if (!profile.loading) {
           return Home();
         }
         else {
           return Loading();
         }
-
       }
-
-    }else{
+    } else {
       return Loading();
     }
-
+  }
   }
 }

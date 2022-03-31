@@ -6,6 +6,7 @@ import 'package:AgriNet/screens/authenticate/authenticate.dart';
 import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,17 +17,22 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
-    ProfileData profile =Provider.of<ProfileData>(context);
+   // ProfileData profile =Provider.of<ProfileData>(context);
     //profile.getProfileSetCount();
-    //print(user);
+    print(user);
     //profile.fetchFirebaseProfile(user.uid);
     // return either the Home or Authenticate widget
-    if (user == null ){
-      return Authenticate();
-    }
-    //else if (profile.profileSetCount<1){return ProfileSelection();}
-    else {
-      return WrapperNext(uid: user.uid,);
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Home();
+        } else {
+          return Authenticate();
+        }
+      },
+    );
+
 
 
 
@@ -43,4 +49,3 @@ class Wrapper extends StatelessWidget {
     }
 
   }
-}
