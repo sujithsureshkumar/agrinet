@@ -68,13 +68,11 @@ class _CreatProfileState extends State<CreatProfile> {
                   circular = true;
                 });
                 if (_globalkey.currentState.validate()) {
-                  Map<String, String> data = {
-                    "service_name": _servicename.text,
-                    "category": _category.text,
-                    "price_per_unit": _price.text,
-                    "no_of_service": _no_of_service.text,
-                    "description": _description.text,
-                  };
+                  sp_addservice(_servicename.text, _category.text,
+                          _price.text, _no_of_service.text, _description.text).then((value) => {
+                    Navigator.pop(context)
+                  });
+
                   // var response =
                   // await networkHandler.post("/profile/add", data);
                   // if (response.statusCode == 200 ||
