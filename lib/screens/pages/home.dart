@@ -35,12 +35,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
 
-    super.didChangeDependencies();
-  }
 
   @override
   void dispose() {

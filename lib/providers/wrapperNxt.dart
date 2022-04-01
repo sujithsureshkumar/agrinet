@@ -11,8 +11,12 @@ import '../screens/pages/serviceProviderHome.dart';
 import '../widget/loading.dart';
 
 class WrapperNxt extends StatelessWidget {
+  ProfileData profile;
+  bool loading =true;
 
-
+  Future<void> callingProviderFunction(String uid) async {
+    await profile.checkIfDocExists(uid);
+  }
 
   @override
   Widget build(BuildContext context) {

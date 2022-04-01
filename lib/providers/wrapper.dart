@@ -22,16 +22,11 @@ class Wrapper extends StatelessWidget {
     print(user);
     //profile.fetchFirebaseProfile(user.uid);
     // return either the Home or Authenticate widget
-    return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Home();
-        } else {
+        if (user==null) {
           return Authenticate();
+        } else {
+          return Home();
         }
-      },
-    );
 
 
 
