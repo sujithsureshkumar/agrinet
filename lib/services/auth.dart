@@ -1,5 +1,8 @@
 import 'package:AgriNet/models/users.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../screens/pages/profile_selection.dart';
 
 class AuthService {
 
@@ -44,10 +47,23 @@ class AuthService {
 
 // register with email and password
   Future registerWithEmailAndPassword(String email, String password) async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
-      print(_userFromFirebaseUser(user));
+      //print(_userFromFirebaseUser(user));
+      Users users =_userFromFirebaseUser(user);
+      print("Account created Successfully");
+
+
+      await _firestore.collection('Users').doc(users.uid).set({
+        "uid": users.uid,
+        "farmer":false,
+        "serviceProvider":false,
+        "labour":false,
+       "spFormFill":true
+      });
+
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

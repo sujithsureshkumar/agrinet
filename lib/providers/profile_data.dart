@@ -80,13 +80,14 @@ class ProfileData extends ChangeNotifier{
     }
 
   Future<void> fetchFirebaseProfile(String uid) async {
-    //_loading=true;
+    print("1.1");
+    _loading=true;
     DocumentSnapshot featureSnapShot =
     await FirebaseFirestore.instance
         .collection('Users')
         .doc(uid)
         .get();
-     print("1");
+     print("1.2");
     _profiles[0].isSelected=featureSnapShot.get("farmer");
     _profiles[1].isSelected=featureSnapShot.get("serviceProvider");
     _profiles[2].isSelected=featureSnapShot.get("labour");
@@ -131,7 +132,8 @@ class ProfileData extends ChangeNotifier{
   }
 
   Future<bool> checkIfDocExists(String docId) async {
-    //_loading2=true;
+    print("2.1");
+    _loading2=true;
     try {
       // Get reference to Firestore collection
       var collectionRef = FirebaseFirestore.instance.collection('Users');
@@ -139,7 +141,9 @@ class ProfileData extends ChangeNotifier{
       var doc = await collectionRef.doc(docId).get();
       //return doc.exists;
       _userExist=doc.exists;
+      print("2.2");
       _loading2=false;
+      print("2.3");
     } catch (e) {
       throw e;
     }
@@ -149,6 +153,7 @@ class ProfileData extends ChangeNotifier{
   setloadingtrue(){
     _loading=true;
    _loading2=true;
+   notifyListeners();
   }
 
   /*void setProfile(int index){
