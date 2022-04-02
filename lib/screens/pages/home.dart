@@ -5,6 +5,7 @@ import 'package:AgriNet/screens/pages/service_catalogue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:AgriNet/services/auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/profile.dart';
 import '../../models/users.dart';
@@ -173,24 +174,76 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
   Widget _buildMyDrawer() {
     ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
     return Drawer(
-      child: ListView(
-          children: <Widget>[
-      ListTile(
-        onTap: () {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (ctx) => DrawerprofileSelection()));
-        },
-        leading: Icon(Icons.home),
-        title: Text("Profile"),
-      ),
-            ListTile(
-              onTap: () async{
-                await _auth.signOut();
-              },
-              leading: Icon(Icons.logout),
-              title: Text("Logout"),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+              DrawerHeader(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage("http://cdn.onlinewebfonts.com/svg/img_364496.png"),
+
+                    ),
+                ),
+              padding: EdgeInsets.all(0),
+              child: Container(
+              child: Column(
+            children: [
+                const SizedBox(
+                    height: 10,
+                    ),
+                CircleAvatar(
+                      radius: 42,
+                      backgroundImage: NetworkImage("http://cdn.onlinewebfonts.com/svg/img_364496.png"),
+                      ),
+                const SizedBox(
+                   height: 10,
+                    ),
+              Text(
+                    'Gabc efg',
+                  style: GoogleFonts.sanchez(
+                  fontSize: 15,
+                color: Colors.red,
+                fontWeight: FontWeight.w400,
+                    ),
+                    ),
+                const SizedBox(
+                  height: 5,
+                  ),
+                Text(
+                    'abc@def.com',
+                  style: GoogleFonts.sanchez(
+                  fontSize: 10,
+                color: Colors.red,
+              fontWeight: FontWeight.w400,
+                    ),
+                  ),
+               ],
+               ),
             ),
-      ]
+          ),
+      Expanded(
+        child: ListView(
+            children: <Widget>[
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (ctx) => DrawerprofileSelection()));
+          },
+          leading: Icon(Icons.home),
+          title: Text("Profile"),
+        ),
+              ListTile(
+                onTap: () async{
+                  await _auth.signOut();
+                },
+                leading: Icon(Icons.logout),
+                title: Text("Logout"),
+              ),
+        ]
+    ),
+      ),
+  ]
     ),
     );
   }
