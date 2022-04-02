@@ -10,15 +10,33 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  File _image;
+  class _ProfilePageState extends State<ProfilePage> {
+  File image;
 
   @override
   Widget build(BuildContext context) {
+      Future pickImage() async{
+
+          final image = await ImagePicker().pickImage(
+              source: ImageSource.gallery);
+          if (image == null) return;
+          final imageTemporary = File(image.path);
+          setState(() => this.image =imageTemporary);
 
 
+      }
 
 
+    Future uploadPic(BuildContext context) async{
+      String fileName = basename(image.path);
+      Reference firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
+      UploadTask uploadTask = firebaseStorageRef.putFile(image);
+      TaskSnapshot taskSnapshot=await uploadTask;
+      setState(() {
+        print("Profile Picture uploaded");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -49,8 +67,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: new SizedBox(
                           width: 180.0,
                           height: 180.0,
-                          child: (_image!=null)?Image.file(
-                            _image,
+                          child: (image!=null)?Image.file(
+                            image,
                             fit: BoxFit.fill,
                           ):Image.network(
                             "https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
@@ -68,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         size: 30.0,
                       ),
                       onPressed: () {
-                        //getImage();
+                        pickImage();
                       },
                     ),
                   ),
@@ -217,30 +235,33 @@ class _ProfilePageState extends State<ProfilePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  RaisedButton(
-                    color: Color(0xff476cfb),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    elevation: 4.0,
-                    splashColor: Colors.blueGrey,
+                  ElevatedButton(
                     child: Text(
                       'Cancel',
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
                     ),
-                  ),
-                  RaisedButton(
-                    color: Color(0xff476cfb),
-                    onPressed: () {
-                      //uploadPic(context);
-                    },
 
-                    elevation: 4.0,
-                    splashColor: Colors.blueGrey,
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.blue),
+                        elevation: MaterialStateProperty.all(4),)
+
+                  ),
+                  ElevatedButton(
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.white, fontSize: 16.0),
+                      ),
+
+                    onPressed: () {
+                      uploadPic(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      elevation: MaterialStateProperty.all(4),),
+
                   ),
 
                 ],
