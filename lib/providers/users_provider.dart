@@ -10,6 +10,18 @@ class UsersProvider extends ChangeNotifier {
   bool _hasNext = true;
   bool _isFetchingUsers = false;
 
+  List<String> wishlist=[];
+
+
+  Future<void> fetchFirebaseWishlist(String uid) async {
+    DocumentSnapshot farmUserSnapShot =
+    await FirebaseFirestore.instance
+        .collection('farmUser')
+        .doc(uid)
+        .get();
+    wishlist= List.from(farmUserSnapShot.get("wishlist"));
+  }
+
 
   String get errorMessage => _errorMessage;
 
@@ -18,11 +30,14 @@ class UsersProvider extends ChangeNotifier {
   List<Service> get serviceList => _usersSnapshot.map((snap) {
     // final user = snap.data();
 
-    return Service(
-      name: snap.get('name'),
-      imageUrl: snap.get('imageUrl'),
-      price:snap.get('price'),
-    );
+      return Service(
+        isLiked:wishlist.contains(snap.get('docid'))?true:false,
+        name: snap.get('name'),
+        imageUrl: snap.get('imageUrl'),
+        price:snap.get('price'),
+        likeCount:snap.get('likecount'),
+      );
+
   }).toList();
 
   Future fetchNextUsers() async {
