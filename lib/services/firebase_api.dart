@@ -7,7 +7,6 @@ class FirebaseApi {
       }) async {
     final refUsers = FirebaseFirestore.instance
         .collection('users')
-        .orderBy('rank')
         .limit(limit);
 
     if (startAfter == null) {

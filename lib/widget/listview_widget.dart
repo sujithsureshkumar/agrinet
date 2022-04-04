@@ -1,6 +1,9 @@
 import 'package:AgriNet/providers/users_provider.dart';
 import 'package:AgriNet/screens/pages/detailscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/users.dart';
 
 class ListViewWidget extends StatefulWidget {
   final UsersProvider usersProvider;
@@ -142,6 +145,8 @@ class _ListViewWidgetState extends State<ListViewWidget> {
 
   @override
   Widget build(BuildContext context){
+    final user = Provider.of<Users>(context);
+    widget.usersProvider.fetchFirebaseWishlist(user.uid);
     return Scaffold(
       backgroundColor: Colors.grey[900],
       body: ListView(
