@@ -24,16 +24,16 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
   }
   @override
   void didChangeDependencies() {
-    final user = Provider.of<Users>(context);
-    profile =Provider.of<ProfileData>(context, listen: true);
-    profile.spFormFillCheck(user.uid);
-    print(profile.profileStatus);
+
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-
+    final user = Provider.of<Users>(context);
+    profile =Provider.of<ProfileData>(context, listen: false);
+    profile.spFormFillCheck(user.uid);
+    print(profile.profileStatus);
 
 
     return Scaffold(
@@ -41,98 +41,102 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
 
         body: Stack(
           children: [
-            profile.profileStatus ?Center(
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => SPOnBoarding(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width:  MediaQuery
-                        .of(context)
-                        .size
-                        .width *0.8,
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height*0.4,
-                    decoration: BoxDecoration(
-                      color:Color(0xffedf1f0),
-                      //border: Border.all(color: Colors.red[500],),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
+            Consumer<ProfileData>(
+              builder: (context, data, child) {
+                return data.profileStatus ?Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => SPOnBoarding(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width:  MediaQuery
+                            .of(context)
+                            .size
+                            .width *0.8,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height*0.4,
+                        decoration: BoxDecoration(
+                          color:Color(0xffedf1f0),
+                          //border: Border.all(color: Colors.red[500],),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
 
-                      child: Padding(
-                        padding: const EdgeInsets.all(28.0),
-                        child: Column(
-                          children: <Widget>[
-                            Expanded(
-                              //flex: 2,
-                              child: Text(
-                                'WELCOME',
-                                style: TextStyle(
-                                    color: Color(0xff27c791),
-                                    fontSize: 35,
-                                  fontWeight: FontWeight. bold,
-                                    fontStyle: FontStyle.italic,
-                                    letterSpacing: 5,
-                                    //textAlign:Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(28.0),
+                            child: Column(
+                              children: <Widget>[
+                                Expanded(
+                                  //flex: 2,
+                                  child: Text(
+                                    'WELCOME',
+                                    style: TextStyle(
+                                        color: Color(0xff27c791),
+                                        fontSize: 35,
+                                      fontWeight: FontWeight. bold,
+                                        fontStyle: FontStyle.italic,
+                                        letterSpacing: 5,
+                                        //textAlign:Alignment.bottomRight,
 
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Service Provider',
-                                style: TextStyle(
-                                  color: Color(0xff27c791),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight. bold,
-                                  fontStyle: FontStyle.italic,
-                                  letterSpacing: 5,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Align(
-                              alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      'Complete Your Profile',
-                                      style: TextStyle(
+                                Expanded(
+                                  child: Text(
+                                    'Service Provider',
+                                    style: TextStyle(
                                       color: Color(0xff27c791),
                                       fontSize: 15,
                                       fontWeight: FontWeight. bold,
                                       fontStyle: FontStyle.italic,
                                       letterSpacing: 5,
-                                    ),),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                        child: Icon(
-                                          Icons.arrow_forward_sharp, size: 44.0 ,
-                                          color:Color(0xff27c791),
-                                        )
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      Align(
+                                  alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'Complete Your Profile',
+                                          style: TextStyle(
+                                          color: Color(0xff27c791),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight. bold,
+                                          fontStyle: FontStyle.italic,
+                                          letterSpacing: 5,
+                                        ),),
+                                      ),
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                            child: Icon(
+                                              Icons.arrow_forward_sharp, size: 44.0 ,
+                                              color:Color(0xff27c791),
+                                            )
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
 
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ): Container(),
+                ): Container();
+              }
+            ),
 
             Positioned(
             bottom:20,

@@ -1,3 +1,4 @@
+import 'package:AgriNet/screens/pages/addService.dart';
 import 'package:flutter/material.dart';
 
 class NavigationServiceProvider extends StatelessWidget {
@@ -30,7 +31,7 @@ class NavigationServiceProvider extends StatelessWidget {
                             ),
                           );
                         },
-                        icon: Icon(Icons.schema,
+                        icon: Icon(Icons.person,
                             size: 44.0 ,
                             color: Color(0xffedf1f0)
                         ),
@@ -40,7 +41,7 @@ class NavigationServiceProvider extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
                       child: Text(
-                        "Join",
+                        "Profile",
                         style: TextStyle(
                           color: Colors.yellow,
                           fontWeight: FontWeight.bold,
@@ -63,11 +64,11 @@ class NavigationServiceProvider extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              //builder: (ctx) => ServiceCatalogue(),
+                              builder: (ctx) => AddService(),
                             ),
                           );
                         },
-                        icon: Icon(Icons.category,
+                        icon: Icon(Icons.add,
                             size: 44.0 ,
                             color: Color(0xffedf1f0)
                         ),
@@ -77,7 +78,7 @@ class NavigationServiceProvider extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
                       child: Text(
-                        "Catalogue",
+                        "Add",
                         style: TextStyle(
                           color: Colors.yellow,
                           fontWeight: FontWeight.bold,
@@ -114,7 +115,7 @@ class NavigationServiceProvider extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
                       child: Text(
-                        "Booking",
+                        "Requests",
                         style: TextStyle(
                           color: Colors.yellow,
                           fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 
 import 'package:AgriNet/providers/profile_data.dart';
+import 'package:AgriNet/screens/pages/profilepage.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
 import 'package:AgriNet/screens/pages/service_catalogue.dart';
 import 'package:flutter/material.dart';
@@ -181,7 +182,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                   decoration: BoxDecoration(
                     image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: NetworkImage("http://cdn.onlinewebfonts.com/svg/img_364496.png"),
+                    image: NetworkImage("https://media.istockphoto.com/photos/summer-sunset-with-a-red-barn-in-rural-montana-and-rocky-mountains-picture-id863542630?k=20&m=863542630&s=612x612&w=0&h=4-udm8ANCd3yZwfEW00QDBrqnwYXFaOGhbM2Rlcobdk="),
 
                     ),
                 ),
@@ -192,10 +193,19 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                 const SizedBox(
                     height: 10,
                     ),
-                CircleAvatar(
+                GestureDetector(
+                child:CircleAvatar(
                       radius: 42,
                       backgroundImage: NetworkImage("http://cdn.onlinewebfonts.com/svg/img_364496.png"),
                       ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => ProfilePage(),
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(
                    height: 10,
                     ),
@@ -203,7 +213,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                     'Gabc efg',
                   style: GoogleFonts.sanchez(
                   fontSize: 15,
-                color: Colors.red,
+                color: Colors.black,
                 fontWeight: FontWeight.w400,
                     ),
                     ),
@@ -214,7 +224,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                     'abc@def.com',
                   style: GoogleFonts.sanchez(
                   fontSize: 10,
-                color: Colors.red,
+                color: Colors.black,
               fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -230,7 +240,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (ctx) => DrawerprofileSelection()));
           },
-          leading: Icon(Icons.home),
+          leading: Icon(Icons.person),
           title: Text("Profile"),
         ),
               ListTile(
