@@ -32,6 +32,7 @@ class UsersProvider extends ChangeNotifier {
 
       return Service(
         isLiked:wishlist.contains(snap.get('docid'))?true:false,
+        docid:snap.get('docid'),
         name: snap.get('name'),
         imageUrl: snap.get('imageUrl'),
         price:snap.get('price'),

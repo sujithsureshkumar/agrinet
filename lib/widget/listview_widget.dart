@@ -1,5 +1,6 @@
 import 'package:AgriNet/providers/users_provider.dart';
 import 'package:AgriNet/screens/pages/detailscreen.dart';
+import 'package:AgriNet/widget/likeButtonWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -88,7 +89,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                           ),
                           Align(
                             alignment: Alignment.centerRight,
-                            child: IconButton(
+                            /*child: IconButton(
 
                               onPressed: () {
                                 Navigator.of(context).pushReplacement(
@@ -102,7 +103,8 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                                   color: Color(0xffedf1f0)
                               ),
                               //label: Text('Home')
-                            ),
+                            ),*/
+                            child:LikeButtonWidget(isLiked:service.isLiked,likeCount:service.likeCount,docid:service.docid),
                           ),
 
                         ],

@@ -6,7 +6,7 @@ class LikeButtonWidget extends StatefulWidget {
   bool isLiked;
   int likeCount;
   String docid;
-  LikeButtonWidget({this.isLiked, this.likeCount});
+  LikeButtonWidget({this.isLiked, this.likeCount,this.docid});
   @override
   _LikeButtonWidgetState createState() => _LikeButtonWidgetState();
 }
@@ -15,12 +15,12 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget > {
   //bool isLiked =false;
   //int likeCount=333;
   Future<bool> onLikeButtonTapped(bool isLiked) async{
-    //widget.isLiked=!widget.isLiked;
+    widget.isLiked=!widget.isLiked;
     //widget.likeCount += widget.isLiked ? 1 : -1;
 
     // Create a reference to the document the transaction will use
     DocumentReference documentReference = FirebaseFirestore.instance
-        .collection('services')
+        .collection('users')
         .doc(widget.docid);
 
      FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -33,7 +33,7 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget > {
       // Note: this could be done without a transaction
       // by updating the population using FieldValue.increment()
 
-      int newCount = (snapshot.data()as Map<String, dynamic>)['likecount'] + 1;
+      int newCount = (snapshot.data()as Map<String, dynamic>)['likecount'] + widget.isLiked ? 1 : -1;
 
       // Perform an update on the document
       transaction.update(documentReference, {'likecount': newCount});
