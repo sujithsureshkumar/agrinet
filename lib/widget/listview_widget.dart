@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/users.dart';
+import '../providers/services_provider.dart';
 
 class ListViewWidget extends StatefulWidget {
-  final UsersProvider usersProvider;
+  //final ServicesProvider servicesProvider;
 
-  const ListViewWidget({
-    @required this.usersProvider,
-    Key key,
-  }) : super(key: key);
+
 
   @override
   _ListViewWidgetState createState() => _ListViewWidgetState();
@@ -120,68 +118,43 @@ class _ListViewWidgetState extends State<ListViewWidget> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    scrollController.addListener(scrollListener);
-    widget.usersProvider.fetchNextUsers();
-  }
 
 
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
 
-  void scrollListener() {
-    if (scrollController.offset >=
-        scrollController.position.maxScrollExtent / 2 &&
-        !scrollController.position.outOfRange) {
-      if (widget.usersProvider.hasNext) {
-        widget.usersProvider.fetchNextUsers();
-      }
-    }
-  }
+
 
   @override
   Widget build(BuildContext context){
 
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(
+        context, listen: false);
     final user = Provider.of<Users>(context);
-    widget.usersProvider.fetchFirebaseWishlist(user.uid);
-    return Scaffold(
-      backgroundColor: Colors.grey[900],
-      body: ListView(
-        controller: scrollController,
-        padding: EdgeInsets.all(12),
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-            child: Column(
-              children: <Widget>[
+    servicesProvider.fetchFirebaseWishlist(user.uid);
+    servicesProvider.getserviceSnapShot();
 
-                Column(
-                    children: widget.usersProvider.serviceList.map((p) {
-                      return catalogueCard(p);
-                    }).toList()
-                ),
-                if (widget.usersProvider.hasNext)
-                  Center(
-                    child: GestureDetector(
-                      onTap: widget.usersProvider.fetchNextUsers,
-                      child: Container(
-                        height: 25,
-                        width: 25,
-                        child: CircularProgressIndicator(),
-                      ),
+    return Consumer<ServicesProvider>(
+      builder:(context, servicesProvider, _) {
+        return Scaffold(
+          backgroundColor: Colors.grey[900],
+          body: ListView(
+            padding: EdgeInsets.all(12),
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                child: Column(
+                  children: <Widget>[
+                    Column(
+                        children: servicesProvider.serviceList.map((p) {
+                          return catalogueCard(p);
+                        }).toList()
                     ),
-                  ),
-              ],
-            ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      }
     );
 
   }

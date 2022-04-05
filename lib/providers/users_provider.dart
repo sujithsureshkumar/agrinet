@@ -42,10 +42,10 @@ class UsersProvider extends ChangeNotifier {
   }).toList();
 
   Future fetchNextUsers() async {
-    if (_isFetchingUsers) return;
+    //if (_isFetchingUsers) return;
 
     _errorMessage = '';
-    _isFetchingUsers = true;
+    //_isFetchingUsers = true;
 
     try {
       final snap = await FirebaseApi.getUsers(

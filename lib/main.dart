@@ -1,5 +1,6 @@
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/profile_data.dart';
+import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/providers/users_provider.dart';
 import 'package:AgriNet/providers/wrapperNew.dart';
 import 'package:AgriNet/providers/wrapperNext.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
     providers: [
     ChangeNotifierProvider(create: (context)=>ProfileData()),
       StreamProvider<Users>.value(value: AuthService().user),
+    ChangeNotifierProvider(create: (context) => ServicesProvider())
 
 
     ],
