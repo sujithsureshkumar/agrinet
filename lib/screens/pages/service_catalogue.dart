@@ -7,6 +7,7 @@ class ServiceCatalogue extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
     create: (context) => UsersProvider(),
+
     child: Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff6d8000),

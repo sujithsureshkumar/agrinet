@@ -33,8 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
     providers: [
-    ChangeNotifierProvider(create: (context)=>ProfileData()),
-      StreamProvider<Users>.value(
+    ChangeNotifierProvider(create: (context)=>ProfileData()), StreamProvider<Users>.value(
           value: AuthService().user),
 
     ],

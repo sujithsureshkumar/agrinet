@@ -147,6 +147,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
 
   @override
   Widget build(BuildContext context){
+
     final user = Provider.of<Users>(context);
     widget.usersProvider.fetchFirebaseWishlist(user.uid);
     return Scaffold(
