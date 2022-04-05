@@ -33,7 +33,7 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget > {
       // Note: this could be done without a transaction
       // by updating the population using FieldValue.increment()
 
-      int newCount = (snapshot.data()as Map<String, dynamic>)['likecount'] + widget.isLiked ? 1 : -1;
+      int newCount = (snapshot.data()as Map<String, dynamic>)['likecount'] + 1;
 
       // Perform an update on the document
       transaction.update(documentReference, {'likecount': newCount});
