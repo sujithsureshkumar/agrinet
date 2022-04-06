@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class ServicesProvider extends ChangeNotifier {
-  QuerySnapshot _serviceSnapShot;
+ // QuerySnapshot _serviceSnapShot;
   List<String> wishlist=[];
   List<Service> serviceList=[];
 

@@ -6,7 +6,8 @@ class LikeButtonWidget extends StatefulWidget {
   bool isLiked;
   int likeCount;
   String docid;
-  LikeButtonWidget({this.isLiked, this.likeCount,this.docid});
+  String userid;
+  LikeButtonWidget({this.isLiked, this.likeCount,this.docid,this.userid});
   @override
   _LikeButtonWidgetState createState() => _LikeButtonWidgetState();
 }
@@ -23,9 +24,26 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget > {
         .collection('users')
         .doc(widget.docid);
 
+    DocumentReference documentReferenceForUser=FirebaseFirestore.instance
+        .collection('farmUser')
+        .doc(widget.userid);
+
      FirebaseFirestore.instance.runTransaction((transaction) async {
       // Get the document
      DocumentSnapshot snapshot = await transaction.get(documentReference);
+
+
+       DocumentSnapshot snapshotForUser =  await transaction.get(documentReferenceForUser);
+        var doc = (snapshotForUser.data()as Map<String, dynamic>);
+        if (doc['wishlist'].contains(widget.docid)) {
+        await transaction.update(snapshotForUser.reference, <String, dynamic>{
+         'wishlist': FieldValue.arrayRemove([widget.docid])
+          });
+      } else {
+          await transaction.update(snapshotForUser.reference, <String, dynamic>{
+            'wishlist': FieldValue.arrayUnion([widget.docid])
+          });
+        }
 
      // if (!snapshot.exists) {throw Exception("User does not exist!");}
 

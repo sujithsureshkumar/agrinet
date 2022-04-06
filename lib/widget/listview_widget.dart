@@ -1,5 +1,6 @@
 import 'package:AgriNet/providers/users_provider.dart';
 import 'package:AgriNet/screens/pages/detailscreen.dart';
+import 'package:AgriNet/widget/catalogueCard.dart';
 import 'package:AgriNet/widget/likeButtonWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ class ListViewWidget extends StatefulWidget {
 class _ListViewWidgetState extends State<ListViewWidget> {
   final scrollController = ScrollController();
 
-  Widget catalogueCard(service) {
+ /* Widget catalogueCard(service) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: GestureDetector(
@@ -116,7 +117,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
         ),
       ),
     );
-  }
+  }*/
 
 
 
@@ -145,7 +146,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                   children: <Widget>[
                     Column(
                         children: servicesProvider.serviceList.map((p) {
-                          return catalogueCard(p);
+                          return CatalogueCard(service: p,user: user);
                         }).toList()
                     ),
                   ],
