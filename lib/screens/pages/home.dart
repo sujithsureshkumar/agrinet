@@ -2,7 +2,7 @@
 import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/screens/pages/profilepage.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
-import 'package:AgriNet/screens/pages/service_catalogue.dart';
+import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:AgriNet/services/auth.dart';

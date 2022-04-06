@@ -1,4 +1,5 @@
-import 'package:AgriNet/screens/pages/service_catalogue.dart';
+import 'package:AgriNet/screens/pages/service_catalog.dart';
+import 'package:AgriNet/screens/pages/wishlist_catalog.dart';
 import 'package:flutter/material.dart';
 
 class FarmHome extends StatefulWidget {
@@ -149,9 +150,9 @@ class _FarmHomeState extends State<FarmHome> {
                             child: IconButton(
 
                               onPressed: () {
-                                Navigator.of(context).pushReplacement(
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    //builder: (ctx) => MyHomePage(),
+                                    builder: (ctx) => WishlistCatalog(),
                                   ),
                                 );
                               },

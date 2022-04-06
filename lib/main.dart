@@ -8,7 +8,7 @@ import 'package:AgriNet/providers/wrapperNxt.dart';
 import 'package:AgriNet/screens/pages/home.dart';
 import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
-import 'package:AgriNet/screens/pages/service_catalogue.dart';
+import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:AgriNet/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

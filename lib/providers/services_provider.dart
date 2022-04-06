@@ -36,6 +36,24 @@ class ServicesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> getserviceSnapShotForWishlist() async {
+    QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('users').get();
+    serviceList=_serviceSnapShot.docs.map((snap) {
+      if(wishlist.contains(snap.get('docid'))) {
+        return Service(
+          isLiked: wishlist.contains(snap.get('docid')) ? true : false,
+          docid: snap.get('docid'),
+          name: snap.get('name'),
+          imageUrl: snap.get('imageUrl'),
+          price: snap.get('price'),
+          likeCount: snap.get('likecount'),
+        );
+      }
+
+    }).toList();
+    notifyListeners();
+  }
+
     /*List<Service> get serviceList => _serviceSnapShot.docs.map((snap) {
       // final user = snap.data();
       return Service(
