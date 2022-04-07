@@ -1,71 +1,26 @@
 import 'package:AgriNet/providers/users_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
-
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+import '../models/users.dart';
+import '../providers/imgProvider.dart';
+import '../providers/services_provider.dart';
 import '../services/img_picker.dart';
 
 class ListViewWidget extends StatefulWidget {
-  final UsersProvider usersProvider;
-
-  const ListViewWidget({
-    @required this.usersProvider,
-    Key key,
-  }) : super(key: key);
-
   @override
   _ListViewWidgetState createState() => _ListViewWidgetState();
 }
 
 class _ListViewWidgetState extends State<ListViewWidget> {
-  final scrollController = ScrollController();
-
-  String imageUrl;
-
-  uploadImage() async {
-    final _storage = FirebaseStorage.instance;
-    //final _picker = ImagePicker();
-    final _picker = ImagePicker();
-    //PickedFile image;
+  //final scrollController = ScrollController();
+  //ImgPicker ImgPick;
 
 
-    //Check Permissions
-    await Permission.photos.request();
-
-    var permissionStatus = await Permission.photos.status;
-
-    if (permissionStatus.isGranted) {
-      //Select Image
-      //image = await _picker.getImage(source: ImageSource.gallery);
-      XFile image = await _picker.pickImage(source: ImageSource.gallery);
-      var file = File(image.path);
-
-      if (image != null) {
-        //Upload to Firebase
-        var snapshot = await _storage.ref()
-            .child('folderName/imageName')
-            .putFile(file);
-        //.onComplete;
-
-        var downloadUrl = await snapshot.ref.getDownloadURL();
-        print(downloadUrl);
-
-
-      } else {
-        print('No Path Received');
-      }
-    } else {
-      print('Grant Permissions and try again');
-    }
-  }
-
-  ImgPicker ImgPick;
 
   Widget addImageCard() {
+    ImgProvider imgProvider = Provider.of<ImgProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: GestureDetector(
@@ -99,9 +54,9 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                           child: IconButton(
 
                             onPressed: () {
-                              uploadImage();
+                              imgProvider.uploadImage();
                             },
-                            icon: Icon(Icons.category, size: 44.0 ,),
+                            icon: Icon(Icons.add, size: 44.0 ,),
                             //label: Text('Home')
                           ),
                         )),
@@ -130,7 +85,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
     );
   }
 
-  Widget catalogueCard(service) {
+  Widget catalogueCard(String imagelink) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: GestureDetector(
@@ -162,7 +117,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                             shape: BoxShape.rectangle,
                             image: new DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(service.imageUrl)
+                                image: NetworkImage(imagelink)
                             )
                         )),
                   ),
@@ -180,66 +135,49 @@ class _ListViewWidgetState extends State<ListViewWidget> {
   void initState() {
     super.initState();
 
-    scrollController.addListener(scrollListener);
-    widget.usersProvider.fetchNextUsers();
   }
 
 
   @override
   void dispose() {
-    scrollController.dispose();
     super.dispose();
   }
 
-  void scrollListener() {
-    if (scrollController.offset >=
-        scrollController.position.maxScrollExtent / 2 &&
-        !scrollController.position.outOfRange) {
-      if (widget.usersProvider.hasNext) {
-        widget.usersProvider.fetchNextUsers();
-      }
-    }
-  }
+
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      backgroundColor: Colors.grey[900],
-      body: Container(
-        child: SingleChildScrollView(
-          scrollDirection:Axis.horizontal,
-          controller: scrollController,
-          padding: EdgeInsets.all(12),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-            child: Row(
-          children: <Widget>[
-            Row(
-                children:[addImageCard()]
-            ),
+    return Consumer<ImgProvider>(
+        builder:(context, imgProvider, _) {
+          return Scaffold(
+            backgroundColor: Colors.grey[900],
+            body: Container(
+             child: SingleChildScrollView(
+            scrollDirection:Axis.horizontal,
+            padding: EdgeInsets.all(12),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Row(
+                children: <Widget>[
+                  Row(
+                      children:[addImageCard()]
+                  ),
 
-                Row(
-                    children: widget.usersProvider.serviceList.map((p) {
+                  Row(
+                    children: imgProvider.imageUrlList.map((p) {
                       return catalogueCard(p);
                     }).toList(),
-                ),
-                if (widget.usersProvider.hasNext)
-                  GestureDetector(
-                    onTap: widget.usersProvider.fetchNextUsers,
-                    child: Container(
-                      height: 25,
-                      width: 25,
-                      child: CircularProgressIndicator(),
-                    ),
                   ),
-              ],
+                ],
+              ),
             ),
           ),
-            ),
-      ),
+        ),
 
 
       );
 
+    }
+    );
   }
 }
