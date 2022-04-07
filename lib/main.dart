@@ -1,5 +1,7 @@
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/services/auth.dart';
+import 'package:AgriNet/services/firestoreApi.dart';
+import 'package:AgriNet/test/test.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:AgriNet/screens/wrapper.dart';
 import 'package:flutter/material.dart';
@@ -21,18 +23,23 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<Users>.value(
-      value: AuthService().user,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context)=>FirestoreApi()),
+        StreamProvider<Users>.value(value: AuthService().user),
+
+
+      ],
       child: MaterialApp(
         // Initialize FlutterFire
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primaryColor: Color(0xFFC41A3B),
-          primaryColorLight: Color(0xFFFBE0E6),
-          accentColor: Color(0xFF1B1F32),
-        ),
-        home: Wrapper(),
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primaryColor: Color(0xFFC41A3B),
+            primaryColorLight: Color(0xFFFBE0E6),
+            accentColor: Color(0xFF1B1F32),
+          ),
+          home:Test()
       ),
     );
   }
