@@ -1,8 +1,6 @@
-//import 'package:chat_app/Authenticate/LoginScree.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'LoginScree.dart';
 
 Future<User> createAccount(String name, String email, String password) async {
@@ -23,6 +21,9 @@ Future<User> createAccount(String name, String email, String password) async {
       "email": email,
       "status": "Unavailable",
       "uid": _auth.currentUser.uid,
+    });
+    await _firestore.collection('search').doc('searchdoc').update({
+      'email': FieldValue.arrayUnion([email])
     });
 
     return userCrendetial.user;

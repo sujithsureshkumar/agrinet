@@ -34,6 +34,14 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
       isLoading = true;
     });
 
+    DocumentSnapshot searchSnapShot =
+    await _firestore
+        .collection('search')
+        .doc('searchdoc')
+        .get();
+    var emailList = (searchSnapShot.data()as Map<String, dynamic>)['email'];
+
+    if (emailList.contains(_search.text)) {
     await _firestore
         .collection('users')
         .where("email", isEqualTo: _search.text)
@@ -44,7 +52,11 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
         isLoading = false;
       });
       print(userMap);
-    });
+    });}else{
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   void onAddMembers() async {
