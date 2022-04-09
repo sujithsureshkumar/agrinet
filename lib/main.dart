@@ -1,9 +1,11 @@
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/providers/imgProvider.dart';
 import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/providers/users_provider.dart';
 import 'package:AgriNet/providers/wrapperNew.dart';
 import 'package:AgriNet/providers/wrapperNext.dart';
 import 'package:AgriNet/providers/wrapperNxt.dart';
+import 'package:AgriNet/screens/pages/addImage.dart';
 import 'package:AgriNet/screens/pages/home.dart';
 import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
     providers: [
     ChangeNotifierProvider(create: (context)=>ProfileData()),
       StreamProvider<Users>.value(value: AuthService().user),
+      ChangeNotifierProvider(create: (context) => ImgProvider())
 
 
     ],
@@ -48,7 +51,7 @@ class MyApp extends StatelessWidget {
             primaryColorLight: Color(0xFFFBE0E6),
             accentColor: Color(0xFF1B1F32),
           ),
-          home:Wrapper()
+          home:AddImage()
         ),
         );
 
