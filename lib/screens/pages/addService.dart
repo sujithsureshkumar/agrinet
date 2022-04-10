@@ -15,7 +15,7 @@ class _AddServiceState extends State<AddService> {
   TextEditingController _servicename = TextEditingController();
   TextEditingController _category= TextEditingController();
   TextEditingController _price = TextEditingController();
-  TextEditingController _no_of_service= TextEditingController();
+  //TextEditingController _no_of_service= TextEditingController();
   TextEditingController _description= TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -46,10 +46,6 @@ class _AddServiceState extends State<AddService> {
             SizedBox(
               height: 20,
             ),
-            titleTextField(),
-            SizedBox(
-              height: 20,
-            ),
             aboutTextField(),
             SizedBox(
               height: 20,
@@ -61,7 +57,7 @@ class _AddServiceState extends State<AddService> {
                 });
                 if (_globalkey.currentState.validate()) {
                   sp_addservice(_servicename.text, _category.text,
-                      _price.text, _no_of_service.text, _description.text).then((value) => {
+                      _price.text,  _description.text).then((value) => {
                     Navigator.pop(context)
                   });
                 }
@@ -78,7 +74,7 @@ class _AddServiceState extends State<AddService> {
                     child: circular
                         ? CircularProgressIndicator()
                         : Text(
-                      "Submit",
+                      "Proceed",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -181,7 +177,7 @@ class _AddServiceState extends State<AddService> {
     );
   }
 
-  Widget titleTextField() {
+  /*Widget titleTextField() {
     return TextFormField(
       controller: _no_of_service,
       validator: (value) {
@@ -208,7 +204,7 @@ class _AddServiceState extends State<AddService> {
 
       ),
     );
-  }
+  }*/
 
   Widget aboutTextField() {
     return TextFormField(

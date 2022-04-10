@@ -6,6 +6,7 @@ import 'package:AgriNet/providers/wrapperNew.dart';
 import 'package:AgriNet/providers/wrapperNext.dart';
 import 'package:AgriNet/providers/wrapperNxt.dart';
 import 'package:AgriNet/screens/pages/addImage.dart';
+import 'package:AgriNet/screens/pages/addService.dart';
 import 'package:AgriNet/screens/pages/home.dart';
 import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
             primaryColorLight: Color(0xFFFBE0E6),
             accentColor: Color(0xFF1B1F32),
           ),
-          home:AddImage()
+          home:AddService()
         ),
         );
 
