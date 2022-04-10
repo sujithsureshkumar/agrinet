@@ -1,12 +1,6 @@
 import 'dart:io';
-
-//import 'package:blogapp/NetworkHandler.dart';
-//import 'package:blogapp/Pages/HomePage.dart';
-//import 'package:blogapp/Screen/HomeScreen.dart';
 import 'package:flutter/material.dart';
-
 import '../../services/firebase_api_methods.dart';
-//import 'package:image_picker/image_picker.dart';
 
 class AddService extends StatefulWidget {
   AddService({Key key}) : super(key: key);
@@ -16,16 +10,13 @@ class AddService extends StatefulWidget {
 }
 
 class _AddServiceState extends State<AddService> {
-  //final networkHandler = NetworkHandler();
   bool circular = false;
-  //PickedFile _imageFile;
   final _globalkey = GlobalKey<FormState>();
   TextEditingController _servicename = TextEditingController();
   TextEditingController _category= TextEditingController();
   TextEditingController _price = TextEditingController();
   TextEditingController _no_of_service= TextEditingController();
   TextEditingController _description= TextEditingController();
-  //final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,31 +64,6 @@ class _AddServiceState extends State<AddService> {
                       _price.text, _no_of_service.text, _description.text).then((value) => {
                     Navigator.pop(context)
                   });
-
-                  // var response =
-                  // await networkHandler.post("/profile/add", data);
-                  // if (response.statusCode == 200 ||
-                  //     response.statusCode == 201) {
-                  //   if (_imageFile.path != null) {
-                  //     var imageResponse = await networkHandler.patchImage(
-                  //         "/profile/add/image", _imageFile.path);
-                  //     if (imageResponse.statusCode == 200) {
-                  //       setState(() {
-                  //         circular = false;
-                  //       });
-                  //       Navigator.of(context).pushAndRemoveUntil(
-                  //           MaterialPageRoute(builder: (context) => HomePage()),
-                  //               (route) => false);
-                  //     }
-                  //   } else {
-                  //     setState(() {
-                  //       circular = false;
-                  //     });
-                  //     Navigator.of(context).pushAndRemoveUntil(
-                  //         MaterialPageRoute(builder: (context) => HomePage()),
-                  //             (route) => false);
-                  //   }
-                  // }
                 }
               },
               child: Center(
@@ -128,85 +94,7 @@ class _AddServiceState extends State<AddService> {
       ),
     );
   }
-  //
-  // Widget imageProfile() {
-  //   return Center(
-  //     child: Stack(children: <Widget>[
-  //       CircleAvatar(
-  //         radius: 80.0,
-  //         backgroundImage: _imageFile == null
-  //             ? AssetImage("assets/profile.jpeg")
-  //             : FileImage(File(_imageFile.path)),
-  //       ),
-  //       Positioned(
-  //         bottom: 20.0,
-  //         right: 20.0,
-  //         child: InkWell(
-  //           onTap: () {
-  //             showModalBottomSheet(
-  //               context: context,
-  //               builder: ((builder) => bottomSheet()),
-  //             );
-  //           },
-  //           child: Icon(
-  //             Icons.camera_alt,
-  //             color: Colors.teal,
-  //             size: 28.0,
-  //           ),
-  //         ),
-  //       ),
-  //     ]),
-  //   );
-  // }
-  //
-  // Widget bottomSheet() {
-  //   return Container(
-  //     height: 100.0,
-  //     width: MediaQuery.of(context).size.width,
-  //     margin: EdgeInsets.symmetric(
-  //       horizontal: 20,
-  //       vertical: 20,
-  //     ),
-  //     child: Column(
-  //       children: <Widget>[
-  //         Text(
-  //           "Choose Profile photo",
-  //           style: TextStyle(
-  //             fontSize: 20.0,
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           height: 20,
-  //         ),
-  //         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-  //           FlatButton.icon(
-  //             icon: Icon(Icons.camera),
-  //             onPressed: () {
-  //               takePhoto(ImageSource.camera);
-  //             },
-  //             label: Text("Camera"),
-  //           ),
-  //           FlatButton.icon(
-  //             icon: Icon(Icons.image),
-  //             onPressed: () {
-  //               takePhoto(ImageSource.gallery);
-  //             },
-  //             label: Text("Gallery"),
-  //           ),
-  //         ])
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // void takePhoto(ImageSource source) async {
-  //   final pickedFile = await _picker.getImage(
-  //     source: source,
-  //   );
-  //   setState(() {
-  //     _imageFile = pickedFile;
-  //   });
-  // }
+
 
   Widget nameTextField() {
     return TextFormField(

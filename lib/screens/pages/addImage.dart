@@ -181,30 +181,63 @@ class _AddImageState extends State<AddImage> {
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () async {
-                  },
-                  child: Center(
-                    child: Container(
-                      width: 200,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child:Center(
-                        child: Text(
-                            "Submit",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () async {
+                        },
+                        child: Center(
+                          child: Container(
+                            width: 150,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child:Center(
+                              child: Text(
+                                  "Submit",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                            ),
                             ),
                           ),
-                      ),
+                        ),
+                    ),
+
+                    Expanded(
+                      child: InkWell(
+                        onTap: () async {
+                        },
+                        child: Center(
+                          child: Container(
+                            width: 150,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child:Center(
+                              child: Text(
+                                "Skip",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
               ],
             ),
 
