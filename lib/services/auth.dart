@@ -34,9 +34,17 @@ class AuthService {
 
 // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       User user = result.user;
+
+      _firestore
+          .collection('users')
+          .doc(_auth.currentUser.uid)
+          .get()
+          .then((value) => user.updateDisplayName(value['name']));
+
       return user;
     } catch (error) {
       print(error.toString());

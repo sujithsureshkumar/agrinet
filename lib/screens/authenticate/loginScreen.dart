@@ -1,6 +1,10 @@
 
 import 'package:flutter/material.dart';
 
+import '../../services/auth.dart';
+import '../pages/home.dart';
+import 'createAccount.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -8,6 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final AuthService _auth = AuthService();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool isLoading = false;
@@ -110,14 +115,14 @@ class _LoginScreenState extends State<LoginScreen> {
             isLoading = true;
           });
 
-          logIn(_email.text, _password.text).then((user) {
+          _auth.signInWithEmailAndPassword(_email.text, _password.text).then((user) {
             if (user != null) {
               print("Login Successfully");
               setState(() {
                 isLoading = false;
               });
               Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                  context, MaterialPageRoute(builder: (_) => Home()));
             } else {
               print("Login Failed");
               setState(() {

@@ -6,7 +6,6 @@ import '../../models/profile.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/users.dart';
-import '../../providers/wrapper.dart';
 import '../../services/firebase_api_methods.dart';
 
 class ProfileSelection extends StatefulWidget {
@@ -83,7 +82,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                           true
                       );
 
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => Wrapper()));
+                      //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => Wrapper()));
                     },
                   ),
                 ),
