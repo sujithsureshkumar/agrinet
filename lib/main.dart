@@ -2,9 +2,6 @@ import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/providers/users_provider.dart';
-import 'package:AgriNet/providers/wrapperNew.dart';
-import 'package:AgriNet/providers/wrapperNext.dart';
-import 'package:AgriNet/providers/wrapperNxt.dart';
 import 'package:AgriNet/screens/pages/home.dart';
 import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
@@ -13,7 +10,6 @@ import 'package:AgriNet/services/auth.dart';
 import 'package:AgriNet/services/autheticate.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:AgriNet/providers/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -67,7 +67,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
       child: Container(
         child: Text(
           'Service Provider',
-          style: TextStyle(color: Colors.white, fontSize: 18.0),
+          style: TextStyle(color: Colors.white, fontSize: 14.0),
         ),
       ),
       ),
@@ -270,12 +270,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
         backgroundColor: Colors.green,
         title: Padding(
           padding: EdgeInsets.only(top: 8.0),
-          child:Center(
-          child:Text("AgriNet")
-          ),
+          child:Text("AgriNet"),
         ),
         bottom: TabBar(
           //isScrollable: true,
+          unselectedLabelColor:Colors.redAccent,
+          indicatorSize:TabBarIndicatorSize.tab,
+          indicator:BoxDecoration(
+              gradient:LinearGradient(colors:[Colors.redAccent,Colors.orange]),
+            borderRadius:BorderRadius.circular(50),
+              color:Colors.redAccent),
           tabs: _selectedTab,
           controller: _tabController,
         ),

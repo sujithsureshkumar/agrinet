@@ -2,16 +2,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../models/users.dart';
 import '../screens/authenticate/loginScreen.dart';
 import '../screens/pages/home.dart';
+import 'package:provider/provider.dart';
 
 
 class Authenticate extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  //final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   @override
   Widget build(BuildContext context) {
-    if (_auth.currentUser != null) {
+    final user = Provider.of<Users>(context);
+    if (user != null) {
       return Home();
     } else {
       return LoginScreen();
