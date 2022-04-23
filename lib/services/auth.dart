@@ -46,7 +46,7 @@ class AuthService {
 
 
 // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future createAccount(String name, String email, String password) async {
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
@@ -55,6 +55,18 @@ class AuthService {
       Users users =_userFromFirebaseUser(user);
       print("Account created Successfully");
 
+      result.user.updateDisplayName(name);
+
+
+      await _firestore.collection('users').doc(users.uid).set({
+        "name": name,
+        "email": email,
+        "status": "Unavailable",
+        "uid": users.uid,
+      });
+      await _firestore.collection('search').doc('searchdoc').update({
+        'email': FieldValue.arrayUnion([email])
+      });
 
       await _firestore.collection('Users').doc(users.uid).set({
         "uid": users.uid,
