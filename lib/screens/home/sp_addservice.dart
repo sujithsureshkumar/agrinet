@@ -1,11 +1,6 @@
 import 'dart:io';
-
-//import 'package:blogapp/NetworkHandler.dart';
-//import 'package:blogapp/Pages/HomePage.dart';
-//import 'package:blogapp/Screen/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:AgriNet/services/addservice.dart';
-//import 'package:image_picker/image_picker.dart';
 
 class CreatProfile extends StatefulWidget {
   CreatProfile({Key key}) : super(key: key);
@@ -13,24 +8,20 @@ class CreatProfile extends StatefulWidget {
   @override
   _CreatProfileState createState() => _CreatProfileState();
 }
-
 class _CreatProfileState extends State<CreatProfile> {
-  //final networkHandler = NetworkHandler();
   bool circular = false;
-  //PickedFile _imageFile;
   final _globalkey = GlobalKey<FormState>();
   TextEditingController _servicename = TextEditingController();
   TextEditingController _category= TextEditingController();
   TextEditingController _price = TextEditingController();
   TextEditingController _no_of_service= TextEditingController();
   TextEditingController _description= TextEditingController();
-  //final ImagePicker _picker = ImagePicker();
+  String dropdownValue = 'One';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add New Service'),
-
         backgroundColor:Colors.green,
       ),
       body: Form(
@@ -72,31 +63,6 @@ class _CreatProfileState extends State<CreatProfile> {
                           _price.text, _no_of_service.text, _description.text).then((value) => {
                     Navigator.pop(context)
                   });
-
-                  // var response =
-                  // await networkHandler.post("/profile/add", data);
-                  // if (response.statusCode == 200 ||
-                  //     response.statusCode == 201) {
-                  //   if (_imageFile.path != null) {
-                  //     var imageResponse = await networkHandler.patchImage(
-                  //         "/profile/add/image", _imageFile.path);
-                  //     if (imageResponse.statusCode == 200) {
-                  //       setState(() {
-                  //         circular = false;
-                  //       });
-                  //       Navigator.of(context).pushAndRemoveUntil(
-                  //           MaterialPageRoute(builder: (context) => HomePage()),
-                  //               (route) => false);
-                  //     }
-                  //   } else {
-                  //     setState(() {
-                  //       circular = false;
-                  //     });
-                  //     Navigator.of(context).pushAndRemoveUntil(
-                  //         MaterialPageRoute(builder: (context) => HomePage()),
-                  //             (route) => false);
-                  //   }
-                  // }
                 }
               },
               child: Center(
@@ -127,85 +93,6 @@ class _CreatProfileState extends State<CreatProfile> {
       ),
     );
   }
-  //
-  // Widget imageProfile() {
-  //   return Center(
-  //     child: Stack(children: <Widget>[
-  //       CircleAvatar(
-  //         radius: 80.0,
-  //         backgroundImage: _imageFile == null
-  //             ? AssetImage("assets/profile.jpeg")
-  //             : FileImage(File(_imageFile.path)),
-  //       ),
-  //       Positioned(
-  //         bottom: 20.0,
-  //         right: 20.0,
-  //         child: InkWell(
-  //           onTap: () {
-  //             showModalBottomSheet(
-  //               context: context,
-  //               builder: ((builder) => bottomSheet()),
-  //             );
-  //           },
-  //           child: Icon(
-  //             Icons.camera_alt,
-  //             color: Colors.teal,
-  //             size: 28.0,
-  //           ),
-  //         ),
-  //       ),
-  //     ]),
-  //   );
-  // }
-  //
-  // Widget bottomSheet() {
-  //   return Container(
-  //     height: 100.0,
-  //     width: MediaQuery.of(context).size.width,
-  //     margin: EdgeInsets.symmetric(
-  //       horizontal: 20,
-  //       vertical: 20,
-  //     ),
-  //     child: Column(
-  //       children: <Widget>[
-  //         Text(
-  //           "Choose Profile photo",
-  //           style: TextStyle(
-  //             fontSize: 20.0,
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           height: 20,
-  //         ),
-  //         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-  //           FlatButton.icon(
-  //             icon: Icon(Icons.camera),
-  //             onPressed: () {
-  //               takePhoto(ImageSource.camera);
-  //             },
-  //             label: Text("Camera"),
-  //           ),
-  //           FlatButton.icon(
-  //             icon: Icon(Icons.image),
-  //             onPressed: () {
-  //               takePhoto(ImageSource.gallery);
-  //             },
-  //             label: Text("Gallery"),
-  //           ),
-  //         ])
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // void takePhoto(ImageSource source) async {
-  //   final pickedFile = await _picker.getImage(
-  //     source: source,
-  //   );
-  //   setState(() {
-  //     _imageFile = pickedFile;
-  //   });
-  // }
 
   Widget nameTextField() {
     return TextFormField(
@@ -234,33 +121,55 @@ class _CreatProfileState extends State<CreatProfile> {
       ),
     );
   }
-
   Widget professionTextField() {
-    return TextFormField(
-      controller: _category,
-      validator: (value) {
-        if (value.isEmpty) return "category can't be empty";
 
-        return null;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.teal,
-            )),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
-        prefixIcon: Icon(
-          Icons.category,
-          color: Colors.green,
-        ),
-        labelText: "Category",
-        helperText: "Category can't be empty",
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+       underline: Container(
+         height: 2,
+        color: Colors.deepPurpleAccent,
       ),
+      onChanged: (newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: <String>['One', 'Two', 'Free', 'Four']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
+    // return TextFormField(
+    //   controller: _category,
+    //   validator: (value) {
+    //     if (value.isEmpty) return "category can't be empty";
+    //
+    //     return null;
+    //   },
+    //   decoration: InputDecoration(
+    //     border: OutlineInputBorder(
+    //         borderSide: BorderSide(
+    //           color: Colors.teal,
+    //         )),
+    //     focusedBorder: OutlineInputBorder(
+    //         borderSide: BorderSide(
+    //           color: Colors.orange,
+    //           width: 2,
+    //         )),
+    //     prefixIcon: Icon(
+    //       Icons.category,
+    //       color: Colors.green,
+    //     ),
+    //     labelText: "Category",
+    //     helperText: "Category can't be empty",
+    //   ),
+    // );
   }
 
   Widget dobField() {
@@ -346,3 +255,4 @@ class _CreatProfileState extends State<CreatProfile> {
     );
   }
 }
+

@@ -24,3 +24,12 @@ Future sp_onboarding(String service_provider_name,String service_type,
       .then((value) => print("User Added"))
       .catchError((error) => print("Failed to add user: $error"));
 }
+
+Future<void> fetchFirebaseCategory() async {
+  DocumentSnapshot categorySnapShot =
+  await FirebaseFirestore.instance
+      .collection('category')
+      .doc('foodGrain')
+      .get();
+  return (categorySnapShot.data()as Map<String, dynamic>)['subcategory']['paddy'];
+}
