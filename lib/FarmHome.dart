@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:AgriNet/screens/SPOonBoarding.dart';
 import 'package:AgriNet/screens/home/sp_addservice.dart';
+import 'package:AgriNet/screens/home/addfarm.dart';
 
 class FarmHome extends StatefulWidget {
   //const nested_tab_bar({Key key}) : super(key: key);
@@ -39,6 +40,21 @@ class _FarmHomeState extends State<FarmHome> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CreatProfile()),
+                  );
+
+                },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(25),
+              child: FlatButton(
+                child: Text('addfarm', style: TextStyle(fontSize: 20.0),),
+                color: Colors.green,
+                textColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => addFarm()),
                   );
 
                 },
