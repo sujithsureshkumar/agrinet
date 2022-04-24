@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:AgriNet/services/addservice.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CreatProfile extends StatefulWidget {
   CreatProfile({Key key}) : super(key: key);
@@ -8,28 +8,51 @@ class CreatProfile extends StatefulWidget {
   @override
   _CreatProfileState createState() => _CreatProfileState();
 }
+
 class _CreatProfileState extends State<CreatProfile> {
+
+  @override
+  void initState () {
+    super.initState();
+    _asyncMethod();
+  }
+  List<String> catList=[];
+  String dropdownValue = '';
+  _asyncMethod() async {
+    QuerySnapshot categorySnapShot =
+      await FirebaseFirestore.instance
+          .collection('category')
+          .get();
+  
+    dropdownValue = categorySnapShot.docs[0].id;
+    categorySnapShot.docs.forEach((result) {
+      catList.add(result.id);
+    });
+     print(catList);
+
+    setState((){});
+  }
   bool circular = false;
   final _globalkey = GlobalKey<FormState>();
   TextEditingController _servicename = TextEditingController();
-  TextEditingController _category= TextEditingController();
+  TextEditingController _category = TextEditingController();
   TextEditingController _price = TextEditingController();
-  TextEditingController _no_of_service= TextEditingController();
-  TextEditingController _description= TextEditingController();
-  String dropdownValue = 'One';
+  TextEditingController _no_of_service = TextEditingController();
+  TextEditingController _description = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add New Service'),
-        backgroundColor:Colors.green,
+        backgroundColor: Colors.green,
       ),
       body: Form(
         key: _globalkey,
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           children: <Widget>[
-           // imageProfile(),
+            // imageProfile(),
             SizedBox(
               height: 20,
             ),
@@ -59,10 +82,9 @@ class _CreatProfileState extends State<CreatProfile> {
                   circular = true;
                 });
                 if (_globalkey.currentState.validate()) {
-                  sp_addservice(_servicename.text, _category.text,
-                          _price.text, _no_of_service.text, _description.text).then((value) => {
-                    Navigator.pop(context)
-                  });
+                  sp_addservice(_servicename.text, dropdownValue, _price.text,
+                          _no_of_service.text, _description.text)
+                      .then((value) => {Navigator.pop(context)});
                 }
               },
               child: Center(
@@ -77,13 +99,13 @@ class _CreatProfileState extends State<CreatProfile> {
                     child: circular
                         ? CircularProgressIndicator()
                         : Text(
-                      "Submit",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                            "Submit",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -105,13 +127,13 @@ class _CreatProfileState extends State<CreatProfile> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.agriculture,
           color: Colors.green,
@@ -121,23 +143,36 @@ class _CreatProfileState extends State<CreatProfile> {
       ),
     );
   }
-  Widget professionTextField() {
 
-    return DropdownButton<String>(
+  Widget professionTextField() {
+    return DropdownButtonFormField(
       value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-       underline: Container(
-         height: 2,
-        color: Colors.deepPurpleAccent,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+          color: Colors.teal,
+        )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+          color: Colors.orange,
+          width: 2,
+        )),
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
       ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.arrow_circle_down_sharp)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
       onChanged: (newValue) {
         setState(() {
           dropdownValue = newValue;
         });
       },
-      items: <String>['One', 'Two', 'Free', 'Four']
+      items: catList
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -145,31 +180,6 @@ class _CreatProfileState extends State<CreatProfile> {
         );
       }).toList(),
     );
-    // return TextFormField(
-    //   controller: _category,
-    //   validator: (value) {
-    //     if (value.isEmpty) return "category can't be empty";
-    //
-    //     return null;
-    //   },
-    //   decoration: InputDecoration(
-    //     border: OutlineInputBorder(
-    //         borderSide: BorderSide(
-    //           color: Colors.teal,
-    //         )),
-    //     focusedBorder: OutlineInputBorder(
-    //         borderSide: BorderSide(
-    //           color: Colors.orange,
-    //           width: 2,
-    //         )),
-    //     prefixIcon: Icon(
-    //       Icons.category,
-    //       color: Colors.green,
-    //     ),
-    //     labelText: "Category",
-    //     helperText: "Category can't be empty",
-    //   ),
-    // );
   }
 
   Widget dobField() {
@@ -183,20 +193,19 @@ class _CreatProfileState extends State<CreatProfile> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.attach_money,
           color: Colors.green,
         ),
         labelText: "Price Per Unit",
         helperText: "Provide price of single service ",
-
       ),
     );
   }
@@ -212,20 +221,19 @@ class _CreatProfileState extends State<CreatProfile> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.person,
           color: Colors.green,
         ),
         labelText: "Number Of Services Available",
         helperText: "Enter in digits",
-
       ),
     );
   }
@@ -242,17 +250,15 @@ class _CreatProfileState extends State<CreatProfile> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         labelText: "Description",
-
       ),
     );
   }
 }
-
