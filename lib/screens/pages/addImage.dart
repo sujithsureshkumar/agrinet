@@ -2,10 +2,13 @@ import 'package:AgriNet/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
+import '../../models/users.dart';
 import '../../providers/imgProvider.dart';
+import '../../services/firebase_api_methods.dart';
 
 
 class AddImage extends StatefulWidget {
+  AddImage({Key key}) : super(key: key);
   @override
   _AddImageState createState() => _AddImageState();
 }
@@ -13,6 +16,7 @@ class AddImage extends StatefulWidget {
 class _AddImageState extends State<AddImage> {
   //final scrollController = ScrollController();
   //ImgPicker ImgPick;
+  bool circular = false;
 
 
 
@@ -144,6 +148,7 @@ class _AddImageState extends State<AddImage> {
 
   @override
   Widget build(BuildContext context){
+    final user = Provider.of<Users>(context);
     return Consumer<ImgProvider>(
         builder:(context, imgProvider, _) {
           return Scaffold(
@@ -186,6 +191,16 @@ class _AddImageState extends State<AddImage> {
                     Expanded(
                       child: InkWell(
                         onTap: () async {
+                          setState(() {
+                            circular = true;
+                          });
+                          if(imgProvider.imageUrlList.length>0){
+                           await updateImage(imgProvider.imageUrlList,user.uid).then((value) => {
+                              Navigator.of(context)
+                              ..pop()
+                              ..pop()
+                            });
+                          }
                         },
                         child: Center(
                           child: Container(
@@ -213,6 +228,9 @@ class _AddImageState extends State<AddImage> {
                     Expanded(
                       child: InkWell(
                         onTap: () async {
+                          Navigator.of(context)
+                            ..pop()
+                            ..pop();
                         },
                         child: Center(
                           child: Container(

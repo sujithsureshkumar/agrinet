@@ -4,8 +4,11 @@ import 'dart:io';
 //import 'package:blogapp/Pages/HomePage.dart';
 //import 'package:blogapp/Screen/HomeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/users.dart';
 import '../../services/firebase_api_methods.dart';
+import 'addImage.dart';
 //import 'package:image_picker/image_picker.dart';
 
 class AddService extends StatefulWidget {
@@ -17,6 +20,7 @@ class AddService extends StatefulWidget {
 
 class _AddServiceState extends State<AddService> {
   //final networkHandler = NetworkHandler();
+  List<String> imageUrlList=["https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2Fnoimage.png?alt=media&token=47ee7a64-0059-4527-a72f-3b983957d887"];
   bool circular = false;
   //PickedFile _imageFile;
   final _globalkey = GlobalKey<FormState>();
@@ -28,6 +32,7 @@ class _AddServiceState extends State<AddService> {
   //final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Users>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add New Service'),
@@ -69,9 +74,14 @@ class _AddServiceState extends State<AddService> {
                   circular = true;
                 });
                 if (_globalkey.currentState.validate()) {
-                  sp_addservice(_servicename.text, _category.text,
-                      _price.text, _no_of_service.text, _description.text).then((value) => {
-                    Navigator.pop(context)
+
+                  sp_addservice(user.uid,_servicename.text, _category.text,
+                      _price.text, _no_of_service.text, _description.text,imageUrlList).then((value) => {
+                  Navigator.of(context).push(
+                  MaterialPageRoute(
+                  builder: (ctx) => AddImage(),
+                  ),
+                  )
                   });
 
                   // var response =

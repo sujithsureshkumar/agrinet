@@ -56,24 +56,38 @@ Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour,bo
 
 
 
-Future sp_addservice(String service_name,String category,
-    String price_per_unit,String no_of_service,String description) async {
+Future sp_addservice(String uid,String service_name,String category,
+    String price_per_unit,String no_of_service,String description ,List<String> imageurl) async {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
   return serviceProvidersCollectionReference
       .add({
+    'serv_prov_id': uid,
     'service_name': service_name,
     'category': category,
     'price_per_unit':price_per_unit,
     'no_of_service':no_of_service,
     'description':description,
+    'imageUrl':imageurl,
 
 
   })
-      .then((value) => print("User Added"))
-      .catchError((error) => print("Failed to add user: $error"));
+      .then((value) => print("Service Added"))
+      .catchError((error) => print("Failed to add Service: $error"));
 }
+Future updateImage(List<String> imageurlList, String uid) async {
+  await FirebaseFirestore.instance.collection('services')
+      .doc(uid)
+      .update({
+    'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
+  })
+      .then((value) => print("Image added"))
+      .catchError((error) => print("Failed to add image: $error"));
+}
+
 /// Check If Document Exists
+
+
 
 
 
