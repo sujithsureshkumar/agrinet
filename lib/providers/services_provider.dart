@@ -44,7 +44,8 @@ class ServicesProvider extends ChangeNotifier {
           isLiked: wishlist.contains(snap.get('docid')) ? true : false,
           docid: snap.get('docid'),
           name: snap.get('name'),
-          imageUrl: snap.get('imageUrl'),
+          //imageUrl: snap.get('imageUrl'),
+          imageUrl: List.from(snap.get("image"))[0],
           price: snap.get('price'),
           likeCount: snap.get('likecount'),
         );
