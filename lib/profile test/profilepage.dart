@@ -46,6 +46,7 @@ class ProfilePage extends StatefulWidget {
               Navigator.pop(context);
             }),
         title: Text('Edit Profile'),
+        backgroundColor:(Colors.green),
       ),
       body: Builder(
         builder: (context) =>  Container(
