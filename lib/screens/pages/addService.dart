@@ -74,15 +74,16 @@ class _AddServiceState extends State<AddService> {
                   circular = true;
                 });
                 if (_globalkey.currentState.validate()) {
-
-                  sp_addservice(user.uid,_servicename.text, _category.text,
-                      _price.text, _no_of_service.text, _description.text,imageUrlList).then((value) => {
+                await sp_addservice(user.uid,_servicename.text, _category.text,
+                      _price.text, _no_of_service.text, _description.text,imageUrlList).then((value) {
+                        return {
                   Navigator.of(context).push(
                   MaterialPageRoute(
                   builder: (ctx) => AddImage(),
                   ),
                   )
-                  });
+                  };
+                      });
 
                   // var response =
                   // await networkHandler.post("/profile/add", data);

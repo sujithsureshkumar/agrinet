@@ -8,6 +8,9 @@ class ServicesProvider extends ChangeNotifier {
  // QuerySnapshot _serviceSnapShot;
   List<String> wishlist=[];
   List<Service> serviceList=[];
+  String _docid;
+
+  String get docid => _docid;
 
   Future<void> fetchFirebaseWishlist(String uid) async {
     DocumentSnapshot farmUserSnapShot =
@@ -68,5 +71,28 @@ class ServicesProvider extends ChangeNotifier {
       );
 
     }).toList();*/
+
+  Future sp_addservice(String uid,String service_name,String category,
+      String price_per_unit,String no_of_service,String description ,List<String> imageurl) async {
+    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
+    return serviceProvidersCollectionReference
+        .add({
+      'serv_prov_id': uid,
+      'service_name': service_name,
+      'category': category,
+      'price_per_unit':price_per_unit,
+      'no_of_service':no_of_service,
+      'description':description,
+      'imageUrl':imageurl,
+
+
+    })
+        .then((value) {
+          print("Service Added");
+          _docid= value.id;
+        })
+        .catchError((error) => print("Failed to add Service: $error"));
+  }
 
 }

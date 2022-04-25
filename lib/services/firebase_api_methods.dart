@@ -7,7 +7,6 @@ import '../models/users.dart';
 
 //final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 //final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('service_providers');
-
 Future sp_onboarding(String uid,String service_provider_name,String service_type,
     String location,String phone_number,String account_holder_name,
     String account_number,String ifs_code,String bank_name,String pincode ) async {
@@ -72,7 +71,10 @@ Future sp_addservice(String uid,String service_name,String category,
 
 
   })
-      .then((value) => print("Service Added"))
+      .then((value) {
+        print("Service Added");
+        return value.id;
+      })
       .catchError((error) => print("Failed to add Service: $error"));
 }
 Future updateImage(List<String> imageurlList, String uid) async {
