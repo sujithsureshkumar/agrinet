@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/users.dart';
+import '../../providers/services_provider.dart';
 import '../../services/firebase_api_methods.dart';
 import 'addImage.dart';
 //import 'package:image_picker/image_picker.dart';
@@ -74,16 +75,15 @@ class _AddServiceState extends State<AddService> {
                   circular = true;
                 });
                 if (_globalkey.currentState.validate()) {
-                await sp_addservice(user.uid,_servicename.text, _category.text,
-                      _price.text, _no_of_service.text, _description.text,imageUrlList).then((value) {
-                        return {
+                  ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
+                await servicesProvider.sp_addservice(user.uid,_servicename.text, _category.text,
+                      _price.text, _no_of_service.text, _description.text,imageUrlList).then((value) => {
                   Navigator.of(context).push(
                   MaterialPageRoute(
                   builder: (ctx) => AddImage(),
                   ),
                   )
-                  };
-                      });
+                  });
 
                   // var response =
                   // await networkHandler.post("/profile/add", data);

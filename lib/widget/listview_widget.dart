@@ -127,8 +127,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
   @override
   Widget build(BuildContext context){
 
-    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(
-        context, listen: false);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
     final user = Provider.of<Users>(context);
     servicesProvider.fetchFirebaseWishlist(user.uid);
     servicesProvider.getserviceSnapShot();

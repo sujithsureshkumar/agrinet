@@ -7,7 +7,7 @@ import 'package:AgriNet/widget/mybutton.dart';
 class DetailScreen extends StatefulWidget {
   final String image;
   final String name;
-  final int price;
+  final String price;
   DetailScreen({this.image, this.name, this.price});
   @override
   _DetailScreenState createState() => _DetailScreenState();

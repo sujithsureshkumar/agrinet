@@ -81,7 +81,8 @@ Future updateImage(List<String> imageurlList, String uid) async {
   await FirebaseFirestore.instance.collection('services')
       .doc(uid)
       .update({
-    'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
+    'imageUrl':imageurlList
+    //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
   })
       .then((value) => print("Image added"))
       .catchError((error) => print("Failed to add image: $error"));

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import '../../models/users.dart';
 import '../../providers/imgProvider.dart';
+import '../../providers/services_provider.dart';
 import '../../services/firebase_api_methods.dart';
 
 
@@ -149,6 +150,7 @@ class _AddImageState extends State<AddImage> {
   @override
   Widget build(BuildContext context){
     final user = Provider.of<Users>(context);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
     return Consumer<ImgProvider>(
         builder:(context, imgProvider, _) {
           return Scaffold(
@@ -195,7 +197,7 @@ class _AddImageState extends State<AddImage> {
                             circular = true;
                           });
                           if(imgProvider.imageUrlList.length>0){
-                           await updateImage(imgProvider.imageUrlList,user.uid).then((value) => {
+                           await updateImage(imgProvider.imageUrlList,servicesProvider.docid).then((value) => {
                               Navigator.of(context)
                               ..pop()
                               ..pop()

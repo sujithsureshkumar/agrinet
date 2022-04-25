@@ -21,7 +21,7 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget > {
 
     // Create a reference to the document the transaction will use
     DocumentReference documentReference = FirebaseFirestore.instance
-        .collection('users')
+        .collection('services')
         .doc(widget.docid);
 
     DocumentReference documentReferenceForUser=FirebaseFirestore.instance

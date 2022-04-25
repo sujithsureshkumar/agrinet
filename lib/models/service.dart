@@ -4,7 +4,7 @@ class Service {
   String name;
   String owner;
   String imageUrl;
-  int price;
+  String price;
   bool isLiked;
   int likeCount;
   String docid;

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:AgriNet/services/firebase_api.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 
 class ServicesProvider extends ChangeNotifier {
@@ -23,7 +24,7 @@ class ServicesProvider extends ChangeNotifier {
 
   Future<void> getserviceSnapShot() async {
     //List<Product> newList = [];
-    QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('users').get();
+    QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('services').get();
     serviceList=_serviceSnapShot.docs.map((snap) {
       // final user = snap.data();
       return Service(
@@ -31,7 +32,7 @@ class ServicesProvider extends ChangeNotifier {
         docid:snap.get('docid'),
         name: snap.get('name'),
         //imageUrl: snap.get('imageUrl'),
-        imageUrl: List.from(snap.get("image"))[0],
+        imageUrl: List.from(snap.get("imageUrl"))[0],
         price:snap.get('price'),
         likeCount:snap.get('likecount'),
       );
@@ -41,7 +42,7 @@ class ServicesProvider extends ChangeNotifier {
   }
 
   Future<void> getserviceSnapShotForWishlist() async {
-    QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('users').get();
+    QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('services').get();
     serviceList=_serviceSnapShot.docs.map((snap) {
       if(wishlist.contains(snap.get('docid'))) {
         return Service(
@@ -74,23 +75,26 @@ class ServicesProvider extends ChangeNotifier {
 
   Future sp_addservice(String uid,String service_name,String category,
       String price_per_unit,String no_of_service,String description ,List<String> imageurl) async {
+    _docid = Uuid().v1();
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
-    return serviceProvidersCollectionReference
-        .add({
+    return serviceProvidersCollectionReference.doc(_docid)
+        .set({
+      'docid':_docid,
       'serv_prov_id': uid,
-      'service_name': service_name,
+      'name': service_name,
       'category': category,
-      'price_per_unit':price_per_unit,
+      'price':price_per_unit,
       'no_of_service':no_of_service,
       'description':description,
       'imageUrl':imageurl,
+      'likecount':0,
+      'isLiked':false,
 
 
     })
         .then((value) {
           print("Service Added");
-          _docid= value.id;
         })
         .catchError((error) => print("Failed to add Service: $error"));
   }
