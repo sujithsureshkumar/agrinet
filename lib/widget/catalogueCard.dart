@@ -2,6 +2,7 @@ import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/pages/detailPage.dart';
 import '../screens/pages/detailscreen.dart';
 import 'likeButtonWidget.dart';
 
@@ -17,7 +18,7 @@ class CatalogueCard extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (ctx) => DetailScreen(
+                builder: (ctx) => DetailPage(
                   image:service.imageUrl ,
                   name:service.name ,
                   price: service.price,
