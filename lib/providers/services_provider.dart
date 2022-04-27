@@ -35,6 +35,8 @@ class ServicesProvider extends ChangeNotifier {
         imageUrl: List.from(snap.get("imageUrl"))[0],
         price:snap.get('price'),
         likeCount:snap.get('likecount'),
+          description:snap.get('description'),
+          serv_prov_id:snap.get('serv_prov_id')
       );
 
     }).toList();

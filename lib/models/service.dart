@@ -8,6 +8,8 @@ class Service {
   bool isLiked;
   int likeCount;
   String docid;
+  String description;
+  String serv_prov_id;
 
   Service({
     @required this.name,
@@ -17,5 +19,7 @@ class Service {
     @required this.isLiked,
     @required this.likeCount,
     @required this.docid,
+    @required description,
+    @required serv_prov_id,
   });
 }

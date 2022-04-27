@@ -267,19 +267,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     return Scaffold(
       drawer: _buildMyDrawer(),
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Color(0xffa694a7),
         title: Padding(
           padding: EdgeInsets.only(top: 8.0),
           child:Text("AgriNet"),
         ),
         bottom: TabBar(
           //isScrollable: true,
-          unselectedLabelColor:Colors.redAccent,
+          unselectedLabelColor:Color(0xffe85f5f),
           indicatorSize:TabBarIndicatorSize.tab,
           indicator:BoxDecoration(
-              gradient:LinearGradient(colors:[Colors.redAccent,Colors.orange]),
+              gradient:LinearGradient(colors:[Color(0xffb199b1),Color(
+                  0xffc9bfcb)]),
             borderRadius:BorderRadius.circular(50),
-              color:Colors.redAccent),
+              color:Color(0xffd469cc)),
           tabs: _selectedTab,
           controller: _tabController,
         ),

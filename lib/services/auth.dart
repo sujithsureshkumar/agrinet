@@ -84,6 +84,10 @@ class AuthService {
        "spFormFill":true
       });
 
+      await _firestore.collection('farmUser').doc(user.uid).set({
+        'wishlist': []
+      });
+
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

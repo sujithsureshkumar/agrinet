@@ -1,7 +1,10 @@
 import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:AgriNet/screens/pages/wishlist_catalog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/users.dart';
 import '../group_chats/group_chat_screen.dart';
 
 class FarmHome extends StatefulWidget {
@@ -14,6 +17,7 @@ class FarmHome extends StatefulWidget {
 class _FarmHomeState extends State<FarmHome> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Users>(context);
     return Stack(
       children: <Widget>[
 
@@ -63,6 +67,40 @@ class _FarmHomeState extends State<FarmHome> {
                                 color: Colors.yellow,
                                 fontWeight: FontWeight.bold,
                                   //fontSize: 12
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 2.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(1.0),
+                            child: IconButton(
+
+                              onPressed: () {
+
+
+                              },
+                              icon: Icon(Icons.add,
+                                  size: 33.0 ,
+                                  color: Color(0xffedf1f0)
+                              ),
+                              //label: Text('Home')
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 2.0),
+                            child: Text(
+                              "Add",
+                              style: TextStyle(
+                                color: Colors.yellow,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
