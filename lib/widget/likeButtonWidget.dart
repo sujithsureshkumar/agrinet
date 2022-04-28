@@ -77,7 +77,7 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget > {
   }
   @override
   Widget build(BuildContext context) {
-    final double buttonSize =40;
+    final double buttonSize =30;
     return LikeButton(
       size: buttonSize,
       //circleColor:
@@ -104,7 +104,7 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget > {
           result = Text(
             text,
             style: TextStyle(color: color,
-                fontSize: 24,
+                fontSize: 10,
                 fontWeight: FontWeight.bold
             ),
           );

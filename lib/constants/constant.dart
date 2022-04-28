@@ -6,6 +6,22 @@ const COLOR_GREY = Color.fromRGBO(141, 141, 141, 1.0);
 const COLOR_WHITE = Colors.white;
 const COLOR_DARK_BLUE = Color.fromRGBO(20, 25, 45, 1.0);
 
+const kPrimaryColor = Color(0xFFFF8084);
+const kAccentColor = Color(0xFFF1F1F1);
+const kWhiteColor = Color(0xFFFFFFFF);
+const kLightColor = Color(0xFF808080);
+const kDarkColor = Color(0xFF303030);
+const kTransparent = Colors.transparent;
+
+const kRadius = 0.0;
+
+const kDefaultPadding = 24.0;
+const kLessPadding = 10.0;
+const kFixPadding = 16.0;
+const kLess = 4.0;
+
+const kShape = 30.0;
+
 const TextTheme TEXT_THEME_DEFAULT = TextTheme(
     headline1: TextStyle(
         color: COLOR_BLACK, fontWeight: FontWeight.w700, fontSize: 26),

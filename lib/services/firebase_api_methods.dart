@@ -88,6 +88,29 @@ Future updateImage(List<String> imageurlList, String uid) async {
       .catchError((error) => print("Failed to add image: $error"));
 }
 
+Future add_to_service_booking(String uid,String service_id,String category,
+    String price_per_unit,String no_of_service,String description ,List<String> imageurl) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
+  return serviceProvidersCollectionReference
+      .add({
+    'serv_prov_id': uid,
+    'service_id': service_id,
+    'category': category,
+    'price_per_unit':price_per_unit,
+    'no_of_service':no_of_service,
+    'description':description,
+    'imageUrl':imageurl,
+
+
+  })
+      .then((value) {
+    print("Service Added");
+    return value.id;
+  })
+      .catchError((error) => print("Failed to add Service: $error"));
+}
+
 /// Check If Document Exists
 
 

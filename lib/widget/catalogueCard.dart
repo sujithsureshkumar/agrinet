@@ -19,9 +19,8 @@ class CatalogueCard extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (ctx) => DetailPage(
-                  image:service.imageUrl ,
-                  name:service.name ,
-                  price: service.price,
+                  service: service,
+                  user: user,
                 ),
               ),
             );
