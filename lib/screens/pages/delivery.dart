@@ -1,4 +1,5 @@
 
+import 'package:AgriNet/widget/date_range_picker_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/constant.dart';
@@ -18,21 +19,137 @@ class Delivery extends StatefulWidget {
 class _DeliveryState extends State<Delivery> {
   List<String> items=['Item 1', 'Item 2' , 'Item 3'];
   String selectedItem = 'Item 1';
+
+  List<String> statesList;
+  String _myState;
+  String _myStateList;
+
+  List<String> typeList=['Individual','Groups'];
+  Map<String, List<String>> selectedTypeList ={'Individual':['Item 1', 'Item 2' , 'Item 3'],
+    'Groups':['Group 1', 'Group 2' , 'Group 3']};
+  _getList(){
+    setState(() {
+      statesList = selectedTypeList[_myState];
+      _myStateList=null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(
-        title: "Delivery Address",
+        title: "More Details",
         child: DefaultBackButton(),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             HeaderLabel(
-              headerText: "Where are your ordered items shipped?",
+              headerText: "Please Provide some more details",
             ),
-            DefaultTextField(
+
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(kShape)),
+                color: kAccentColor,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: ButtonTheme(
+                        alignedDropdown: true,
+                        child: DropdownButton<String>(
+                          value: _myState,
+                          iconSize: 30,
+                          icon: (null),
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                          ),
+                          hint: Text('Select Type of Farming'),
+                          onChanged: (String newValue) {
+                            setState(() {
+                              _myState = newValue;
+                              _getList();
+                              print(_myState);
+                            });
+                          },
+                          items: typeList?.map((item) {
+                            return new DropdownMenuItem(
+                              child: new Text(item),
+                              value: item,
+                            );
+                          })?.toList() ??
+                              [],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(
+              height: 30,
+            ),
+
+            //======================================================== City
+
+            Container(
+              //padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+              //color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(kShape)),
+                color: kAccentColor,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: ButtonTheme(
+                        alignedDropdown: true,
+                        child: DropdownButton<String>(
+                          value: _myStateList,
+                          iconSize: 30,
+                          icon: (null),
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                          ),
+                          hint: Text('Select Farm'),
+                          onChanged: (String newValue) {
+                            setState(() {
+                              _myStateList = newValue;
+                              print(_myStateList);
+                            });
+                          },
+                          items: statesList?.map((item) {
+                            return new DropdownMenuItem(
+                              child: new Text(item),
+                              value: item,
+                            );
+                          })?.toList() ??
+                              [],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+           /* DefaultTextField(
               hintText: "State",
               icon: Icons.map,
               obscureText: false,
@@ -65,17 +182,7 @@ class _DeliveryState extends State<Delivery> {
               obscureText: false,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(
-              height: kDefaultPadding,
-            ),
-            DefaultButton(
-              btnText: "Go to payment",
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                 // builder: (context) => Payment(),
-                ),
-              ),
-            ),
+
             Container(
                 margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -98,9 +205,34 @@ class _DeliveryState extends State<Delivery> {
              )
           )
         )
-          .toList(),onChanged:(item)=>setState(()=>selectedItem = item),
+          .toList(),
+          onChanged:(item)=>setState(()=>selectedItem = item),
       )
-    )
+    ),
+            */
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+            Text(
+              'Date Range',
+              style: TextStyle(color: kLightColor, fontSize: 20.0),
+            ),
+            DateRangePickerWidget(),
+
+            DefaultButton(
+              btnText: "Go to payment",
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                 // builder: (context) => Payment(),
+                ),
+              ),
+              color: kPrimaryColor,
+              textColor: kWhiteColor,
+              ratio: 1,
+            ),
+
+
+
           ],
         ),
       ),
