@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class MyButton extends StatelessWidget {
   final Function onPressed;
   final String name;
-  MyButton({this.name, this.onPressed});
+  final double ratio;
+  MyButton({this.name, this.onPressed,this.ratio});
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 45,
-      width: double.infinity,
+      //width: double.infinity,
+      width: MediaQuery.of(context).size.width*ratio,
       child: RaisedButton(
         child: Text(
           name,
