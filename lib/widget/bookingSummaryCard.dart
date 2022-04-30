@@ -2,6 +2,8 @@ import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
 
 class BookingSummaryCard extends StatefulWidget {
+  String status;
+  BookingSummaryCard({this.status,});
   @override
   _BookingSummaryCardState createState() => _BookingSummaryCardState();
 }
@@ -27,12 +29,8 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
   }*/
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text("booking summary card"),
-      centerTitle: true,
-    ),
-    body: Padding(
+  Widget build(BuildContext context) {
+    return Padding(
       padding: EdgeInsets.all(12),
       child: Card(
 
@@ -49,23 +47,22 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Row(
-                    children:[
-                    Icon(
-                      Icons.event_note,
-                      color: Colors.pink,
-                      size: 24.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    ),
+                    children: [
+                      Icon(
+                        Icons.event_note,
+                        color: Colors.pink,
+                        size: 20.0,
+                      ),
                       SizedBox(
                         width: 5,
                       ),
                       Column(
-                          children:[
+                          children: [
                             Text(
                               "Accepted",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.red,
                               ),
@@ -75,7 +72,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                               "On Feb 16,22",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 12,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.red,
                               ),
@@ -83,17 +80,17 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                           ]
                       ),
                       SizedBox(
-                        width: 20,
+                        width: 15,
                       ),
                       Expanded(
-                        child:Align(
+                        child: Align(
                           alignment: Alignment.centerRight,
                           child: Column(
-                              children:[
+                              children: [
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                    "Payment Type:Paid Online",
+                                    "Service:Harvesting",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 15,
@@ -123,8 +120,8 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                       ),
 
 
-              ],
-            ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -134,12 +131,12 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                 buildText(context),
                 buttonWidget(),
               ],
+            ),
           ),
         ),
       ),
-    ),
-    ),
-  );
+    );
+  }
 
 
   Widget buttonWidget() {
@@ -155,20 +152,25 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                 ),
               );
             },
-            ratio: 0.38,
+            ratio: 0.41,
+            color: Color(0xffd782d6),
           ),
-          SizedBox(
-            width: 40,
-          ),
-          MyButton(name:"Reject",
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  //builder: (ctx) => CheckOut(),
-                ),
-              );
-            },
-            ratio: 0.38,
+
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: MyButton(name:"Reject",
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      //builder: (ctx) => CheckOut(),
+                    ),
+                  );
+                },
+                ratio: 0.41,
+                  color: Color(0xff86d76d)
+              ),
+            ),
           ),
         ],
       ),
@@ -185,10 +187,10 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                   Row(
                     children: [
                       Text(
-                        "Farmer:",
+                        "Customer:",
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.red,
                         ),
@@ -198,7 +200,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                         "Paddy Farmer",
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.normal,
                           color: Colors.red,
                         ),
@@ -212,7 +214,6 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                         Icons.location_on,
                         color: Colors.pink,
                         size: 14.0,
-                        semanticLabel: 'Text to announce in accessibility modes',
                       ),
                       Text(
                         "Thalapuzha, Manandavady,wayanad",
@@ -244,7 +245,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                     );
                   },
                   icon: Icon(Icons.phone,
-                      size: 30.0 ,
+                      size: 23.0 ,
                       color: Color(0xff7b4949)
                   ),
                   //label: Text('Home')
@@ -277,14 +278,14 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
             alignment: Alignment.centerLeft,
             child: Text(
               'Order Details',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: Color(0xff324441)),
             ),
           ),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Order Details',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+              'View Order Details',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal,color: Color(0xff415e5b)),
             ),
           ),
         ],
@@ -294,7 +295,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
           alignment: Alignment.centerLeft,
           child: Text(
             ' Order date:24-12-22\nService Period:24-12-22 to 01-02-21 ',
-            style: TextStyle(fontSize: 18, height: 1.4),
+            style: TextStyle(fontSize: 13, height: 1.4),
           ),
         ),
       Divider(
@@ -309,7 +310,8 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     ' More Details',
-                    style: TextStyle(fontSize: 18, height: 1.4),
+                    style: TextStyle(fontSize: 18, height: 1.4,fontWeight: FontWeight.bold,
+                        color: Color(0xffb46a6a)),
                   ),
                 ),
                 Expanded(
