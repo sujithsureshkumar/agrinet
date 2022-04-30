@@ -13,6 +13,7 @@ class _FarmHomeState extends State<FarmHome> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
             leading: IconButton(
