@@ -1,7 +1,9 @@
 import 'package:AgriNet/screens/pages/bookingSummary.dart';
+import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:AgriNet/screens/pages/wishlist_catalog.dart';
 import 'package:AgriNet/widget/bookingSummaryCard.dart';
+import 'package:AgriNet/widget/serviceListingCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +90,7 @@ class _FarmHomeState extends State<FarmHome> {
                               onPressed: () {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (ctx) => BookingSummary(),
+                                    builder: (ctx) => ServiceListing(),
                                   ),
                                 );
 

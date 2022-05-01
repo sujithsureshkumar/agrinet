@@ -22,6 +22,11 @@ const kLess = 4.0;
 
 const kShape = 30.0;
 
+const kSubTextStyle = TextStyle(
+    fontSize: 18.0,
+    color: kLightColor,
+);
+
 const TextTheme TEXT_THEME_DEFAULT = TextTheme(
     headline1: TextStyle(
         color: COLOR_BLACK, fontWeight: FontWeight.w700, fontSize: 26),
