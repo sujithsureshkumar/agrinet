@@ -1,3 +1,4 @@
+import 'package:AgriNet/screens/pages/bookingSummary.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:AgriNet/screens/pages/wishlist_catalog.dart';
 import 'package:AgriNet/widget/bookingSummaryCard.dart';
@@ -87,7 +88,7 @@ class _FarmHomeState extends State<FarmHome> {
                               onPressed: () {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (ctx) => BookingSummaryCard(),
+                                    builder: (ctx) => BookingSummary(),
                                   ),
                                 );
 

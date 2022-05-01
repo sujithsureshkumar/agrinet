@@ -1,15 +1,21 @@
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class BookingSummaryCard extends StatefulWidget {
   String status;
-  BookingSummaryCard({this.status,});
+  String serviceCategory;
+  String price;
+  String farmerName;
+  BookingSummaryCard({this.status,this.serviceCategory,this.price,this.farmerName});
   @override
   _BookingSummaryCardState createState() => _BookingSummaryCardState();
 }
 
 class _BookingSummaryCardState extends State<BookingSummaryCard> {
   static final double radius = 20;
+  bool buttonVisible=true;
+
 
  /* UniqueKey keyTile;
   bool isExpanded = false;
@@ -27,112 +33,161 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
       keyTile = UniqueKey();
     });
   }*/
+ accept() {
+    setState(() {
+      widget.status = 'Accepted';
+      buttonVisible=false;
+    });
+  }
+  reject() {
+    setState(() {
+      widget.status = 'Rejected';
+      buttonVisible=false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(DateFormat.yMMMd().format(DateTime.now()));
+
+    print(DateFormat.yMMMMd('en_US').format(DateTime.now()));
     return Padding(
       padding: EdgeInsets.all(12),
       child: Card(
 
         child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                /*GestureDetector(
-                  onTap: () => isExpanded ? shrinkTile() : expandTile(),
-                  child: buildImage(),
-                ),*/
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.event_note,
-                        color: Colors.pink,
-                        size: 20.0,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Column(
-                          children: [
-                            Text(
-                              "Accepted",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                              ),
-                            ),
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  /*GestureDetector(
+                    onTap: () => isExpanded ? shrinkTile() : expandTile(),
+                    child: buildImage(),
+                  ),*/
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.event_note,
+                          color: Colors.pink,
+                          size: 20.0,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
 
-                            Text(
-                              "On Feb 16,22",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ]
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    "Service:Harvesting",
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                                children: [
+                                  Text(
+                                    widget.status,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 15,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.red,
                                     ),
                                   ),
-                                ),
 
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    "amount:3000",
+                                  Text(
+                                    "On Feb 16,22",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal,
                                       color: Colors.red,
                                     ),
                                   ),
-                                ),
-
-
-                              ]
+                                ]
+                            ),
                           ),
                         ),
-                      ),
+
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            "Service:",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        widget.serviceCategory,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff528090),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            "amount:",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        widget.price,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff528090),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
 
 
-                    ],
+                                ]
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                detailWidget(),
-                Divider(),
-                buildText(context),
-                buttonWidget(),
-              ],
+                  SizedBox(
+                    height: 20,
+                  ),
+                  detailWidget(),
+                  Divider(),
+                  buildText(context),
+                  buttonVisible?buttonWidget():Container(),
+                ],
+              ),
             ),
-          ),
         ),
       ),
     );
@@ -145,13 +200,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
       child: Row(
         children: [
           MyButton(name:"Accept",
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  //builder: (ctx) => CheckOut(),
-                ),
-              );
-            },
+            onPressed: () =>accept(),
             ratio: 0.41,
             color: Color(0xffd782d6),
           ),
@@ -160,13 +209,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
             child: Align(
               alignment: Alignment.centerRight,
               child: MyButton(name:"Reject",
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      //builder: (ctx) => CheckOut(),
-                    ),
-                  );
-                },
+                onPressed: () =>reject(),
                 ratio: 0.41,
                   color: Color(0xff86d76d)
               ),
@@ -182,51 +225,58 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Row(
             children: [
-              Column(
-                children: [
-                  Row(
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
                     children: [
-                      Text(
-                        "Customer:",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            "Customer:",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+
+                          Text(
+                            widget.farmerName,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
                       ),
 
-                      Text(
-                        "Paddy Farmer",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.red,
-                        ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.pink,
+                            size: 14.0,
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Thalapuzha, Manandavady,wayanad",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.pink,
-                        size: 14.0,
-                      ),
-                      Text(
-                        "Thalapuzha, Manandavady,wayanad",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
 
               SizedBox(
@@ -258,12 +308,6 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
     );
 
   }
-  Widget buildImage() => Image.network(
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
-    fit: BoxFit.cover,
-    width: double.infinity,
-    height: 400,
-  );
 
   Widget buildText(BuildContext context) => Theme(
     data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
