@@ -1,4 +1,5 @@
 import 'package:AgriNet/screens/pages/bookingSummary.dart';
+import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:AgriNet/screens/pages/wishlist_catalog.dart';
@@ -90,7 +91,7 @@ class _FarmHomeState extends State<FarmHome> {
                               onPressed: () {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (ctx) => ServiceListing(),
+                                    builder: (ctx) => editService(),
                                   ),
                                 );
 
