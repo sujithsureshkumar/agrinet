@@ -1,4 +1,6 @@
 import 'package:AgriNet/screens/pages/addService.dart';
+import 'package:AgriNet/screens/pages/serviceDetails.dart';
+import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:flutter/material.dart';
 
 class NavigationServiceProvider extends StatelessWidget {
@@ -99,9 +101,9 @@ class NavigationServiceProvider extends StatelessWidget {
                       child: IconButton(
 
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.of(context).push(
                             MaterialPageRoute(
-                              //builder: (ctx) => MyHomePage(),
+                              builder: (ctx) => ServiceListing(),
                             ),
                           );
                         },
@@ -138,7 +140,7 @@ class NavigationServiceProvider extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              //builder: (ctx) => MyHomePage(),
+                              builder: (ctx) => ServiceDetails(),
                             ),
                           );
                         },

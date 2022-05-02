@@ -1,11 +1,14 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/models/service.dart';
 import 'package:flutter/material.dart';
 
 
 
 
 class ServiceListingCard extends StatefulWidget {
-  ServiceListingCard({Key key}) : super(key: key);
+
+  Service service;
+  ServiceListingCard({this.service});
 
   @override
   _ServiceListingCardState createState() => _ServiceListingCardState();
@@ -21,7 +24,7 @@ class _ServiceListingCardState extends State<ServiceListingCard> {
               child: Row(
                 children: [
                   Image(
-                    image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCtIuT92c5b4YgL4lqKnww5Gn12arzdaARA&usqp=CAU"),
+                    image: NetworkImage(widget.service.imageUrl),
                     height: 110.0,
                     width: 110.0,
                     fit: BoxFit.cover,
@@ -32,7 +35,7 @@ class _ServiceListingCardState extends State<ServiceListingCard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Service Name",
+                          Text(widget.service.name,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: kFixPadding)),
                           Text("Category",
@@ -41,7 +44,7 @@ class _ServiceListingCardState extends State<ServiceListingCard> {
                           Text("Date",
                               style: TextStyle(
                                   fontSize: 12.0, color: Color(0xFF90C440))),
-                          Text("\$ 100"),
+                          Text("\$ ${widget.service.name}"),
                         ],
                       ),
                     ),

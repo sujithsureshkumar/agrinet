@@ -15,6 +15,7 @@ class Authenticate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    print(user);
     if (user != null) {
       return Home();
     } else {

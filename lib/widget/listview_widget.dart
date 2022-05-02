@@ -135,7 +135,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
     return Consumer<ServicesProvider>(
       builder:(context, servicesProvider, _) {
         return Scaffold(
-          backgroundColor: Colors.grey[900],
+          //backgroundColor: Colors.grey[900],
           body: ListView(
             padding: EdgeInsets.all(12),
             children: [

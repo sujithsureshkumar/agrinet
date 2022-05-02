@@ -213,6 +213,7 @@ class _editServiceState extends State<editService> {
   Widget dobField() {
     return TextFormField(
       controller: _price,
+      keyboardType:TextInputType.number,
       validator: (value) {
         if (value.isEmpty) return "price can't be empty";
 
@@ -241,6 +242,7 @@ class _editServiceState extends State<editService> {
   Widget titleTextField() {
     return TextFormField(
       controller: _no_of_service,
+      keyboardType:TextInputType.number,
       validator: (value) {
         if (value.isEmpty) return "Enter number of services available";
 

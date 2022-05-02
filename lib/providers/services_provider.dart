@@ -52,7 +52,7 @@ class ServicesProvider extends ChangeNotifier {
           docid: snap.get('docid'),
           name: snap.get('name'),
           //imageUrl: snap.get('imageUrl'),
-          imageUrl: List.from(snap.get("image"))[0],
+          imageUrl: List.from(snap.get("imageUrl"))[0],
           price: snap.get('price'),
           likeCount: snap.get('likecount'),
         );
@@ -99,6 +99,30 @@ class ServicesProvider extends ChangeNotifier {
           print("Service Added");
         })
         .catchError((error) => print("Failed to add Service: $error"));
+  }
+
+  Future<void> getserviceListing(String uid) async {
+    //List<Product> newList = [];
+    QuerySnapshot _serviceSnapShot = await FirebaseFirestore
+        .instance.collection('services')
+        .where('serv_prov_id', isEqualTo: uid)
+        .get();
+    serviceList=_serviceSnapShot.docs.map((snap) {
+      // final user = snap.data();
+      return Service(
+          isLiked:wishlist.contains(snap.get('docid'))?true:false,
+          docid:snap.get('docid'),
+          name: snap.get('name'),
+          //imageUrl: snap.get('imageUrl'),
+          imageUrl: List.from(snap.get("imageUrl"))[0],
+          price:snap.get('price'),
+          likeCount:snap.get('likecount'),
+          description:snap.get('description'),
+          serv_prov_id:snap.get('serv_prov_id')
+      );
+
+    }).toList();
+    notifyListeners();
   }
 
 }
