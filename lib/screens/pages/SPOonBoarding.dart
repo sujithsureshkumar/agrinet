@@ -13,13 +13,13 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
 
   int _activeStepIndex = 0;
   TextEditingController name = TextEditingController();
-  TextEditingController company_name = TextEditingController();
+  //TextEditingController company_name = TextEditingController();
   TextEditingController location = TextEditingController();
   TextEditingController phone_number = TextEditingController();
   TextEditingController pincode = TextEditingController();
   TextEditingController address= TextEditingController();
   TextEditingController service_type = TextEditingController();
-  TextEditingController sp_id = TextEditingController();
+  //TextEditingController sp_id = TextEditingController();
   TextEditingController holder_name = TextEditingController();
   TextEditingController acc_number = TextEditingController();
   TextEditingController ifs_code= TextEditingController();
@@ -39,7 +39,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                 labelText: 'Full Name',
               ),
             ),
-            const SizedBox(
+            /*const SizedBox(
               height: 12,
             ),
             TextField(
@@ -49,8 +49,8 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                 border: OutlineInputBorder(),
                 labelText: 'Service Provider ID ',
               ),
-            ),
-            const SizedBox(
+            ),*/
+            /*const SizedBox(
               height: 12,
             ),
             TextField(
@@ -59,7 +59,9 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                 border: OutlineInputBorder(),
                 labelText: 'Company Name',
               ),
-            ),const SizedBox(
+            ),*/
+            const SizedBox(
+
               height: 12,
             ),
             TextField(
@@ -86,6 +88,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
             TextField(
               controller: pincode,
               obscureText: true,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Pincode',
@@ -99,6 +102,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
             TextField(
               controller: phone_number,
               obscureText: true,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Phone Number',
@@ -133,6 +137,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
               ),
               TextField(
                 controller: acc_number,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'A/c Number',
@@ -171,8 +176,8 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Name: ${name.text}'),
-                Text('Service Provider ID : ${sp_id.text}'),
-                Text('Company Name: ${company_name.text}'),
+                //Text('Service Provider ID : ${sp_id.text}'),
+                //Text('Company Name: ${company_name.text}'),
                 Text('Type Of Service: ${service_type.text}'),
                 Text('Location : ${location.text}'),
                 Text('PinCode : ${pincode.text}'),

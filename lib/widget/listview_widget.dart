@@ -137,10 +137,10 @@ class _ListViewWidgetState extends State<ListViewWidget> {
         return Scaffold(
           //backgroundColor: Colors.grey[900],
           body: ListView(
-            padding: EdgeInsets.all(12),
+            padding: EdgeInsets.all(3),
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: const EdgeInsets.fromLTRB(2, 1, 2, 1),
                 child: Column(
                   children: <Widget>[
                     Column(

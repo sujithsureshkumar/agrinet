@@ -26,16 +26,23 @@ class _WishlistCatalogState extends State<WishlistCatalog> {
         body: Consumer<ServicesProvider>(
             builder:(context, servicesProvider, _) {
               return Scaffold(
-                backgroundColor: Colors.grey[900],
-                body: ListView(
+                //backgroundColor: Colors.grey[900],
+                body: ListView.builder(
+
+                    itemCount: servicesProvider.wishlist.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // return item
+                      return CatalogueCard(service: servicesProvider.serviceWishlist[index],user: user);
+                    }),
+                /*ListView(
                   padding: EdgeInsets.all(12),
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      padding: const EdgeInsets.fromLTRB(2, 1, 2, 1),
                       child: Column(
                         children: <Widget>[
                           Column(
-                              children: servicesProvider.serviceList.map((p) {
+                              children: servicesProvider.serviceWishlist.map((p) {
                                 return CatalogueCard(service: p,user: user);
                               }).toList()
                           ),
@@ -43,7 +50,7 @@ class _WishlistCatalogState extends State<WishlistCatalog> {
                       ),
                     ),
                   ],
-                ),
+                ),*/
               );
             }
         ),

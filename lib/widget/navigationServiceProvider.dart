@@ -8,7 +8,8 @@ class NavigationServiceProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(16.0),
+      //height: 100,
+      padding: EdgeInsets.all(10.0),
       child: ClipRRect(
         borderRadius: BorderRadius.all(
           Radius.circular(50.0),
@@ -23,27 +24,65 @@ class NavigationServiceProvider extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(2.0),
+                      padding: const EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 1.0),
                       child: IconButton(
 
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.of(context).push(
                             MaterialPageRoute(
-                              //builder: (ctx) => MyHomePage(),
+                              //builder: (ctx) => AddService(),
                             ),
                           );
                         },
                         icon: Icon(Icons.person,
-                            size: 44.0 ,
+                            size: 33.0 ,
                             color: Color(0xffedf1f0)
                         ),
                         //label: Text('Home')
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
+                      padding: const EdgeInsets.fromLTRB(14.0, 1.0, 2.0, 2.0),
                       child: Text(
                         "Profile",
+                        style: TextStyle(
+                          color: Colors.yellow,
+                          fontWeight: FontWeight.bold,
+                          //fontSize: 12
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                padding: EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 2.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: IconButton(
+
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              //builder: (ctx) => ServiceCatalogue(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.category,
+                            size: 33.0 ,
+                            color: Color(0xffedf1f0)
+                        ),
+                        //label: Text('Home')
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 2.0),
+                      child: Text(
+                        "Catalogue",
                         style: TextStyle(
                           color: Colors.yellow,
                           fontWeight: FontWeight.bold,
@@ -60,7 +99,7 @@ class NavigationServiceProvider extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(2.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: IconButton(
 
                         onPressed: () {
@@ -69,16 +108,17 @@ class NavigationServiceProvider extends StatelessWidget {
                               builder: (ctx) => AddService(),
                             ),
                           );
+
                         },
                         icon: Icon(Icons.add,
-                            size: 44.0 ,
+                            size: 33.0 ,
                             color: Color(0xffedf1f0)
                         ),
                         //label: Text('Home')
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
+                      padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 2.0),
                       child: Text(
                         "Add",
                         style: TextStyle(
@@ -91,13 +131,15 @@ class NavigationServiceProvider extends StatelessWidget {
                 ),
               ),
 
+
+
               Container(
                 padding: EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 2.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(2.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: IconButton(
 
                         onPressed: () {
@@ -108,16 +150,16 @@ class NavigationServiceProvider extends StatelessWidget {
                           );
                         },
                         icon: Icon(Icons.assignment,
-                            size: 44.0 ,
+                            size: 33.0 ,
                             color: Color(0xffedf1f0)
                         ),
                         //label: Text('Home')
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
+                      padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 2.0),
                       child: Text(
-                        "Requests",
+                        "Request",
                         style: TextStyle(
                           color: Colors.yellow,
                           fontWeight: FontWeight.bold,
@@ -129,30 +171,30 @@ class NavigationServiceProvider extends StatelessWidget {
               ),
 
               Container(
-                padding: EdgeInsets.fromLTRB(12.0, 2.0, 2.0, 2.0),
+                padding: EdgeInsets.fromLTRB(12.0, 1.0, 2.0, 2.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(2.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: IconButton(
 
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (ctx) => ServiceDetails(),
+                              //builder: (ctx) => WishlistCatalog(),
                             ),
                           );
                         },
                         icon: Icon(Icons.favorite,
-                            size: 44.0 ,
+                            size: 33.0 ,
                             color: Color(0xffedf1f0)
                         ),
                         //label: Text('Home')
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(14.0, 2.0, 2.0, 2.0),
+                      padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 2.0),
                       child: Text(
                         "Fav",
                         style: TextStyle(

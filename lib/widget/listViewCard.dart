@@ -1,27 +1,27 @@
+import 'package:AgriNet/models/service.dart';
+import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:flutter/material.dart';
 
 class ListViewCard extends StatelessWidget {
-  final Function onTap;
-  final String name;
-  final String image;
-  ListViewCard({this.name,this.image, this.onTap});
+  final Service service;
+  ListViewCard({this.service});
   @override
   Widget build(BuildContext context) {
     return Card(
         child: ListTile(
           leading: CircleAvatar(
             radius: 28,
-            backgroundImage: NetworkImage(image),
+            backgroundImage: NetworkImage(service.imageUrl[0]),
           ),
-          title: Text(name),
+          title: Text(service.name),
           subtitle: Text("Name"),
           trailing: const Icon(Icons.arrow_forward),
-          onTap: onTap,
-              /*(){
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context)=>ProfilePage(),
+          onTap: (){
+            Navigator.of(context).push(
+                MaterialPageRoute(
+              builder: (context)=>EditService(service: service),
             ));
-          },*/
+          },
 
         )
     );

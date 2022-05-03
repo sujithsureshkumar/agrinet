@@ -1,3 +1,4 @@
+import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/widget/addImageCard.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/serviceListingCard.dart';
@@ -8,20 +9,22 @@ import 'package:AgriNet/constants/constant.dart';
 
 
 
-class editService extends StatefulWidget {
-  editService({Key key}) : super(key: key);
+class EditService extends StatefulWidget {
+  final Service service;
 
+  EditService({Key key,@required this.service}) : super(key: key);
   @override
-  _editServiceState createState() => _editServiceState();
+  _EditServiceState createState() => _EditServiceState();
 }
 
-class _editServiceState extends State<editService> {
+class _EditServiceState extends State<EditService> {
   @override
   void initState() {
     super.initState();
     _asyncMethod();
     setState(() {
-      _servicename.text = 'fullName';
+      //_servicename.text = 'fullName';
+      _price.text=widget.service.price;
      // _controllerEmail.text = widget.email;
     });
   }
@@ -49,11 +52,16 @@ class _editServiceState extends State<editService> {
   TextEditingController _servicename = TextEditingController();
   TextEditingController _category = TextEditingController();
   TextEditingController _price = TextEditingController();
-  TextEditingController _no_of_service = TextEditingController();
+  //TextEditingController _no_of_service = TextEditingController();
+  TextEditingController _equipmentDetail= TextEditingController();
   TextEditingController _description = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    //_price.text=widget.service.price;
+    //_servicename.text=widget.service.name;
+    //print(widget.service.name);
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(title: "Edit Service"),
@@ -123,19 +131,23 @@ class _editServiceState extends State<editService> {
           SizedBox(
             height: 20,
           ),
-          professionTextField(),
+          CategoryField(),
           SizedBox(
             height: 20,
           ),
-          dobField(),
+          priceField(),
+         /* SizedBox(
+            height: 20,
+          ),*/
+          //titleTextField(),
           SizedBox(
             height: 20,
           ),
-          titleTextField(),
+          equipmentDetailsField(),
           SizedBox(
             height: 20,
           ),
-          aboutTextField(),
+          descriptionField(),
           SizedBox(
             height: 20,
           ),
@@ -172,7 +184,7 @@ class _editServiceState extends State<editService> {
     );
   }
 
-  Widget professionTextField() {
+  Widget CategoryField() {
     return DropdownButtonFormField(
       value: dropdownValue,
       decoration: InputDecoration(
@@ -210,7 +222,7 @@ class _editServiceState extends State<editService> {
     );
   }
 
-  Widget dobField() {
+  Widget priceField() {
     return TextFormField(
       controller: _price,
       keyboardType:TextInputType.number,
@@ -239,7 +251,7 @@ class _editServiceState extends State<editService> {
     );
   }
 
-  Widget titleTextField() {
+  /*Widget titleTextField() {
     return TextFormField(
       controller: _no_of_service,
       keyboardType:TextInputType.number,
@@ -266,9 +278,33 @@ class _editServiceState extends State<editService> {
         helperText: "Enter in digits",
       ),
     );
+  }*/
+
+  Widget equipmentDetailsField() {
+    return TextFormField(
+      controller: _equipmentDetail,
+      validator: (value) {
+        if (value.isEmpty) return "About service";
+
+        return null;
+      },
+      maxLines: 2,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        labelText: "Equipment Detail",
+      ),
+    );
   }
 
-  Widget aboutTextField() {
+  Widget descriptionField() {
     return TextFormField(
       controller: _description,
       validator: (value) {

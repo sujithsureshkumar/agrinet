@@ -91,7 +91,7 @@ class _FarmHomeState extends State<FarmHome> {
                               onPressed: () {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (ctx) => editService(),
+                                    builder: (ctx) => EditService(),
                                   ),
                                 );
 

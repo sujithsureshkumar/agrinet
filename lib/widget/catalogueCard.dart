@@ -29,7 +29,7 @@ class CatalogueCard extends StatelessWidget {
           child: Container(
             height: 200,
             child: Card(
-              color: Colors.grey[800],
+              //color: Colors.grey[800],
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(

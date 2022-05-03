@@ -9,6 +9,7 @@ class ServicesProvider extends ChangeNotifier {
  // QuerySnapshot _serviceSnapShot;
   List<String> wishlist=[];
   List<Service> serviceList=[];
+  List<Service> serviceWishlist=[];
   String _docid;
 
   String get docid => _docid;
@@ -45,7 +46,7 @@ class ServicesProvider extends ChangeNotifier {
 
   Future<void> getserviceSnapShotForWishlist() async {
     QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('services').get();
-    serviceList=_serviceSnapShot.docs.map((snap) {
+    serviceWishlist=_serviceSnapShot.docs.map((snap) {
       if(wishlist.contains(snap.get('docid'))) {
         return Service(
           isLiked: wishlist.contains(snap.get('docid')) ? true : false,
