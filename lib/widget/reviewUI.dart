@@ -1,19 +1,17 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/models/reviewModal.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ReviewUI extends StatelessWidget {
-  final String image, name, date, comment;
-  final double rating;
+  //final String image, name, date, comment;
+  //final double rating;
+  final ReviewModal serviceReview;
   final Function onTap, onPressed;
   final bool isLess;
   const ReviewUI({
     Key key,
-    this.image,
-    this.name,
-    this.date,
-    this.comment,
-    this.rating,
+    this.serviceReview,
     this.onTap,
     this.isLess,
     this.onPressed,
@@ -39,7 +37,7 @@ class ReviewUI extends StatelessWidget {
                 margin: EdgeInsets.only(right: 16.0),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(image),
+                    image: NetworkImage(serviceReview.image),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(44.0),
@@ -47,7 +45,7 @@ class ReviewUI extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  name,
+                  serviceReview.name,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -65,14 +63,14 @@ class ReviewUI extends StatelessWidget {
             children: [
               SmoothStarRating(
                 starCount: 5,
-                rating: rating,
+                rating: serviceReview.rating,
                 size: 28.0,
                 color: Colors.orange,
                 borderColor: Colors.orange,
               ),
               SizedBox(width: kFixPadding),
               Text(
-                date,
+                serviceReview.date,
                 style: TextStyle(fontSize: 18.0),
               ),
             ],
@@ -82,14 +80,14 @@ class ReviewUI extends StatelessWidget {
             onTap: onTap,
             child: isLess
                 ? Text(
-              comment,
+              serviceReview.comment,
               style: TextStyle(
                 fontSize: 18.0,
                 color: kLightColor,
               ),
             )
                 : Text(
-              comment,
+              serviceReview.comment,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

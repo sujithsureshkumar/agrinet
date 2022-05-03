@@ -24,7 +24,7 @@ class _ServiceListingCardState extends State<ServiceListingCard> {
               child: Row(
                 children: [
                   Image(
-                    image: NetworkImage(widget.service.imageUrl),
+                    image: NetworkImage(widget.service.imageUrl[0]),
                     height: 110.0,
                     width: 110.0,
                     fit: BoxFit.cover,

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 class Service {
   String name;
   String owner;
-  String imageUrl;
+  List<String> imageUrl;
   String price;
   bool isLiked;
   int likeCount;

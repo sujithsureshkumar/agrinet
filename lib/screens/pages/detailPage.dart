@@ -44,7 +44,7 @@ class _DetailPageState extends State<DetailPage> {
                     Stack(
                       children: [
                         //Image.asset(itemData["image"]),
-                        Image.network(widget.service.imageUrl),
+                        Image.network(widget.service.imageUrl[0]),
                         Positioned(
                           width: size.width,
                           top: padding,

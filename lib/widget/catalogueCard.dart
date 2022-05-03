@@ -1,5 +1,6 @@
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/screens/pages/serviceDetails.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/pages/detailPage.dart';
@@ -18,7 +19,7 @@ class CatalogueCard extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (ctx) => DetailPage(
+                builder: (ctx) => ServiceDetails(
                   service: service,
                   user: user,
                 ),
@@ -42,7 +43,7 @@ class CatalogueCard extends StatelessWidget {
                               shape: BoxShape.rectangle,
                               image: new DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage(service.imageUrl)
+                                  image: NetworkImage(service.imageUrl[0])
                               )
                           )),
                     ),

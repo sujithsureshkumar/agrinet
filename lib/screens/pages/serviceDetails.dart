@@ -1,6 +1,9 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/models/service.dart';
+import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/defaultBackButton.dart';
+import 'package:AgriNet/widget/likeButtonWidget.dart';
 import 'package:AgriNet/widget/recommendedItems.dart';
 import 'package:AgriNet/widget/recommendedView.dart';
 import 'package:AgriNet/widget/reviewUI.dart';
@@ -8,7 +11,11 @@ import 'package:AgriNet/widget/stickyLabel.dart';
 import 'package:flutter/material.dart';
 
 class ServiceDetails extends StatefulWidget {
-  ServiceDetails({Key key}) : super(key: key);
+  final Service service;
+  final Users user;
+
+  ServiceDetails({Key key,@required this.service,
+    @required this.user,}) : super(key: key);
 
   @override
   _ServiceDetailsState createState() => _ServiceDetailsState();
@@ -39,7 +46,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(
-        title: "Product Details",
+        title: "Service Details",
       ),
       bottomNavigationBar: Material(
         elevation: kLess,
@@ -52,8 +59,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 border: Border.all(color: kPrimaryColor, width: 2.0),
               ),
               child: IconButton(
-                icon: Icon(Icons.add_shopping_cart, color: kPrimaryColor),
-                onPressed: () => print("Add to Cart"),
+                icon: Icon(Icons.phone, color: kPrimaryColor),
+                onPressed: () => print("Phone Call"),
               ),
             ),
             Container(
@@ -107,10 +114,12 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                         currentIndex = value;
                       });
                     },
-                    itemCount: detailImages.length,
+                    //itemCount: detailImages.length,
+                      itemCount:widget.service.imageUrl.length,
                     itemBuilder: (context, index) {
                       return Image.network(
-                        detailImages[index],
+                        //detailImages[index],
+                        widget.service.imageUrl[index],
                         width: MediaQuery.of(context).size.width,
                         fit: BoxFit.cover,
                       );
@@ -142,12 +151,29 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 ),
               ],
             ),
-            StickyLabel(text: "Xbox Wireless Controller"),
+            StickyLabel(text: widget.service.name),
             Padding(
               padding: EdgeInsets.only(left: kDefaultPadding),
-              child: Text(
-                "\$ ${76.12}",
-                style: TextStyle(fontSize: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    "\$ ${widget.service.price}",
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  SizedBox(
+                    width: 240,
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: LikeButtonWidget(isLiked:widget.service.isLiked,
+                        likeCount:widget.service.likeCount,
+                        docid:widget.service.docid,
+                        userid: widget.user.uid,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -186,7 +212,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: Text(
-                      "${826} Sale",
+                      "${826} Requests",
                       style: TextStyle(
                         color: kDarkColor.withOpacity(0.4),
                         fontSize: 18.0,
@@ -201,10 +227,13 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             // for shirt or Other Products who has the Size
             Padding(
               padding: EdgeInsets.only(left: kDefaultPadding),
-              child: Text(
-                "Size",
-                style: TextStyle(
-                  fontSize: 20.0,
+              child: GestureDetector(
+                onTap: () => print("Selected Service Provider"),
+                child: Text(
+                  "ABC Service Provider",
+                  style: TextStyle(
+                    fontSize: 17.0,
+                  ),
                 ),
               ),
             ),
@@ -212,34 +241,25 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               height: 44.0,
               margin: EdgeInsets.symmetric(
                   horizontal: kDefaultPadding, vertical: kLessPadding),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: productSize.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => print("Selected Size : ${productSize[index]}"),
-                    child: Container(
-                      height: 44.0,
-                      width: 44.0,
-                      margin: EdgeInsets.only(right: 8.0),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 3.0,
-                          color: kDarkColor.withOpacity(0.4),
-                        ),
-                        borderRadius: BorderRadius.circular(44.0),
-                      ),
-                      child: Text(
-                        productSize[index],
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: kDarkColor.withOpacity(0.4),
-                        ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: Colors.pink,
+                    size: 14.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Thalapuzha, Manandavady,wayanad",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.red,
                       ),
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
             ),
             kSmallDivider,
@@ -247,7 +267,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             Padding(
               padding: EdgeInsets.only(left: kDefaultPadding),
               child: Text(
-                "Color",
+                "Machine details",
                 style: TextStyle(
                   fontSize: 20.0,
                 ),
@@ -257,29 +277,11 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               height: 44.0,
               margin: EdgeInsets.symmetric(
                   horizontal: kDefaultPadding, vertical: kLessPadding),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: productColors.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () =>
-                        print("Selected Color : ${productColors[index]}"),
-                    child: Container(
-                      height: 44.0,
-                      width: 44.0,
-                      margin: EdgeInsets.only(right: 8.0),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: productColors[index],
-                        border: Border.all(
-                          width: 3.0,
-                          color: kDarkColor.withOpacity(0.4),
-                        ),
-                        borderRadius: BorderRadius.circular(44.0),
-                      ),
-                    ),
-                  );
-                },
+              child: Text(
+                "Tracter,Harvesting Machine",
+                style: TextStyle(
+                  fontSize: 18.0,
+                ),
               ),
             ),
             kSmallDivider,
@@ -351,11 +353,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               itemCount: 3,
               itemBuilder: (context, index) {
                 return ReviewUI(
-                  image: reviewList[index].image,
-                  name: reviewList[index].name,
-                  date: reviewList[index].date,
-                  comment: reviewList[index].comment,
-                  rating: reviewList[index].rating,
+                  serviceReview:reviewList[index],
                   onPressed: () => print("More Action $index"),
                   onTap: () => setState(() {
                     isMore = !isMore;
@@ -374,7 +372,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                StickyLabel(text: "Top Related Products"),
+                StickyLabel(text: "Top Related Services"),
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
