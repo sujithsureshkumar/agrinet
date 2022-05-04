@@ -3,6 +3,7 @@ import 'dart:io';
 //import 'package:blogapp/NetworkHandler.dart';
 //import 'package:blogapp/Pages/HomePage.dart';
 //import 'package:blogapp/Screen/HomeScreen.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,18 +29,15 @@ class _AddServiceState extends State<AddService> {
   TextEditingController _servicename = TextEditingController();
   TextEditingController _category= TextEditingController();
   TextEditingController _price = TextEditingController();
-  TextEditingController _no_of_service= TextEditingController();
+  TextEditingController _equipmentDetail= TextEditingController();
+  //TextEditingController _no_of_service= TextEditingController();
   TextEditingController _description= TextEditingController();
   //final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Service'),
-
-        backgroundColor:Colors.green,
-      ),
+      appBar: DefaultAppBar(title: 'Add New Service'),
       body: Form(
         key: _globalkey,
         child: ListView(
@@ -58,10 +56,14 @@ class _AddServiceState extends State<AddService> {
               height: 20,
             ),
             dobField(),
+            /*SizedBox(
+              height: 20,
+            ),
+            titleTextField(),*/
             SizedBox(
               height: 20,
             ),
-            titleTextField(),
+            equipmentDetailsField(),
             SizedBox(
               height: 20,
             ),
@@ -77,7 +79,7 @@ class _AddServiceState extends State<AddService> {
                 if (_globalkey.currentState.validate()) {
                   ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
                 await servicesProvider.sp_addservice(user.uid,_servicename.text, _category.text,
-                      _price.text, _no_of_service.text, _description.text,imageUrlList).then((value) => {
+                      _price.text, _description.text,imageUrlList).then((value) => {
                   Navigator.of(context).push(
                   MaterialPageRoute(
                   builder: (ctx) => AddImage(),
@@ -304,7 +306,7 @@ class _AddServiceState extends State<AddService> {
     );
   }
 
-  Widget titleTextField() {
+ /* Widget titleTextField() {
     return TextFormField(
       controller: _no_of_service,
       validator: (value) {
@@ -329,6 +331,30 @@ class _AddServiceState extends State<AddService> {
         labelText: "Number Of Services Available",
         helperText: "Enter in digits",
 
+      ),
+    );
+  }*/
+
+  Widget equipmentDetailsField() {
+    return TextFormField(
+      controller: _equipmentDetail,
+      validator: (value) {
+        if (value.isEmpty) return "About service";
+
+        return null;
+      },
+      maxLines: 2,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        labelText: "Equipment Detail",
       ),
     );
   }

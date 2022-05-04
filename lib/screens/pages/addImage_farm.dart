@@ -1,3 +1,4 @@
+import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -150,7 +151,7 @@ class _AddImageFarmState extends State<AddImageFarm> {
   @override
   Widget build(BuildContext context){
     final user = Provider.of<Users>(context);
-    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
+    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
     return Consumer<ImgProvider>(
         builder:(context, imgProvider, _) {
           return Scaffold(
@@ -197,7 +198,7 @@ class _AddImageFarmState extends State<AddImageFarm> {
                             circular = true;
                           });
                           if(imgProvider.imageUrlList.length>0){
-                            await UpdateImageFarmAdd(imgProvider.imageUrlList,user.uid,servicesProvider.docid,)
+                            await UpdateImageFarmAdd(imgProvider.imageUrlList,user.uid,farmProvider.docid,)
                                 .then((value) => {
                               Navigator.of(context)
                                 ..pop()

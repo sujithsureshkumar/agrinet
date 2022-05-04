@@ -77,7 +77,7 @@ class ServicesProvider extends ChangeNotifier {
     }).toList();*/
 
   Future sp_addservice(String uid,String service_name,String category,
-      String price_per_unit,String no_of_service,String description ,List<String> imageurl) async {
+      String price_per_unit,String description ,List<String> imageurl) async {
     _docid = Uuid().v1();
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
@@ -88,7 +88,7 @@ class ServicesProvider extends ChangeNotifier {
       'name': service_name,
       'category': category,
       'price':price_per_unit,
-      'no_of_service':no_of_service,
+      //'no_of_service':no_of_service,
       'description':description,
       'imageUrl':imageurl,
       'likecount':0,

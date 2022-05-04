@@ -1,4 +1,6 @@
 import 'package:AgriNet/models/service.dart';
+import 'package:AgriNet/providers/imgProvider.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/addImageCard.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/serviceListingCard.dart';
@@ -6,6 +8,7 @@ import 'package:AgriNet/widget/viewImageCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:AgriNet/constants/constant.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -24,7 +27,7 @@ class _EditServiceState extends State<EditService> {
     super.initState();
     _asyncMethod();
     setState(() {
-      //_servicename.text = 'fullName';
+      _servicename.text = widget.service.name;
       _price.text=widget.service.price;
      // _controllerEmail.text = widget.email;
     });
@@ -59,7 +62,7 @@ class _EditServiceState extends State<EditService> {
 
   @override
   Widget build(BuildContext context) {
-
+    ImgProvider imgProvider = Provider.of<ImgProvider>(context, listen: false);
     //_price.text=widget.service.price;
     //_servicename.text=widget.service.name;
     //print(widget.service.name);
@@ -106,11 +109,12 @@ class _EditServiceState extends State<EditService> {
                       elevation: 2,
                       backgroundColor: kPrimaryColor,
                   ),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    //builder: (context) => DeliveryAddress(),
-                  ),
-                ),
+                onPressed: () async => await sp_updateService(widget.service.docid,_servicename.text, _category.text,
+                    _price.text, _description.text,imgProvider.imageUrlList).then((value) => {
+                  Navigator.of(context)
+                    ..pop()
+                    ..pop()
+                }),
               ),
             ),
             SizedBox(

@@ -3,6 +3,7 @@ import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/screens/pages/addImage.dart';
 import 'package:AgriNet/screens/pages/addImage_farm.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //import 'package:AgriNet/services/addservice.dart';
@@ -25,10 +26,7 @@ class _AddFarmState extends State<AddFarm> {
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Farm'),
-        backgroundColor:Colors.green,
-      ),
+      appBar: DefaultAppBar(title: "Add Farm"),
       body: Form(
         key: _globalkey,
         child: ListView(

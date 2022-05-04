@@ -21,6 +21,7 @@ class FarmProvider extends ChangeNotifier {
       'category': category,
       'landarea':landarea,
       'location':location,
+      'imageUrl':[],
     })
         .then((value) {
       print("new Farm Added");

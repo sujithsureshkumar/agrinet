@@ -56,7 +56,7 @@ Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour,bo
 
 
 Future sp_addservice(String uid,String service_name,String category,
-    String price_per_unit,String no_of_service,String description ,List<String> imageurl) async {
+    String price_per_unit,String description ,List<String> imageurl) async {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
   return serviceProvidersCollectionReference
@@ -65,7 +65,7 @@ Future sp_addservice(String uid,String service_name,String category,
     'service_name': service_name,
     'category': category,
     'price_per_unit':price_per_unit,
-    'no_of_service':no_of_service,
+    //'no_of_service':no_of_service,
     'description':description,
     'imageUrl':imageurl,
 
@@ -121,6 +121,23 @@ Future UpdateImageFarmAdd(List<String> imageurlList,String uid, String docid) as
   })
       .then((value) => print("Image added"))
       .catchError((error) => print("Failed to add image: $error"));
+}
+
+Future sp_updateService(String docid,String service_name,String category,
+    String price_per_unit,String description ,List<String> imageurl) async {
+  await FirebaseFirestore.instance.collection('services')
+      .doc(docid)
+      .update({
+    'name': service_name,
+    'category': category,
+    'price_per_unit':price_per_unit,
+    //'no_of_service':no_of_service,
+    'description':description,
+    'imageUrl':imageurl,
+    //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
+  })
+      .then((value) => print("Updated"))
+      .catchError((error) => print("Failed to Updated: $error"));
 }
 
 /// Check If Document Exists
