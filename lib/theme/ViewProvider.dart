@@ -236,13 +236,13 @@ class _ViewProviderState extends State<ViewProvider> {
 
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.blue, //background color of button
+                    primary: Colors.blueGrey.shade600, //background color of button
                     side: BorderSide(width:4, color:Colors.brown), //border width and color
                     elevation: 5, //elevation of button
                     //shape: RoundedRectangleBorder( //to set border radius to button
                         //borderRadius: BorderRadius.circular(40)
                    // ),
-                    padding: EdgeInsets.all(40) //content padding inside button
+                    padding: EdgeInsets.all(20) //content padding inside button
                 )
 
               ),
@@ -257,20 +257,42 @@ class _ViewProviderState extends State<ViewProvider> {
 
                           },
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.blue, //background color of button
+                              primary: Colors.blueGrey.shade600, //background color of button
                               side: BorderSide(width:4, color:Colors.brown), //border width and color
                               elevation: 5, //elevation of button
                               //shape: RoundedRectangleBorder( //to set border radius to button
                               //borderRadius: BorderRadius.circular(40)
                               // ),
-                              padding: EdgeInsets.all(40) //content padding inside button
+                              padding: EdgeInsets.all(20) //content padding inside button
                           )
 
                       )
 
         ]
-    )
-        ]
+    ),
+                Container(
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.all(12),
+                      child:Row(
+                        children:[
+                          buildCard(1),
+                          const SizedBox(width:12),
+                          buildCard(2),
+                          const SizedBox(width:12),
+                          buildCard(3),
+                          const SizedBox(width:12),
+                          buildCard(4),
+                          const SizedBox(width:12),
+                          buildCard(5),
+                          const SizedBox(width:12),
+
+                        ]
+                      )
+
+
+                    ))]
+
       )
       )
         )
