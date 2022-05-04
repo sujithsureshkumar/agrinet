@@ -77,9 +77,9 @@ Future sp_addservice(String uid,String service_name,String category,
       })
       .catchError((error) => print("Failed to add Service: $error"));
 }
-Future updateImage(List<String> imageurlList, String uid) async {
+Future updateImage(List<String> imageurlList, String docid) async {
   await FirebaseFirestore.instance.collection('services')
-      .doc(uid)
+      .doc(docid)
       .update({
     'imageUrl':imageurlList
     //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
@@ -109,6 +109,18 @@ Future add_to_service_booking(String uid,String service_id,String category,
     return value.id;
   })
       .catchError((error) => print("Failed to add Service: $error"));
+}
+
+Future UpdateImageFarmAdd(List<String> imageurlList,String uid, String docid) async {
+  await FirebaseFirestore.instance.collection('farmUser')
+      .doc(uid).collection("farms")
+      .doc(docid)
+      .update({
+    'imageUrl':imageurlList
+    //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
+  })
+      .then((value) => print("Image added"))
+      .catchError((error) => print("Failed to add image: $error"));
 }
 
 /// Check If Document Exists

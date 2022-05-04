@@ -1,3 +1,4 @@
+import 'package:AgriNet/screens/pages/addfarm.dart';
 import 'package:AgriNet/screens/pages/bookingSummary.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
@@ -51,13 +52,13 @@ class _FarmHomeState extends State<FarmHome> {
                             child: IconButton(
 
                               onPressed: () {
-                                Navigator.of(context).pushReplacement(
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (ctx) => GroupChatHomeScreen(),
                                   ),
                                 );
                               },
-                              icon: Icon(Icons.schema,
+                              icon: Icon(Icons.groups,
                                 size: 33.0 ,
                                 color: Color(0xffedf1f0)
                               ),
@@ -67,7 +68,7 @@ class _FarmHomeState extends State<FarmHome> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(14.0, 1.0, 2.0, 2.0),
                             child: Text(
-                              "Join",
+                              "Groups",
                               style: TextStyle(
                                 color: Colors.yellow,
                                 fontWeight: FontWeight.bold,
@@ -89,9 +90,9 @@ class _FarmHomeState extends State<FarmHome> {
                             child: IconButton(
 
                               onPressed: () {
-                                Navigator.of(context).pushReplacement(
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (ctx) => EditService(),
+                                    builder: (ctx) => AddFarm(),
                                   ),
                                 );
 
@@ -164,7 +165,7 @@ class _FarmHomeState extends State<FarmHome> {
                             child: IconButton(
 
                               onPressed: () {
-                                Navigator.of(context).pushReplacement(
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
                                     //builder: (ctx) => MyHomePage(),
                                   ),

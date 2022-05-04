@@ -2,6 +2,7 @@ import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/widget/addImageCard.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/serviceListingCard.dart';
+import 'package:AgriNet/widget/viewImageCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:AgriNet/constants/constant.dart';
@@ -82,7 +83,7 @@ class _EditServiceState extends State<EditService> {
         style: TextButton.styleFrom(
             primary: kWhiteColor,
             elevation: 2,
-            backgroundColor: kPrimaryColor),
+            backgroundColor: kLightColor),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
             //builder: (context) => DeliveryAddress(),
@@ -103,7 +104,7 @@ class _EditServiceState extends State<EditService> {
                   style: TextButton.styleFrom(
                       primary: kWhiteColor,
                       elevation: 2,
-                      backgroundColor: kLightColor,
+                      backgroundColor: kPrimaryColor,
                   ),
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(
@@ -123,7 +124,7 @@ class _EditServiceState extends State<EditService> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         children: <Widget>[
           // imageProfile(),
-          AddImageCard(),
+          ViewImageCard(imageList:widget.service.imageUrl),
           SizedBox(
             height: 20,
           ),
@@ -204,7 +205,7 @@ class _EditServiceState extends State<EditService> {
       ),
       icon: Padding(
           padding: EdgeInsets.only(left: 20),
-          child: Icon(Icons.arrow_circle_down_sharp)),
+          child: Icon(Icons.keyboard_arrow_down)),
       style: const TextStyle(color: Colors.teal, fontSize: 16),
       isExpanded: true,
       onChanged: (newValue) {

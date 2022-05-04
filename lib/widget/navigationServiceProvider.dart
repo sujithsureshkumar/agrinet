@@ -72,7 +72,7 @@ class NavigationServiceProvider extends StatelessWidget {
                             ),
                           );
                         },
-                        icon: Icon(Icons.category,
+                        icon: Icon(Icons.view_list,
                             size: 33.0 ,
                             color: Color(0xffedf1f0)
                         ),
@@ -82,7 +82,7 @@ class NavigationServiceProvider extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 2.0),
                       child: Text(
-                        "Catalogue",
+                        "Listings",
                         style: TextStyle(
                           color: Colors.yellow,
                           fontWeight: FontWeight.bold,
@@ -149,7 +149,7 @@ class NavigationServiceProvider extends StatelessWidget {
                             ),
                           );
                         },
-                        icon: Icon(Icons.assignment,
+                        icon: Icon(Icons.receipt,
                             size: 33.0 ,
                             color: Color(0xffedf1f0)
                         ),
