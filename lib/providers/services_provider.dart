@@ -14,6 +14,8 @@ class ServicesProvider extends ChangeNotifier {
 
   String get docid => _docid;
 
+  Timestamp startTimeStamp,endTimeStamp;
+
   Future<void> fetchFirebaseWishlist(String uid) async {
     DocumentSnapshot farmUserSnapShot =
     await FirebaseFirestore.instance

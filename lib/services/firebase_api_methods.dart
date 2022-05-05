@@ -140,6 +140,23 @@ Future sp_updateService(String docid,String service_name,String category,
       .catchError((error) => print("Failed to Updated: $error"));
 }
 
+
+Future addBooking(Timestamp startTime,Timestamp endTime) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Bookings');
+  return serviceProvidersCollectionReference
+      .add({
+    'startTime': startTime,
+    'endTime': endTime,
+
+
+
+  })
+      .then((value) {
+    print("start&end time Added");
+  })
+      .catchError((error) => print("Failed to add start&end time: $error"));
+}
 /// Check If Document Exists
 
 

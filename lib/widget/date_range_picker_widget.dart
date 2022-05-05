@@ -1,7 +1,10 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/widget/HeaderWidget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'buttonWidget.dart';
 import 'defaultButton.dart';
@@ -13,19 +16,25 @@ class DateRangePickerWidget extends StatefulWidget {
 
 class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
   DateTimeRange dateRange;
+  //Timestamp startTimeStamp,endTimeStamp;
+
 
   String getFrom() {
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider >(context, listen: false);
     if (dateRange == null) {
       return 'From';
     } else {
+      servicesProvider.startTimeStamp = Timestamp.fromDate(dateRange.start);
       return DateFormat('MM/dd/yyyy').format(dateRange.start);
     }
   }
 
   String getUntil() {
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider >(context, listen: false);
     if (dateRange == null) {
       return 'Until';
     } else {
+      servicesProvider.endTimeStamp = Timestamp.fromDate(dateRange.end);
       return DateFormat('MM/dd/yyyy').format(dateRange.end);
     }
   }

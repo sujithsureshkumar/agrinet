@@ -1,6 +1,8 @@
 
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
+import 'package:AgriNet/providers/services_provider.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/date_range_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +60,7 @@ class _DeliveryState extends State<Delivery> {
     //final user = Provider.of<Users>(context);
     //FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
     //farmProvider.fetchUserGroup(user.uid);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider >(context, listen: false);
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(
@@ -248,11 +251,7 @@ class _DeliveryState extends State<Delivery> {
 
             DefaultButton(
               btnText: "Go to payment",
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                 // builder: (context) => Payment(),
-                ),
-              ),
+              onPressed: () => addBooking(servicesProvider.startTimeStamp,servicesProvider.endTimeStamp),
               color: kPrimaryColor,
               textColor: kWhiteColor,
               ratio: 1,
