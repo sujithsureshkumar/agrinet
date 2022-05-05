@@ -6,6 +6,10 @@ import 'package:uuid/uuid.dart';
 class FarmProvider extends ChangeNotifier {
   String _docid;
   String get docid => _docid;
+
+  List<String> _groupList=[];
+  List<String> get groupList => _groupList;
+
   Future farmer_addfarm(String uid,String name,String category,String subCategory,
       String landarea,String location) async {
     _docid = Uuid().v1();
@@ -27,5 +31,42 @@ class FarmProvider extends ChangeNotifier {
       print("new Farm Added");
     })
         .catchError((error) => print("Failed to add Farm: $error"));
+  }
+
+
+
+  Future<void> fetchUserGroup(String uid) async {
+    _groupList=[];
+    QuerySnapshot groupSnapShot =
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('groups')
+        .get();
+
+    groupSnapShot.docs.forEach((result) {
+      _groupList.add(result.get('name'));
+    });
+    /*_groupList=groupSnapShot.docs.map((snap) {
+      return snap.get('name');
+    }).toList();*/
+
+    notifyListeners();
+  }
+
+  Future<void> fetchUserFarm(String uid) async {
+    _groupList=[];
+    QuerySnapshot userFarmSnapShot =
+    await FirebaseFirestore.instance
+        .collection('farmUser')
+        .doc(uid)
+        .collection('farms')
+        .get();
+
+    userFarmSnapShot.docs.forEach((result) {
+      _groupList.add(result.get('name'));
+    });
+
+    notifyListeners();
   }
 }

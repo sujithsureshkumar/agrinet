@@ -1,6 +1,9 @@
 
+import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/widget/date_range_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/constant.dart';
 import '../../widget/defaultAppBar.dart';
@@ -27,6 +30,7 @@ class _DeliveryState extends State<Delivery> {
   List<String> typeList=['Individual','Groups'];
   Map<String, List<String>> selectedTypeList ={'Individual':['Item 1', 'Item 2' , 'Item 3'],
     'Groups':['Group 1', 'Group 2' , 'Group 3']};
+
   _getList(){
     setState(() {
       statesList = selectedTypeList[_myState];
@@ -34,8 +38,26 @@ class _DeliveryState extends State<Delivery> {
     });
   }
 
+  _newGetList() async {
+    final user = Provider.of<Users>(context,listen: false);
+    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
+
+    setState(() {
+      if(_myState=='Individual'){
+        farmProvider.fetchUserFarm(user.uid);
+      }
+      if(_myState=='Groups'){
+        farmProvider.fetchUserGroup(user.uid);
+      }
+      _myStateList=null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    //final user = Provider.of<Users>(context);
+    //FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
+    //farmProvider.fetchUserGroup(user.uid);
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(
@@ -79,7 +101,7 @@ class _DeliveryState extends State<Delivery> {
                           onChanged: (String newValue) {
                             setState(() {
                               _myState = newValue;
-                              _getList();
+                              _newGetList();
                               print(_myState);
                             });
                           },
@@ -104,50 +126,55 @@ class _DeliveryState extends State<Delivery> {
 
             //======================================================== City
 
-            Container(
-              //padding: EdgeInsets.only(left: 15, right: 15, top: 5),
-              //color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(kShape)),
-                color: kAccentColor,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: ButtonTheme(
-                        alignedDropdown: true,
-                        child: DropdownButton<String>(
-                          value: _myStateList,
-                          iconSize: 30,
-                          icon: (null),
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 16,
+            Consumer<FarmProvider>(
+              builder: (context, farmProvider, _) {
+                //print(farmProvider.groupList);
+                return Container(
+                  //padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+                  //color: Colors.white,
+                  margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(kShape)),
+                    color: kAccentColor,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton<String>(
+                              value: _myStateList,
+                              iconSize: 30,
+                              icon: (null),
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                              ),
+                              hint: Text('Select Farm'),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  _myStateList = newValue;
+                                  print(_myStateList);
+                                });
+                              },
+                              items: farmProvider.groupList?.map((item) {
+                                return new DropdownMenuItem(
+                                  child: new Text(item),
+                                  value: item,
+                                );
+                              })?.toList() ??
+                                  [],
+                            ),
                           ),
-                          hint: Text('Select Farm'),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _myStateList = newValue;
-                              print(_myStateList);
-                            });
-                          },
-                          items: statesList?.map((item) {
-                            return new DropdownMenuItem(
-                              child: new Text(item),
-                              value: item,
-                            );
-                          })?.toList() ??
-                              [],
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              }
             ),
            /* DefaultTextField(
               hintText: "State",

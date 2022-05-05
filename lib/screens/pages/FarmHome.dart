@@ -1,5 +1,6 @@
 import 'package:AgriNet/screens/pages/addfarm.dart';
 import 'package:AgriNet/screens/pages/bookingSummary.dart';
+import 'package:AgriNet/screens/pages/delivery.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
@@ -167,7 +168,7 @@ class _FarmHomeState extends State<FarmHome> {
                               onPressed: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    //builder: (ctx) => MyHomePage(),
+                                    builder: (ctx) => Delivery(),
                                   ),
                                 );
                               },
