@@ -130,7 +130,9 @@ class _ListViewWidgetState extends State<ListViewWidget> {
     ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
     final user = Provider.of<Users>(context);
     servicesProvider.fetchFirebaseWishlist(user.uid);
-    servicesProvider.getserviceSnapShot();
+    servicesProvider.getserviceSnapShot1();
+    //print(servicesProvider.newList);
+
 
     return Consumer<ServicesProvider>(
       builder:(context, servicesProvider, _) {
@@ -145,7 +147,9 @@ class _ListViewWidgetState extends State<ListViewWidget> {
                   children: <Widget>[
                     Column(
                         children: servicesProvider.serviceList.map((p) {
-                          return CatalogueCard(service: p,user: user);
+                          return CatalogueCard(service: p,
+                            user: user,
+                          );
                         }).toList()
                     ),
                   ],

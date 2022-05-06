@@ -21,7 +21,6 @@ class AddService extends StatefulWidget {
 }
 
 class _AddServiceState extends State<AddService> {
-  //final networkHandler = NetworkHandler();
   List<String> imageUrlList=["https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2Fnoimage.png?alt=media&token=47ee7a64-0059-4527-a72f-3b983957d887"];
   bool circular = false;
   //PickedFile _imageFile;
@@ -73,10 +72,11 @@ class _AddServiceState extends State<AddService> {
             ),
             InkWell(
               onTap: () async {
-                setState(() {
-                  circular = true;
-                });
+
                 if (_globalkey.currentState.validate()) {
+                  setState(() {
+                    circular = true;
+                  });
                   ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
                 await servicesProvider.sp_addservice(user.uid,_servicename.text, _category.text,
                       _price.text, _description.text,imageUrlList).then((value) => {
@@ -87,30 +87,7 @@ class _AddServiceState extends State<AddService> {
                   )
                   });
 
-                  // var response =
-                  // await networkHandler.post("/profile/add", data);
-                  // if (response.statusCode == 200 ||
-                  //     response.statusCode == 201) {
-                  //   if (_imageFile.path != null) {
-                  //     var imageResponse = await networkHandler.patchImage(
-                  //         "/profile/add/image", _imageFile.path);
-                  //     if (imageResponse.statusCode == 200) {
-                  //       setState(() {
-                  //         circular = false;
-                  //       });
-                  //       Navigator.of(context).pushAndRemoveUntil(
-                  //           MaterialPageRoute(builder: (context) => HomePage()),
-                  //               (route) => false);
-                  //     }
-                  //   } else {
-                  //     setState(() {
-                  //       circular = false;
-                  //     });
-                  //     Navigator.of(context).pushAndRemoveUntil(
-                  //         MaterialPageRoute(builder: (context) => HomePage()),
-                  //             (route) => false);
-                  //   }
-                  // }
+
                 }
               },
               child: Center(
@@ -141,85 +118,6 @@ class _AddServiceState extends State<AddService> {
       ),
     );
   }
-  //
-  // Widget imageProfile() {
-  //   return Center(
-  //     child: Stack(children: <Widget>[
-  //       CircleAvatar(
-  //         radius: 80.0,
-  //         backgroundImage: _imageFile == null
-  //             ? AssetImage("assets/profile.jpeg")
-  //             : FileImage(File(_imageFile.path)),
-  //       ),
-  //       Positioned(
-  //         bottom: 20.0,
-  //         right: 20.0,
-  //         child: InkWell(
-  //           onTap: () {
-  //             showModalBottomSheet(
-  //               context: context,
-  //               builder: ((builder) => bottomSheet()),
-  //             );
-  //           },
-  //           child: Icon(
-  //             Icons.camera_alt,
-  //             color: Colors.teal,
-  //             size: 28.0,
-  //           ),
-  //         ),
-  //       ),
-  //     ]),
-  //   );
-  // }
-  //
-  // Widget bottomSheet() {
-  //   return Container(
-  //     height: 100.0,
-  //     width: MediaQuery.of(context).size.width,
-  //     margin: EdgeInsets.symmetric(
-  //       horizontal: 20,
-  //       vertical: 20,
-  //     ),
-  //     child: Column(
-  //       children: <Widget>[
-  //         Text(
-  //           "Choose Profile photo",
-  //           style: TextStyle(
-  //             fontSize: 20.0,
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           height: 20,
-  //         ),
-  //         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-  //           FlatButton.icon(
-  //             icon: Icon(Icons.camera),
-  //             onPressed: () {
-  //               takePhoto(ImageSource.camera);
-  //             },
-  //             label: Text("Camera"),
-  //           ),
-  //           FlatButton.icon(
-  //             icon: Icon(Icons.image),
-  //             onPressed: () {
-  //               takePhoto(ImageSource.gallery);
-  //             },
-  //             label: Text("Gallery"),
-  //           ),
-  //         ])
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // void takePhoto(ImageSource source) async {
-  //   final pickedFile = await _picker.getImage(
-  //     source: source,
-  //   );
-  //   setState(() {
-  //     _imageFile = pickedFile;
-  //   });
-  // }
 
   Widget nameTextField() {
     return TextFormField(
@@ -306,34 +204,6 @@ class _AddServiceState extends State<AddService> {
     );
   }
 
- /* Widget titleTextField() {
-    return TextFormField(
-      controller: _no_of_service,
-      validator: (value) {
-        if (value.isEmpty) return "Enter number of services available";
-
-        return null;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.teal,
-            )),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
-        prefixIcon: Icon(
-          Icons.person,
-          color: Colors.green,
-        ),
-        labelText: "Number Of Services Available",
-        helperText: "Enter in digits",
-
-      ),
-    );
-  }*/
 
   Widget equipmentDetailsField() {
     return TextFormField(

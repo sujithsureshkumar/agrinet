@@ -10,6 +10,7 @@ class Service {
   String docid;
   String description;
   String serv_prov_id;
+  String serv_prov_name;
 
   Service({
     @required this.name,
@@ -19,7 +20,8 @@ class Service {
     @required this.isLiked,
     @required this.likeCount,
     @required this.docid,
-    @required description,
-    @required serv_prov_id,
+    @required this.description,
+    @required this.serv_prov_id,
+    @required this.serv_prov_name,
   });
 }

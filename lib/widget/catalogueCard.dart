@@ -1,7 +1,9 @@
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/screens/pages/serviceDetails.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/pages/detailPage.dart';
 import '../screens/pages/detailscreen.dart';
@@ -11,8 +13,12 @@ class CatalogueCard extends StatelessWidget {
   final Service service;
   final Users user;
   CatalogueCard({this.service,this.user});
+
+  String spName;
   @override
   Widget build(BuildContext context) {
+    //ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
+    //servicesProvider.getServiceProviderDetails(service.serv_prov_id);
     return Padding(
         padding: const EdgeInsets.all(10.0),
         child: GestureDetector(
@@ -55,50 +61,47 @@ class CatalogueCard extends StatelessWidget {
                           children: <Widget>[
                             Text(service.name,
                               style: TextStyle (
-                                  color: Colors.white,
+                                  color: Color(0xffe57008),
                                   fontSize: 18
                               ),
                             ),
+
+
+                                Expanded(
+                                      child: Text(service.serv_prov_name,
+                                        style: TextStyle (
+                                            color: Color(0xffe57008),
+                                            fontSize: 12
+                                        ),
+                                      ),
+                                    ),
+
+
+
                             Expanded(
-                              child: Text(service.name,
+                              child: Text("Price: "+service.price,
                                 style: TextStyle (
-                                    color: Colors.white,
+                                    color: Color(0xffe57008),
                                     fontSize: 12
                                 ),
                               ),
                             ),
-
-
-                            Expanded(
-                              child: Text("Price: "+service.price.toString(),
-                                style: TextStyle (
-                                    color: Colors.white,
-                                    fontSize: 12
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 70,
                                 ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              /*child: IconButton(
-
-                              onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    //builder: (ctx) => MyHomePage(),
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child:LikeButtonWidget(isLiked:service.isLiked,
+                                        likeCount:service.likeCount,
+                                        docid:service.docid,
+                                        userid: user.uid,
+                                    ),
                                   ),
-                                );
-                              },
-                              icon: Icon(Icons.favorite,
-                                  size: 22.0 ,
-                                  color: Color(0xffedf1f0)
-                              ),
-                              //label: Text('Home')
-                            ),*/
-                              child:LikeButtonWidget(isLiked:service.isLiked,
-                                  likeCount:service.likeCount,
-                                  docid:service.docid,
-                                  userid: user.uid,
-                              ),
+                                ),
+                              ],
                             ),
 
                           ],
