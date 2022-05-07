@@ -68,7 +68,7 @@ class CatalogueCard extends StatelessWidget {
 
 
                                 Expanded(
-                                      child: Text(service.serv_prov_name,
+                                      child: Text(service.spName,
                                         style: TextStyle (
                                             color: Color(0xffe57008),
                                             fontSize: 12

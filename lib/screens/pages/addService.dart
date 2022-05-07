@@ -79,7 +79,7 @@ class _AddServiceState extends State<AddService> {
                   });
                   ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
                 await servicesProvider.sp_addservice(user.uid,_servicename.text, _category.text,
-                      _price.text, _description.text,imageUrlList).then((value) => {
+                      _price.text, _description.text,imageUrlList,_equipmentDetail.text,servicesProvider.serviceProvModel).then((value) => {
                   Navigator.of(context).push(
                   MaterialPageRoute(
                   builder: (ctx) => AddImage(),

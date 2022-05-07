@@ -130,7 +130,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
     ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
     final user = Provider.of<Users>(context);
     servicesProvider.fetchFirebaseWishlist(user.uid);
-    servicesProvider.getserviceSnapShot1();
+    servicesProvider.getserviceSnapShot();
     //print(servicesProvider.newList);
 
 

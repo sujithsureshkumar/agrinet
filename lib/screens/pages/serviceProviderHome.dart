@@ -1,3 +1,4 @@
+import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/screens/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,18 +32,18 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
+    servicesProvider.getServiceProviderDetails(user.uid);
     profile =Provider.of<ProfileData>(context, listen: false);
     profile.spFormFillCheck(user.uid);
     print(profile.profileStatus);
-
-
     return Scaffold(
         //backgroundColor: Colors.grey[900],
-
         body: Stack(
           children: [
             Consumer<ProfileData>(
               builder: (context, data, child) {
+                print(servicesProvider.serviceProvModel);
                 return data.profileStatus ?Center(
                   child: Padding(
                     padding: const EdgeInsets.all(30.0),

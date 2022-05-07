@@ -1,14 +1,17 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/screens/pages/reviews.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/defaultBackButton.dart';
 import 'package:AgriNet/widget/likeButtonWidget.dart';
 import 'package:AgriNet/widget/recommendedItems.dart';
 import 'package:AgriNet/widget/recommendedView.dart';
+import 'package:AgriNet/widget/reviewEditUI.dart';
 import 'package:AgriNet/widget/reviewUI.dart';
 import 'package:AgriNet/widget/stickyLabel.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetails extends StatefulWidget {
   final Service service;
@@ -41,6 +44,14 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     "ahttps://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/folderName%2FimageName?alt=media&token=77b4fba1-5afd-4c85-a86a-d4c44f3f0ecf",
   ];
 
+  _launchCaller() async {
+    const url = "tel:1234567";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +71,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               ),
               child: IconButton(
                 icon: Icon(Icons.phone, color: kPrimaryColor),
-                onPressed: () => print("Phone Call"),
+                onPressed: () => _launchCaller(),
               ),
             ),
             Container(
@@ -230,7 +241,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               child: GestureDetector(
                 onTap: () => print("Selected Service Provider"),
                 child: Text(
-                  "ABC Service Provider",
+                  widget.service.spName,
                   style: TextStyle(
                     fontSize: 17.0,
                   ),
@@ -301,11 +312,11 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   top: kLessPadding),
               child: isMore
                   ? Text(
-                "Xbox is a video gaming brand created and owned by Microsoft. The brand consists of five video game consoles, as well as applications (games), streaming services, an online service by the name of Xbox Live, and the development arm by the name of Xbox Game Studios. The brand was first introduced in the United States in November 2001, with the launch of the original Xbox console. The original device was the first video game console offered by an American company after the Atari Jaguar stopped sales in 1996. It reached over 24 million units sold as of May 2006. Microsoft's second console, the Xbox 360, was released in 2005 and has sold 84 million units as of June 2014. The third console, the Xbox One, was released in November 2013 and has sold 46.9 million units as of October 2019. The fourth and fifth consoles, Xbox Series X and Series S, were released in November 2020. The head of Xbox is Phil Spencer, who succeeded former head Marc Whitten in late March 2014.",
+                widget.service.description,
                 style: kSubTextStyle,
               )
                   : Text(
-                "Xbox is a video gaming brand created and owned by Microsoft. The brand consists of five video game consoles, as well as applications (games), streaming services, an online service by the name of Xbox Live, and the development arm by the name of Xbox Game Studios. The brand was first introduced in the United States in November 2001, with the launch of the original Xbox console. The original device was the first video game console offered by an American company after the Atari Jaguar stopped sales in 1996. It reached over 24 million units sold as of May 2006. Microsoft's second console, the Xbox 360, was released in 2005 and has sold 84 million units as of June 2014. The third console, the Xbox One, was released in November 2013 and has sold 46.9 million units as of October 2019. The fourth and fifth consoles, Xbox Series X and Series S, were released in November 2020. The head of Xbox is Phil Spencer, who succeeded former head Marc Whitten in late March 2014.",
+                widget.service.description,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 style: kSubTextStyle,
@@ -335,7 +346,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      //builder: (context) => Reviews(),
+                      builder: (context) => Reviews(),
                     ),
                   ),
                   child: Padding(
@@ -368,6 +379,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 );
               },
             ),
+            kSmallDivider,
+            ReviewEditUI(),
             kSmallDivider,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,3 +1,4 @@
+import 'package:AgriNet/models/serviceProvModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:AgriNet/services/firebase_api.dart';
 import 'package:AgriNet/models/service.dart';
@@ -11,7 +12,8 @@ class ServicesProvider extends ChangeNotifier {
   List<Service> serviceList=[];
   List<Service> serviceWishlist=[];
   String _docid;
-
+  ServiceProvModel _serviceProvModel;
+  ServiceProvModel get serviceProvModel => _serviceProvModel;
   List<Service> newList=[];
 
   String get docid => _docid;
@@ -22,14 +24,21 @@ class ServicesProvider extends ChangeNotifier {
   String get serviceProviderName => _serviceProviderName;
 
 
+
  Future<bool> getServiceProviderDetails(String docid) async {
-   _serviceProviderName = '';
    DocumentSnapshot spSnapShot =
    await FirebaseFirestore.instance
        .collection('service_providers')
        .doc(docid)
        .get();
-   _serviceProviderName = spSnapShot.get('service_provider_name');
+   //_serviceProviderName = spSnapShot.get('service_provider_name');
+   _serviceProvModel=ServiceProvModel(
+       name: spSnapShot.get('name'),
+      phone_number: spSnapShot.get('phone_number'),
+      account_holder_name: spSnapShot.get('account_holder_name'),
+      ifs_code: spSnapShot.get('ifs_code'),
+      account_number: spSnapShot.get('account_number'),
+   );
    notifyListeners();
  }
 
@@ -59,6 +68,11 @@ class ServicesProvider extends ChangeNotifier {
         likeCount:snap.get('likecount'),
           description:snap.get('description'),
           serv_prov_id:snap.get('serv_prov_id'),
+          spName:snap.get('spName'),
+          phone_number:snap.get('phone_number'),
+          account_holder_name:snap.get('account_holder_name'),
+          ifs_code:snap.get('ifs_code'),
+          account_number:snap.get('account_number'),
         //serv_prov_name:
       );
 
@@ -99,7 +113,7 @@ class ServicesProvider extends ChangeNotifier {
     }).toList();*/
 
   Future sp_addservice(String uid,String service_name,String category,
-      String price_per_unit,String description ,List<String> imageurl) async {
+      String price_per_unit,String description ,List<String> imageurl,String equipments ,ServiceProvModel spData) async {
     _docid = Uuid().v1();
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
@@ -113,8 +127,14 @@ class ServicesProvider extends ChangeNotifier {
       //'no_of_service':no_of_service,
       'description':description,
       'imageUrl':imageurl,
+      'equipments':equipments,
       'likecount':0,
       'isLiked':false,
+      'spName':spData.name,
+      'phone_number':spData.phone_number,
+      'account_holder_name':spData.account_holder_name,
+      'ifs_code':spData.ifs_code,
+      'account_number':spData.account_number,
 
 
     })
@@ -148,7 +168,7 @@ class ServicesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getserviceSnapShot1() async {
+  /*Future<void> getserviceSnapShot1() async {
     newList = [];
     Service obj;
     QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('services').get();
@@ -183,5 +203,7 @@ class ServicesProvider extends ChangeNotifier {
     });
     serviceList=newList;
     notifyListeners();
-  }
+  }*/
+
+
 }
