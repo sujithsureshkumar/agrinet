@@ -1,5 +1,6 @@
 
 import 'package:AgriNet/providers/profile_data.dart';
+import 'package:AgriNet/screens/pages/labourHome.dart';
 import 'package:AgriNet/screens/pages/profilepage.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
@@ -87,7 +88,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
   List<Widget> _allWidgets = [
     FarmHome(),
     ServiceProviderHome(),
-    FarmHome(),
+    LabourHome(),
   ];
 
   List<Widget> getWidgets() {

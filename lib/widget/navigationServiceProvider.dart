@@ -1,4 +1,5 @@
 import 'package:AgriNet/screens/pages/addService.dart';
+import 'package:AgriNet/screens/pages/labour_Catalog.dart';
 import 'package:AgriNet/screens/pages/serviceDetails.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:flutter/material.dart';
@@ -182,11 +183,11 @@ class NavigationServiceProvider extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              //builder: (ctx) => WishlistCatalog(),
+                              builder: (ctx) => LabourCatalog(),
                             ),
                           );
                         },
-                        icon: Icon(Icons.favorite,
+                        icon: Icon(Icons.person_add,
                             size: 33.0 ,
                             color: Color(0xffedf1f0)
                         ),
@@ -196,7 +197,7 @@ class NavigationServiceProvider extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 2.0),
                       child: Text(
-                        "Fav",
+                        "Labor",
                         style: TextStyle(
                           color: Colors.yellow,
                           fontWeight: FontWeight.bold,
