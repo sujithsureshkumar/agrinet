@@ -34,6 +34,11 @@ const kSmallDivider = Divider(
     thickness: 5.0,
 );
 
+const kDarkTextStyle = TextStyle(
+    fontSize: 20.0,
+    color: kDarkColor,
+);
+
 const TextTheme TEXT_THEME_DEFAULT = TextTheme(
     headline1: TextStyle(
         color: COLOR_BLACK, fontWeight: FontWeight.w700, fontSize: 26),

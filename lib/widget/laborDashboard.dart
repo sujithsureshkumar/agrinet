@@ -1,33 +1,40 @@
 
+import 'package:AgriNet/screens/pages/laborProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LaborDashboard extends StatelessWidget {
   Items item1 = new Items(
       title: "Profile",
-      icon:Icons.person
+      icon:Icons.person,
+      widget:LaborProfile()
   );
 
 
   Items item2 = new Items(
     title: "Location",
       icon:Icons.location_on,
+      widget:LaborProfile()
   );
   Items item3 = new Items(
     title: "Bank Account",
-      icon: Icons.account_balance_wallet
+      icon: Icons.account_balance_wallet,
+      widget:LaborProfile()
   );
   Items item4 = new Items(
     title: "Activity",
       icon: Icons.local_activity,
+      widget:LaborProfile()
   );
   Items item5 = new Items(
     title: "To do",
-      icon:Icons.person
+      icon:Icons.person,
+      widget:LaborProfile()
   );
   Items item6 = new Items(
     title: "Settings",
-      icon:Icons.person
+      icon:Icons.person,
+      widget:LaborProfile()
   );
 
   @override
@@ -42,33 +49,42 @@ class LaborDashboard extends StatelessWidget {
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
           children: myList.map((data) {
-            return Container(
-              decoration: BoxDecoration(
-                  color: Color(0xffb9b3c2),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                Icon(
-                  data.icon,
-                  size: 66,
-                  color: Color(0xff83b13a),
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => data.widget
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color(0xffb9b3c2),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                  Icon(
+                    data.icon,
+                    size: 66,
+                    color: Color(0xff83b13a),
+                  ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    Text(
+                      data.title,
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600)),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                  ],
                 ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  Text(
-                    data.title,
-                    style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                            color: Colors.green,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600)),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                ],
               ),
             );
           }).toList()),
@@ -82,5 +98,6 @@ class Items {
   String event;
   String img;
   IconData icon;
-  Items({this.title, this.subtitle, this.event, this.img,this.icon});
+  Widget widget;
+  Items({this.title, this.subtitle, this.event, this.img,this.icon,this.widget});
 }
