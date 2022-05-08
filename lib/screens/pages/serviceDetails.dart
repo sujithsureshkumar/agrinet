@@ -11,6 +11,7 @@ import 'package:AgriNet/widget/reviewEditUI.dart';
 import 'package:AgriNet/widget/reviewUI.dart';
 import 'package:AgriNet/widget/stickyLabel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetails extends StatefulWidget {
@@ -54,6 +55,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
   }
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Users>(context);
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(
@@ -380,7 +382,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               },
             ),
             kSmallDivider,
-            ReviewEditUI(),
+            widget.service.reviewList.contains(user.uid)?
+            Container():ReviewEditUI(service: widget.service,),
             kSmallDivider,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

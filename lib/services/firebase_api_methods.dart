@@ -157,6 +157,28 @@ Future addBooking(Timestamp startTime,Timestamp endTime) async {
   })
       .catchError((error) => print("Failed to add start&end time: $error"));
 }
+
+
+Future addReview(String docid,String uid,String image,String name, String rating,String comment) async {
+  await FirebaseFirestore.instance.collection('services')
+      .doc(docid).collection("Review")
+      .doc(uid)
+      .set({
+    'image': image, // John Doe
+    'name': name, // Stokes and Sons
+    'rating': rating,
+    'comment': comment,
+    'createdOn':FieldValue.serverTimestamp()
+  });
+
+  await FirebaseFirestore.instance.collection('services')
+      .doc(docid)
+      .update({
+    'reviewList': FieldValue.arrayUnion([uid]), // John Doe
+
+  });
+}
+
 /// Check If Document Exists
 
 

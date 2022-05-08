@@ -73,6 +73,7 @@ class ServicesProvider extends ChangeNotifier {
           account_holder_name:snap.get('account_holder_name'),
           ifs_code:snap.get('ifs_code'),
           account_number:snap.get('account_number'),
+          reviewList: List.from(snap.get("reviewList"))
         //serv_prov_name:
       );
 
@@ -205,5 +206,20 @@ class ServicesProvider extends ChangeNotifier {
     notifyListeners();
   }*/
 
+  bool _reviewExist=false;
+  bool get reviewExist => _reviewExist;
+  Future<bool> checkIfReviewExists(String docId) async {
+    _reviewExist=false;
+    try {
+      // Get reference to Firestore collection
+      var collectionRef = FirebaseFirestore.instance.collection('services');
 
+      var doc = await collectionRef.doc(docId).get();
+      //return doc.exists;
+      _reviewExist=doc.exists;
+    } catch (e) {
+      throw e;
+    }
+    notifyListeners();
+  }
 }
