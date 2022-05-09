@@ -1,5 +1,7 @@
 
+import 'package:AgriNet/screens/pages/addImage.dart';
 import 'package:AgriNet/screens/pages/laborProfile.dart';
+import 'package:AgriNet/test/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,12 +16,12 @@ class LaborDashboard extends StatelessWidget {
   Items item2 = new Items(
     title: "Location",
       icon:Icons.location_on,
-      widget:LaborProfile()
+      widget:Location()
   );
   Items item3 = new Items(
     title: "Bank Account",
       icon: Icons.account_balance_wallet,
-      widget:LaborProfile()
+      widget:AddImage()
   );
   Items item4 = new Items(
     title: "Activity",

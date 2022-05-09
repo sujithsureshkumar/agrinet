@@ -1,4 +1,6 @@
+import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/providers/users_provider.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
@@ -6,6 +8,8 @@ import '../../models/users.dart';
 import '../../providers/imgProvider.dart';
 import '../../providers/services_provider.dart';
 import '../../services/firebase_api_methods.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 
 class AddImage extends StatefulWidget {
@@ -18,8 +22,64 @@ class _AddImageState extends State<AddImage> {
   //final scrollController = ScrollController();
   //ImgPicker ImgPick;
   bool circular = false;
+  TextEditingController _street = TextEditingController();
+  TextEditingController _locality = TextEditingController();
+  TextEditingController _district = TextEditingController();
+  TextEditingController _state = TextEditingController();
+  TextEditingController _postalCode = TextEditingController();
+  TextEditingController _country = TextEditingController();
+
+  String location ='Null, Press Button';
+  String Address = 'search';
+  Placemark place;
+
+  Future<Position> _getGeoLocationPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
 
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      await Geolocator.openLocationSettings();
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
+
+  Future<void> GetAddressFromLatLong(Position position)async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    print(placemarks);
+    place = placemarks[0];
+    Address = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    setState(()  {
+    });
+  }
 
   Widget addImageCard() {
     ImgProvider imgProvider = Provider.of<ImgProvider>(context, listen: false);
@@ -41,7 +101,7 @@ class _AddImageState extends State<AddImage> {
           height: 200,
           width: 150.0,
           child: Card(
-            color: Colors.grey[800],
+            color: Color(0xffb9b3c2),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -105,7 +165,7 @@ class _AddImageState extends State<AddImage> {
         child: Container(
           height: 200,
           child: Card(
-            color: Colors.grey[800],
+            color: Color(0xffb9b3c2),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -133,6 +193,31 @@ class _AddImageState extends State<AddImage> {
     );
   }
 
+  Widget locationTextField(TextEditingController name,String label) {
+    return TextFormField(
+      controller: name,
+      validator: (value) {
+        if (value.isEmpty) return "Name can't be empty";
+
+        return null;
+      },
+      enabled:false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        labelText: label,
+        //helperText: "Name can't be empty",
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -146,7 +231,7 @@ class _AddImageState extends State<AddImage> {
   }
 
 
-
+  bool fixed=false;
   @override
   Widget build(BuildContext context){
     final user = Provider.of<Users>(context);
@@ -154,16 +239,62 @@ class _AddImageState extends State<AddImage> {
     return Consumer<ImgProvider>(
         builder:(context, imgProvider, _) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Color(0xff6d8000),
-              title: Padding(
-                padding: EdgeInsets.only(top: 4.0),
-                child:Center(
-                    child:Text("Add Image")
-                ),
+            appBar:DefaultAppBar(title: "Add Image"),
+            bottomNavigationBar: Material(
+              elevation: kLess,
+              color: kWhiteColor,
+              child: Row(
+                children: [
+                  SizedBox(
+                      width:5
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      //padding: EdgeInsets.symmetric(vertical: kLessPadding),
+                      //color: kPrimaryColor,
+                      //textColor: kWhiteColor,
+                      child: Text("Skip", style: TextStyle(fontSize: 18.0)),
+                      style: TextButton.styleFrom(
+                          primary: kWhiteColor,
+                          elevation: 2,
+                          backgroundColor: kLightColor),
+                      onPressed: () => Navigator.of(context)
+                        ..pop()
+                        ..pop()
+                    ),
+                  ),
+
+                  SizedBox(
+                      width:10
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      //padding: EdgeInsets.symmetric(vertical: kLessPadding),
+                      //color: kPrimaryColor,
+                      //textColor: kWhiteColor,
+                      child: Text("Submit", style: TextStyle(fontSize: 18.0)),
+                      style: TextButton.styleFrom(
+                        primary: kWhiteColor,
+                        elevation: 2,
+                        backgroundColor: kPrimaryColor,
+                      ),
+                      onPressed: () async {
+                        if(imgProvider.imageUrlList.length>0){
+                          await updateImage(imgProvider.imageUrlList,servicesProvider.docid).then((value) => {
+                            Navigator.of(context)
+                              ..pop()
+                              ..pop()
+                          });
+                        }
+                      }),
+                  ),
+                  SizedBox(
+                      width:5
+                  ),
+                ],
               ),
             ),
-            backgroundColor: Colors.grey[900],
+            //backgroundColor: Colors.grey[900],
             body: Column(
               children: [
                 Container(
@@ -190,75 +321,83 @@ class _AddImageState extends State<AddImage> {
                 ),
                 Row(
                   children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () async {
-                          setState(() {
-                            circular = true;
-                          });
-                          if(imgProvider.imageUrlList.length>0){
-                           await updateImage(imgProvider.imageUrlList,servicesProvider.docid).then((value) => {
-                              Navigator.of(context)
-                              ..pop()
-                              ..pop()
-                            });
-                          }
-                        },
-                        child: Center(
-                          child: Container(
-                            width: 150,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child:Center(
-                              child: Text(
-                                "Submit",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0,left: 10,right: 10),
+                      child:SizedBox(
+                          width:MediaQuery.of(context).size.width*0.75,
+                          child: locationTextField(_street,"Street")),
                     ),
 
-                    Expanded(
-                      child: InkWell(
-                        onTap: () async {
-                          Navigator.of(context)
-                            ..pop()
-                            ..pop();
-                        },
-                        child: Center(
-                          child: Container(
-                            width: 150,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child:Center(
-                              child: Text(
-                                "Skip",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0,left: 10,right: 10),
+                      child: Container(
+                        //margin: const EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.all(3.0),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black38)
+                        ),
+                        child: IconButton(
+
+                          onPressed: () async {
+                            Position position = await _getGeoLocationPosition();
+                            location ='Lat: ${position.latitude} , Long: ${position.longitude}';
+                            GetAddressFromLatLong(position);
+
+                            setState(() {
+                              _street.text = place.street;
+                              _locality.text = place.locality;
+                              _district.text = place.subAdministrativeArea;
+                              _state.text = place.administrativeArea;
+                              _postalCode.text = place.postalCode;
+                              _country.text = place.country;
+                              fixed=true;
+                              // _controllerEmail.text = widget.email;
+                            });
+                          },
+                          icon:fixed? Icon(Icons.gps_fixed,
+                              size: 33.0 ,
+                              color: Color(0xff141514)
+                          ):Icon(Icons.gps_not_fixed,
+                                size: 33.0 ,
+                                color: Color(0xff353935)
+                          //label: Text('Home')
                         ),
                       ),
                     ),
+                    ),
+
                   ],
                 ),
+
+
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0,left: 10,right: 10),
+                  child:locationTextField(_locality,"Locality"),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0,left: 10,right: 10),
+                  child:locationTextField(_district,"District"),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0,left: 10,right: 10),
+                  child:locationTextField(_state,"State"),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0,left: 10,right: 10),
+                  child:locationTextField(_postalCode,"Postal Code"),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0,left: 10,right: 10),
+                  child:locationTextField(_country,"Country"),
+                ),
+
               ],
+
+
             ),
 
 
