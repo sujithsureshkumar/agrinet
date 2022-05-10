@@ -1,6 +1,7 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/screens/pages/dateFarmSelection.dart';
 import 'package:AgriNet/screens/pages/reviews.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/defaultBackButton.dart';
@@ -103,7 +104,10 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   child: Text("Proceed", style: TextStyle(fontSize: 18.0)),
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      //builder: (context) => DeliveryAddress(),
+                      builder: (context) => DateFarmSelection(
+                        service:widget.service,
+                        user: widget.user,
+                      ),
                     ),
                   ),
                 ),

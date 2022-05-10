@@ -1,4 +1,5 @@
 //import 'package:chat_app/group_chats/group_info.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,21 @@ class GroupChatRoom extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: DefaultAppBar(title:groupName,
+        action:  [
+          IconButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => GroupInfo(
+                    groupName: groupName,
+                    groupId: groupChatId,
+                  ),
+                ),
+              ),
+              icon: Icon(Icons.more_vert)),
+        ],
+      ),
+      /*AppBar(
         title: Text(groupName),
         actions: [
           IconButton(
@@ -53,7 +68,7 @@ class GroupChatRoom extends StatelessWidget {
               ),
               icon: Icon(Icons.more_vert)),
         ],
-      ),
+      ),*/
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -1,7 +1,9 @@
 
+import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/providers/services_provider.dart';
+import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/date_range_picker_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +16,17 @@ import '../../widget/defaultButton.dart';
 import '../../widget/defaultTextField.dart';
 import '../../widget/headerLabel.dart';
 
-class Delivery extends StatefulWidget {
-  Delivery({Key key}) : super(key: key);
+class DateFarmSelection extends StatefulWidget {
+  final Service service;
+  final Users user;
+  DateFarmSelection({Key key,@required this.service,
+    @required this.user}) : super(key: key);
 
   @override
-  _DeliveryState createState() => _DeliveryState();
+  _DateFarmSelectionState createState() => _DateFarmSelectionState();
 }
 
-class _DeliveryState extends State<Delivery> {
+class _DateFarmSelectionState extends State<DateFarmSelection> {
   final _globalkey = GlobalKey<FormState>();
 
   List<String> items=['Item 1', 'Item 2' , 'Item 3'];
@@ -59,6 +64,7 @@ class _DeliveryState extends State<Delivery> {
 
   @override
   Widget build(BuildContext context) {
+    print("null for date");
     //final user = Provider.of<Users>(context);
     //FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
     //farmProvider.fetchUserGroup(user.uid);
@@ -260,12 +266,23 @@ class _DeliveryState extends State<Delivery> {
               DateRangePickerWidget(),
 
               DefaultButton(
-                btnText: "Go to payment",
+                btnText: "Place Request",
                 onPressed: () async {
-                  if (_globalkey.currentState.validate()) {
+                  if (_globalkey.currentState.validate()
+                      && servicesProvider.startTimeStamp!=null
+                      && servicesProvider.endTimeStamp!=null) {
 
-                    await addBooking(servicesProvider.startTimeStamp,servicesProvider.endTimeStamp);
+                    await addBooking(widget.service,widget.user,_myState,_myStateList,
+                        servicesProvider.startTimeStamp,servicesProvider.endTimeStamp).then((value) => {
+                           Navigator.of(context).push(
+                               MaterialPageRoute(
+                                   builder: (ctx) => Success(),
+                                    ),
+                              )
+                           });
 
+                  }else{
+                    print("null for date");
                   }
                   //return addBooking(servicesProvider.startTimeStamp,servicesProvider.endTimeStamp);
                 },

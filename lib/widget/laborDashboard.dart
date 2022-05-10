@@ -1,6 +1,7 @@
 
 import 'package:AgriNet/screens/pages/addImage.dart';
 import 'package:AgriNet/screens/pages/laborProfile.dart';
+import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/test/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,7 +27,7 @@ class LaborDashboard extends StatelessWidget {
   Items item4 = new Items(
     title: "Activity",
       icon: Icons.local_activity,
-      widget:LaborProfile()
+      widget:Success()
   );
   Items item5 = new Items(
     title: "To do",
@@ -36,7 +37,7 @@ class LaborDashboard extends StatelessWidget {
   Items item6 = new Items(
     title: "Settings",
       icon:Icons.person,
-      widget:LaborProfile()
+      widget:Success()
   );
 
   @override
@@ -61,31 +62,41 @@ class LaborDashboard extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: Color(0xffb9b3c2),
+                    color: Colors.purple[400],
+                    image: DecorationImage(
+                      image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2Fbanner2.jpg?alt=media&token=9a215c7b-6fde-4def-b988-c6e985c203cb"),
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                      fit: BoxFit.cover,
+                    ),
                     borderRadius: BorderRadius.circular(10)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                  Icon(
-                    data.icon,
-                    size: 66,
-                    color: Color(0xff83b13a),
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                    Icon(
+                      data.icon,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                      SizedBox(
+                        height: 14,
+                      ),
+                      Text(
+                        data.title,
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600)),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                    ],
                   ),
-                    SizedBox(
-                      height: 14,
-                    ),
-                    Text(
-                      data.title,
-                      style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600)),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                  ],
                 ),
               ),
             );

@@ -1,11 +1,13 @@
 import 'package:AgriNet/screens/pages/addfarm.dart';
+import 'package:AgriNet/screens/pages/bookingListing.dart';
 import 'package:AgriNet/screens/pages/bookingSummary.dart';
-import 'package:AgriNet/screens/pages/delivery.dart';
+import 'package:AgriNet/screens/pages/dateFarmSelection.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:AgriNet/screens/pages/wishlist_catalog.dart';
 import 'package:AgriNet/widget/bookingSummaryCard.dart';
+import 'package:AgriNet/widget/customCardsPage.dart';
 import 'package:AgriNet/widget/serviceListingCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,10 @@ class _FarmHomeState extends State<FarmHome> {
     final user = Provider.of<Users>(context);
     return Stack(
       children: <Widget>[
-
+        SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: CustomCardsPage()
+        ),
 
         Positioned(
           bottom:20,
@@ -40,7 +45,8 @@ class _FarmHomeState extends State<FarmHome> {
                 Radius.circular(50.0),
               ),
               child: Container(
-                color: Colors.black26,
+                //color: Colors.black26,
+                 color: Color(0xffa694a7),
                 child: Row(
                   children:<Widget> [
                     Container(
@@ -168,7 +174,7 @@ class _FarmHomeState extends State<FarmHome> {
                               onPressed: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (ctx) => Delivery(),
+                                    builder: (ctx) => BookingListing(),
                                   ),
                                 );
                               },

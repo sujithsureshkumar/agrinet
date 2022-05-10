@@ -1,4 +1,5 @@
 import 'package:AgriNet/screens/pages/addService.dart';
+import 'package:AgriNet/screens/pages/bookingSummary.dart';
 import 'package:AgriNet/screens/pages/labour_Catalog.dart';
 import 'package:AgriNet/screens/pages/serviceDetails.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
@@ -16,7 +17,7 @@ class NavigationServiceProvider extends StatelessWidget {
           Radius.circular(50.0),
         ),
         child: Container(
-          color: Colors.black26,
+          color: Color(0xffa694a7),
           child: Row(
             children:<Widget> [
               Container(
@@ -69,7 +70,7 @@ class NavigationServiceProvider extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              //builder: (ctx) => ServiceCatalogue(),
+                              builder: (ctx) => ServiceListing(),
                             ),
                           );
                         },
@@ -146,7 +147,7 @@ class NavigationServiceProvider extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (ctx) => ServiceListing(),
+                              builder: (ctx) => BookingSummary(),
                             ),
                           );
                         },

@@ -1,4 +1,5 @@
 
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +49,7 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Groups"),
-      ),
+      appBar: DefaultAppBar(title: "Groups"),
       body: isLoading
           ? Container(
         height: size.height,
@@ -76,6 +75,7 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+          backgroundColor:Color(0xffa694a7),
         child: Icon(Icons.create),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(

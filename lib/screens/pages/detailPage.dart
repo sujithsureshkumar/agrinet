@@ -8,7 +8,7 @@ import '../../methods/widget_functions.dart';
 import '../../models/users.dart';
 import '../../widget/BorderIcon.dart';
 import '../../widget/OptionButton.dart';
-import 'delivery.dart';
+import 'dateFarmSelection.dart';
 
 class DetailPage extends StatefulWidget {
   final Service service;
@@ -139,7 +139,7 @@ class _DetailPageState extends State<DetailPage> {
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (ctx) => Delivery(),
+                            builder: (ctx) => DateFarmSelection(),
                           ),
                         );
                       },
@@ -152,7 +152,7 @@ class _DetailPageState extends State<DetailPage> {
                       onPressed: () {
                     Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                    builder: (ctx) => Delivery(),
+                    builder: (ctx) => DateFarmSelection(),
                     ),
                     );
                     },

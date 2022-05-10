@@ -1,5 +1,6 @@
 
 
+import 'package:AgriNet/models/service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/users.dart';
@@ -7,7 +8,7 @@ import '../models/users.dart';
 
 //final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 //final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('service_providers');
-Future sp_onboarding(String uid,String service_provider_name,String service_type,
+Future sp_onboarding(String uid,String name,
     String location,String phone_number,String account_holder_name,
     String account_number,String ifs_code,String bank_name,String pincode ) async {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -15,9 +16,8 @@ Future sp_onboarding(String uid,String service_provider_name,String service_type
   return serviceProvidersCollectionReference
       .doc(uid)
       .set({
-    'service_provider_name': service_provider_name, // John Doe
-    'service_type': service_type, // Stokes and Sons
-    'location': location, // 42
+    'name': name,
+    'location': location,
     'phone_number':phone_number,
     'account_holder_name':account_holder_name,
     'account_number':account_number,
@@ -141,13 +141,21 @@ Future sp_updateService(String docid,String service_name,String category,
 }
 
 
-Future addBooking(Timestamp startTime,Timestamp endTime) async {
+Future addBooking(Service service, Users user,String farmType,String farmName,Timestamp startTime,Timestamp endTime) async {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Bookings');
   return serviceProvidersCollectionReference
       .add({
+    'farmType':farmType,
+    'farmName':farmName,
+    'price':service.price,
+    'uid':user.uid,
+    'spid':service.serv_prov_id,
+    'spName':service.spName,
+    'serviceName':service.name,
     'startTime': startTime,
     'endTime': endTime,
+    'createdOn':FieldValue.serverTimestamp(),
 
 
 

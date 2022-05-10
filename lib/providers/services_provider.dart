@@ -1,3 +1,4 @@
+import 'package:AgriNet/models/booking.dart';
 import 'package:AgriNet/models/serviceProvModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:AgriNet/services/firebase_api.dart';
@@ -136,6 +137,7 @@ class ServicesProvider extends ChangeNotifier {
       'account_holder_name':spData.account_holder_name,
       'ifs_code':spData.ifs_code,
       'account_number':spData.account_number,
+      'reviewList':[],
 
 
     })
@@ -222,4 +224,32 @@ class ServicesProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  List<Booking> bookingList;
+  Future<void> getBookingSnapShot(String firestoreField,String uid) async {
+    bookingList = [];
+    QuerySnapshot _bookingSnapShot = await FirebaseFirestore.instance
+        .collection('Bookings')
+        .where(firestoreField, isEqualTo: uid)
+        .get();
+    bookingList=_bookingSnapShot.docs.map((snap) {
+      // final user = snap.data();
+      return Booking(
+          farmType: snap.get('farmType'),
+          farmName:snap.get('farmName'),
+          uid: snap.get('uid'),
+          price: snap.get('price'),
+      //phone_number= json['spid'];
+         spid:snap.get('spid'),
+         spName: snap.get('spName'),
+         serviceName: snap.get('serviceName'),
+        Startdate:snap.get('startTime').toDate(),
+        Enddate:snap.get('endTime').toDate(),
+        createdOn: snap.get('createdOn').toDate(),
+      );
+
+    }).toList();
+    notifyListeners();
+  }
+
 }

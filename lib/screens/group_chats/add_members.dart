@@ -1,3 +1,4 @@
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -79,9 +80,7 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Add Members"),
-      ),
+      appBar:DefaultAppBar(title: "Add Members"),
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

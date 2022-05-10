@@ -17,9 +17,6 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
   TextEditingController location = TextEditingController();
   TextEditingController phone_number = TextEditingController();
   TextEditingController pincode = TextEditingController();
-  TextEditingController address= TextEditingController();
-  TextEditingController service_type = TextEditingController();
-  //TextEditingController sp_id = TextEditingController();
   TextEditingController holder_name = TextEditingController();
   TextEditingController acc_number = TextEditingController();
   TextEditingController ifs_code= TextEditingController();
@@ -39,63 +36,6 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                 labelText: 'Full Name',
               ),
             ),
-            /*const SizedBox(
-              height: 12,
-            ),
-            TextField(
-              controller: sp_id,
-              obscureText: true,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Service Provider ID ',
-              ),
-            ),*/
-            /*const SizedBox(
-              height: 12,
-            ),
-            TextField(
-              controller: company_name,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Company Name',
-              ),
-            ),*/
-            const SizedBox(
-
-              height: 12,
-            ),
-            TextField(
-              controller: service_type,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Type Of Service',
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            TextField(
-              controller: location,
-              obscureText: true,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Location',
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            TextField(
-              controller: pincode,
-              obscureText: true,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Pincode',
-              ),
-            ),
-
-
             const SizedBox(
               height: 12,
             ),
@@ -108,6 +48,32 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
                 labelText: 'Phone Number',
               ),
             ),
+            const SizedBox(
+              height: 12,
+            ),
+            TextField(
+              controller: location,
+              //obscureText: true,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Location',
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            TextField(
+              controller: pincode,
+              //obscureText: true,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Pincode',
+              ),
+            ),
+
+
+
 
           ],
         ),
@@ -176,12 +142,9 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Name: ${name.text}'),
-                //Text('Service Provider ID : ${sp_id.text}'),
-                //Text('Company Name: ${company_name.text}'),
-                Text('Type Of Service: ${service_type.text}'),
+                Text('Phone Number: ${phone_number.text}'),
                 Text('Location : ${location.text}'),
                 Text('PinCode : ${pincode.text}'),
-                Text('Phone Number: ${phone_number.text}'),
                 Text('A/c Holder Name: ${holder_name.text}'),
                 Text('A/c Number : ${acc_number.text}'),
                 Text('IFS Code: ${ifs_code.text}'),
@@ -210,7 +173,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
             });
           } else {
             updateFirebaseProfileFillStatus(user.uid,false);
-            sp_onboarding(user.uid,name.text,service_type.text,location.text,
+            sp_onboarding(user.uid,name.text,location.text,
                 phone_number.text,holder_name.text,acc_number.text,ifs_code.text,bank_name.text,pincode.text)
                 .then((value) => {
               Navigator.pop(context)

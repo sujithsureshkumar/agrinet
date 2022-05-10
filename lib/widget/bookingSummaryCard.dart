@@ -242,13 +242,15 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                             ),
                           ),
 
-                          Text(
-                            widget.farmerName,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.red,
+                          Expanded(
+                            child: Text(
+                              widget.farmerName,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                         ],
