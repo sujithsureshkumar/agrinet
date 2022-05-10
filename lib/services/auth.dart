@@ -88,6 +88,13 @@ class AuthService {
         'wishlist': []
       });
 
+      await _firestore.collection('farmUser').doc(users.uid)
+        .collection("allfarms")
+        .doc("allFarm")
+        .set({
+    'allFarm': []
+    });
+
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

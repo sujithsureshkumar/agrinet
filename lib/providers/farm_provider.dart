@@ -12,10 +12,12 @@ class FarmProvider extends ChangeNotifier {
 
   Future farmer_addfarm(String uid,String name,String category,String subCategory,
       String landarea,String location) async {
-    _docid = Uuid().v1();
+    //_docid = Uuid().v1();
+    _docid =name;
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('farmUser');
-    return serviceProvidersCollectionReference.doc(uid)
+    final CollectionReference serviceProvidersCollectionReference = await firebaseFirestore.collection('farmUser');
+    //return
+      serviceProvidersCollectionReference.doc(uid)
         .collection("farms")
         .doc(_docid)
         .set({
@@ -31,6 +33,15 @@ class FarmProvider extends ChangeNotifier {
       print("new Farm Added");
     })
         .catchError((error) => print("Failed to add Farm: $error"));
+
+   serviceProvidersCollectionReference.doc(uid)
+        .collection("allfarms")
+        .doc("allFarm")
+        .update({
+      'allFarm': FieldValue.arrayUnion([_docid])
+    });
+
+
   }
 
 
