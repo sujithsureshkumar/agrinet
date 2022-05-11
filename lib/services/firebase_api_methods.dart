@@ -111,12 +111,13 @@ Future add_to_service_booking(String uid,String service_id,String category,
       .catchError((error) => print("Failed to add Service: $error"));
 }
 
-Future UpdateImageFarmAdd(List<String> imageurlList,String uid, String docid) async {
+Future UpdateImageFarmAdd(List<String> imageurlList,String uid, String docid,double latitude,double longitude) async {
   await FirebaseFirestore.instance.collection('farmUser')
       .doc(uid).collection("farms")
       .doc(docid)
       .update({
-    'imageUrl':imageurlList
+    'imageUrl':imageurlList,
+    'location':GeoPoint(latitude,longitude),
     //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
   })
       .then((value) => print("Image added"))

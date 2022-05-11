@@ -1,5 +1,6 @@
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/providers/users_provider.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
@@ -9,13 +10,13 @@ import '../../providers/services_provider.dart';
 import '../../services/firebase_api_methods.dart';
 
 
-class AddImageFarm extends StatefulWidget {
-  AddImageFarm({Key key}) : super(key: key);
+class AddImageService extends StatefulWidget {
+  AddImageService({Key key}) : super(key: key);
   @override
-  _AddImageFarmState createState() => _AddImageFarmState();
+  _AddImageServiceState createState() => _AddImageServiceState();
 }
 
-class _AddImageFarmState extends State<AddImageFarm> {
+class _AddImageServiceState extends State<AddImageService> {
   //final scrollController = ScrollController();
   //ImgPicker ImgPick;
   bool circular = false;
@@ -151,20 +152,12 @@ class _AddImageFarmState extends State<AddImageFarm> {
   @override
   Widget build(BuildContext context){
     final user = Provider.of<Users>(context);
-    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
     return Consumer<ImgProvider>(
         builder:(context, imgProvider, _) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Color(0xff6d8000),
-              title: Padding(
-                padding: EdgeInsets.only(top: 4.0),
-                child:Center(
-                    child:Text("Add Image")
-                ),
-              ),
-            ),
-            backgroundColor: Colors.grey[900],
+            appBar: DefaultAppBar(title: "Add Image"),
+            //backgroundColor: Colors.grey[900],
             body: Column(
               children: [
                 Container(
@@ -198,8 +191,7 @@ class _AddImageFarmState extends State<AddImageFarm> {
                             circular = true;
                           });
                           if(imgProvider.imageUrlList.length>0){
-                            await UpdateImageFarmAdd(imgProvider.imageUrlList,user.uid,farmProvider.docid,)
-                                .then((value) => {
+                            await updateImage(imgProvider.imageUrlList,servicesProvider.docid).then((value) => {
                               Navigator.of(context)
                                 ..pop()
                                 ..pop()

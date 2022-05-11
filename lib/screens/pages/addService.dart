@@ -1,17 +1,14 @@
 import 'dart:io';
 
-//import 'package:blogapp/NetworkHandler.dart';
-//import 'package:blogapp/Pages/HomePage.dart';
-//import 'package:blogapp/Screen/HomeScreen.dart';
+import 'package:AgriNet/screens/pages/addImageService.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/users.dart';
 import '../../providers/services_provider.dart';
 import '../../services/firebase_api_methods.dart';
-import 'addImage.dart';
-//import 'package:image_picker/image_picker.dart';
+import 'addImageFarm.dart';
 
 class AddService extends StatefulWidget {
   AddService({Key key}) : super(key: key);
@@ -21,6 +18,27 @@ class AddService extends StatefulWidget {
 }
 
 class _AddServiceState extends State<AddService> {
+  @override
+  void initState () {
+    super.initState();
+    _asyncMethod();
+  }
+  List<String> catList=[];
+  String dropdownValue = '';
+  _asyncMethod() async {
+    QuerySnapshot categorySnapShot =
+    await FirebaseFirestore.instance
+        .collection('category')
+        .get();
+
+    dropdownValue = categorySnapShot.docs[0].id;
+    categorySnapShot.docs.forEach((result) {
+      catList.add(result.id);
+    });
+    print(catList);
+
+    setState((){});
+  }
   List<String> imageUrlList=["https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2Fnoimage.png?alt=media&token=47ee7a64-0059-4527-a72f-3b983957d887"];
   bool circular = false;
   //PickedFile _imageFile;
@@ -50,11 +68,11 @@ class _AddServiceState extends State<AddService> {
             SizedBox(
               height: 20,
             ),
-            professionTextField(),
+            catagoryTextField(),
             SizedBox(
               height: 20,
             ),
-            dobField(),
+            priceField(),
             /*SizedBox(
               height: 20,
             ),
@@ -66,7 +84,7 @@ class _AddServiceState extends State<AddService> {
             SizedBox(
               height: 20,
             ),
-            aboutTextField(),
+            descriptionTextField(),
             SizedBox(
               height: 20,
             ),
@@ -82,7 +100,7 @@ class _AddServiceState extends State<AddService> {
                       _price.text, _description.text,imageUrlList,_equipmentDetail.text,servicesProvider.serviceProvModel).then((value) => {
                   Navigator.of(context).push(
                   MaterialPageRoute(
-                  builder: (ctx) => AddImage(),
+                  builder: (ctx) => AddImageService(),
                   ),
                   )
                   });
@@ -147,37 +165,11 @@ class _AddServiceState extends State<AddService> {
     );
   }
 
-  Widget professionTextField() {
-    return TextFormField(
-      controller: _category,
-      validator: (value) {
-        if (value.isEmpty) return "category can't be empty";
 
-        return null;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.teal,
-            )),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
-        prefixIcon: Icon(
-          Icons.category,
-          color: Colors.green,
-        ),
-        labelText: "Category",
-        helperText: "Category can't be empty",
-      ),
-    );
-  }
-
-  Widget dobField() {
+  Widget priceField() {
     return TextFormField(
       controller: _price,
+      keyboardType:TextInputType.number,
       validator: (value) {
         if (value.isEmpty) return "price can't be empty";
 
@@ -201,6 +193,44 @@ class _AddServiceState extends State<AddService> {
         helperText: "Provide price of single service ",
 
       ),
+    );
+  }
+
+  Widget catagoryTextField() {
+    return DropdownButtonFormField(
+      value: dropdownValue,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
+      ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.arrow_circle_down_sharp)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: catList
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 
@@ -229,7 +259,7 @@ class _AddServiceState extends State<AddService> {
     );
   }
 
-  Widget aboutTextField() {
+  Widget descriptionTextField() {
     return TextFormField(
       controller: _description,
       validator: (value) {

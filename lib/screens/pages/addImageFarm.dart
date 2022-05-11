@@ -1,4 +1,5 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/providers/users_provider.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +13,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
 
-class AddImage extends StatefulWidget {
-  AddImage({Key key}) : super(key: key);
+class AddImageFarm extends StatefulWidget {
+  AddImageFarm({Key key}) : super(key: key);
   @override
-  _AddImageState createState() => _AddImageState();
+  _AddImageFarmState createState() => _AddImageFarmState();
 }
 
-class _AddImageState extends State<AddImage> {
+class _AddImageFarmState extends State<AddImageFarm> {
   //final scrollController = ScrollController();
   //ImgPicker ImgPick;
   bool circular = false;
@@ -32,6 +33,7 @@ class _AddImageState extends State<AddImage> {
   String location ='Null, Press Button';
   String Address = 'search';
   Placemark place;
+  Position position;
 
   Future<Position> _getGeoLocationPosition() async {
     bool serviceEnabled;
@@ -235,7 +237,7 @@ class _AddImageState extends State<AddImage> {
   @override
   Widget build(BuildContext context){
     final user = Provider.of<Users>(context);
-    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
+    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
     return Consumer<ImgProvider>(
         builder:(context, imgProvider, _) {
           return Scaffold(
@@ -280,7 +282,9 @@ class _AddImageState extends State<AddImage> {
                       ),
                       onPressed: () async {
                         if(imgProvider.imageUrlList.length>0){
-                          await updateImage(imgProvider.imageUrlList,servicesProvider.docid).then((value) => {
+                          await UpdateImageFarmAdd(imgProvider.imageUrlList,user.uid,farmProvider.docid,
+                              position.latitude,position.longitude)
+                              .then((value) => {
                             Navigator.of(context)
                               ..pop()
                               ..pop()
@@ -339,7 +343,7 @@ class _AddImageState extends State<AddImage> {
                         child: IconButton(
 
                           onPressed: () async {
-                            Position position = await _getGeoLocationPosition();
+                            position = await _getGeoLocationPosition();
                             location ='Lat: ${position.latitude} , Long: ${position.longitude}';
                             GetAddressFromLatLong(position);
 

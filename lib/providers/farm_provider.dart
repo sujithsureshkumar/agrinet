@@ -11,7 +11,7 @@ class FarmProvider extends ChangeNotifier {
   List<String> get groupList => _groupList;
 
   Future farmer_addfarm(String uid,String name,String category,String subCategory,
-      String landarea,String location) async {
+      String landarea) async {
     //_docid = Uuid().v1();
     _docid =name;
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -26,7 +26,7 @@ class FarmProvider extends ChangeNotifier {
       'subcategory': subCategory,
       'category': category,
       'landarea':landarea,
-      'location':location,
+      'location':GeoPoint(0,0),
       'imageUrl':[],
     })
         .then((value) {

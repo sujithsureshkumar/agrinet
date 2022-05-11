@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
-import 'package:AgriNet/screens/pages/addImage.dart';
-import 'package:AgriNet/screens/pages/addImage_farm.dart';
+import 'package:AgriNet/screens/pages/addImageFarm.dart';
+import 'package:AgriNet/screens/pages/addImageService.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class _AddFarmState extends State<AddFarm> {
   }
   List<String> catList=[];
   Map<String, dynamic> CategoryList;
-  String dropdownValue = '';
+  String categoryValue = '';
   String subCategoryValue;
   List<String> subCategory;
   List<String> _tempList=[];
@@ -38,7 +38,7 @@ class _AddFarmState extends State<AddFarm> {
     CategoryList = (categorySnapShot.data()as Map<String, dynamic>)['category'];
 
     catList = CategoryList.keys.toList();
-    dropdownValue = catList[0];
+    categoryValue = catList[0];
     print(CategoryList);
     print(catList);
 
@@ -47,7 +47,7 @@ class _AddFarmState extends State<AddFarm> {
 
   _newGetList() async {
     _tempList=[];
-    CategoryList[dropdownValue].forEach((result){
+    CategoryList[categoryValue].forEach((result){
       _tempList.add(result);
     });
     setState(() {
@@ -62,7 +62,6 @@ class _AddFarmState extends State<AddFarm> {
   TextEditingController _category= TextEditingController();
   TextEditingController _subcategory= TextEditingController();
   TextEditingController _landarea= TextEditingController();
-  TextEditingController _location= TextEditingController();
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
@@ -89,12 +88,7 @@ class _AddFarmState extends State<AddFarm> {
             SizedBox(
               height: 20,
             ),
-            titleTextField(),
-            SizedBox(
-              height: 20,
-            ),
-            aboutTextField(),
-
+            landAreaTextField(),
             SizedBox(
               height: 20,
             ),
@@ -105,8 +99,8 @@ class _AddFarmState extends State<AddFarm> {
                 });
                  if (_globalkey.currentState.validate()) {
                    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
-                   await farmProvider.farmer_addfarm(user.uid,_name.text, _category.text,
-                       _subcategory.text, _landarea.text, _location.text,).then((value) => {
+                   await farmProvider.farmer_addfarm(user.uid,_name.text, categoryValue,
+                     subCategoryValue, _landarea.text,).then((value) => {
                      Navigator.of(context).push(
                        MaterialPageRoute(
                          builder: (ctx) => AddImageFarm(),
@@ -173,7 +167,7 @@ class _AddFarmState extends State<AddFarm> {
   }
   Widget categoryTextField() {
     return DropdownButtonFormField(
-      value: dropdownValue,
+      value: categoryValue,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -196,7 +190,7 @@ class _AddFarmState extends State<AddFarm> {
       isExpanded: true,
       onChanged: (newValue) {
         setState(() {
-          dropdownValue = newValue;
+          categoryValue = newValue;
           _newGetList();
         });
       },
@@ -249,9 +243,10 @@ class _AddFarmState extends State<AddFarm> {
 
 
 
-  Widget titleTextField() {
+  Widget landAreaTextField() {
     return TextFormField(
       controller: _landarea,
+      keyboardType:TextInputType.number,
       validator: (value) {
         if (value.isEmpty) return "Enter acres of land";
 
@@ -278,33 +273,6 @@ class _AddFarmState extends State<AddFarm> {
     );
   }
 
-  Widget aboutTextField() {
-    return TextFormField(
-      controller: _location,
-      validator: (value) {
-        if (value.isEmpty) return "Enter location";
 
-        return null;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.teal,
-            )),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
-        // prefixIcon: Icon(
-        //   Icons.person,
-        //   color: Colors.green,
-        // ),
-        labelText: " Location",
-
-
-      ),
-    );
-  }
 
 }

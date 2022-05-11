@@ -1,5 +1,5 @@
 
-import 'package:AgriNet/screens/pages/addImage.dart';
+import 'package:AgriNet/screens/pages/addImageFarm.dart';
 import 'package:AgriNet/screens/pages/laborProfile.dart';
 import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/test/location.dart';
@@ -22,7 +22,7 @@ class LaborDashboard extends StatelessWidget {
   Items item3 = new Items(
     title: "Bank Account",
       icon: Icons.account_balance_wallet,
-      widget:AddImage()
+      widget:AddImageFarm()
   );
   Items item4 = new Items(
     title: "Activity",
