@@ -6,6 +6,7 @@ import 'package:AgriNet/screens/pages/addImage_farm.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:AgriNet/services/addservice.dart';
 
 class AddFarm extends StatefulWidget {
@@ -15,6 +16,46 @@ class AddFarm extends StatefulWidget {
   _AddFarmState createState() => _AddFarmState();
 }
 class _AddFarmState extends State<AddFarm> {
+
+  @override
+  void initState () {
+    super.initState();
+    _asyncMethod();
+  }
+  List<String> catList=[];
+  Map<String, dynamic> CategoryList;
+  String dropdownValue = '';
+  String subCategoryValue;
+  List<String> subCategory;
+  List<String> _tempList=[];
+  _asyncMethod() async {
+    DocumentSnapshot categorySnapShot =
+    await FirebaseFirestore.instance
+        .collection('Category')
+        .doc('category')
+        .get();
+
+    CategoryList = (categorySnapShot.data()as Map<String, dynamic>)['category'];
+
+    catList = CategoryList.keys.toList();
+    dropdownValue = catList[0];
+    print(CategoryList);
+    print(catList);
+
+    setState((){});
+  }
+
+  _newGetList() async {
+    _tempList=[];
+    CategoryList[dropdownValue].forEach((result){
+      _tempList.add(result);
+    });
+    setState(() {
+      subCategory=_tempList;
+      subCategoryValue=null;
+    });
+  }
+
   bool circular = false;
   final _globalkey = GlobalKey<FormState>();
   TextEditingController _name = TextEditingController();
@@ -40,11 +81,11 @@ class _AddFarmState extends State<AddFarm> {
             SizedBox(
               height: 20,
             ),
-            professionTextField(),
+            categoryTextField(),
             SizedBox(
               height: 20,
             ),
-            dobField(),
+            subCategoryTextField(),
             SizedBox(
               height: 20,
             ),
@@ -130,17 +171,9 @@ class _AddFarmState extends State<AddFarm> {
       ),
     );
   }
-  Widget professionTextField() {
-
-
-
-    return TextFormField(
-      controller: _category,
-      validator: (value) {
-        if (value.isEmpty) return "category can't be empty";
-
-        return null;
-      },
+  Widget categoryTextField() {
+    return DropdownButtonFormField(
+      value: dropdownValue,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -151,24 +184,35 @@ class _AddFarmState extends State<AddFarm> {
               color: Colors.orange,
               width: 2,
             )),
-        // prefixIcon: Icon(
-        //   Icons.category,
-        //   color: Colors.green,
-        // ),
-        labelText: "Category",
-        helperText: "Category can't be empty",
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
       ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.keyboard_arrow_down)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          dropdownValue = newValue;
+          _newGetList();
+        });
+      },
+      items: catList
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 
-  Widget dobField() {
-    return TextFormField(
-      controller: _subcategory,
-      validator: (value) {
-        if (value.isEmpty) return "Subcategory can't be empty";
-
-        return null;
-      },
+  Widget subCategoryTextField() {
+    return DropdownButtonFormField(
+      value: subCategoryValue,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -179,15 +223,31 @@ class _AddFarmState extends State<AddFarm> {
               color: Colors.orange,
               width: 2,
             )),
-        // prefixIcon: Icon(
-        //   Icons.attach_money,
-        //   color: Colors.green,
-        // ),
-        labelText: "Subcategory",
-
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
       ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.keyboard_arrow_down)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          subCategoryValue = newValue;
+        });
+      },
+      items: subCategory?.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      })?.toList(),
     );
   }
+
+
 
   Widget titleTextField() {
     return TextFormField(
