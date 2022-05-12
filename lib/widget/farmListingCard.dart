@@ -1,4 +1,5 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/models/farm.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,8 @@ import 'package:flutter/material.dart';
 
 class FarmListingCard extends StatefulWidget {
 
-  Service service;
-  FarmListingCard ({this.service});
+  Farm farm;
+  FarmListingCard ({this.farm});
 
   @override
   _FarmListingCardState createState() => _FarmListingCardState();
@@ -22,7 +23,7 @@ class _FarmListingCardState extends State<FarmListingCard> {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-              builder: (ctx) => EditService(service: widget.service)
+             // builder: (ctx) => EditService(service: widget.farm)
           ),
         );
       },
@@ -38,7 +39,7 @@ class _FarmListingCardState extends State<FarmListingCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.service.name,
+                    Text(widget.farm.name,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: kFixPadding)),
                     Text("Category",
@@ -47,14 +48,14 @@ class _FarmListingCardState extends State<FarmListingCard> {
                     Text("Date",
                         style: TextStyle(
                             fontSize: 12.0, color: Color(0xFF90C440))),
-                    Text("\$ ${widget.service.name}"),
+                    Text("\$ ${widget.farm.name}"),
                   ],
                 ),
               ),
             ),
 
             Image(
-              image: NetworkImage(widget.service.imageUrl[0]),
+              image: NetworkImage(widget.farm.imageUrl[0]),
               height: 110.0,
               width: 110.0,
               fit: BoxFit.cover,

@@ -5,7 +5,10 @@ class Farm {
   String name;
   String category;
   String subCategory;
+  String landarea;
   GeoPoint location;
+  List<String> imageUrl;
+  DateTime createdOn;
 
 
   Farm({
@@ -14,6 +17,9 @@ class Farm {
     @required this.category,
     @required this.subCategory,
     @required this.location,
+    @required this.landarea,
+    @required this.imageUrl,
+    @required this.createdOn,
   });
 
 }

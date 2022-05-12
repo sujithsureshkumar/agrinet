@@ -27,7 +27,8 @@ class FarmProvider extends ChangeNotifier {
       'subcategory': subCategory,
       'landarea':landarea,
       'location':GeoPoint(0,0),
-      'imageUrl':[],
+        'createdOn':FieldValue.serverTimestamp(),
+      'imageUrl':["https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2Fnoimage.png?alt=media&token=47ee7a64-0059-4527-a72f-3b983957d887"],
     })
         .then((value) {
       print("new Farm Added");
@@ -95,7 +96,10 @@ class FarmProvider extends ChangeNotifier {
           name: snap.get('name'),
           category:snap.get('category'),
           subCategory:snap.get('subcategory'),
+          landarea: snap.get('landarea'),
           location:snap.get('location'),
+          imageUrl: List.from(snap.get("imageUrl")),
+          createdOn: snap.get('createdOn').toDate(),
         //serv_prov_name:
       );
 

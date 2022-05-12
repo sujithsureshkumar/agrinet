@@ -1,4 +1,6 @@
 
+import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/screens/pages/home.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,7 +51,17 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: DefaultAppBar(title: "Groups"),
+      appBar: DefaultAppBar(
+        title: "Groups",
+          child:IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: kPrimaryColor),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => Home(),
+              ),
+            ),
+          )
+      ),
       body: isLoading
           ? Container(
         height: size.height,

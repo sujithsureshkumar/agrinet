@@ -36,8 +36,8 @@ class _FarmListingState extends State<FarmListing> {
                 Column(
                   children: <Widget>[
                     Column(
-                        children: farmProvider.serviceList.map((p) {
-                          return FarmListingCard(service: p);
+                        children: farmProvider.farmList.map((p) {
+                          return FarmListingCard(farm: p);
                         }).toList()
                     ),
                   ],
