@@ -1,5 +1,6 @@
 
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/screens/pages/groupInfoPage.dart';
 import 'package:AgriNet/screens/pages/home.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -75,9 +76,10 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
           return ListTile(
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => GroupChatRoom(
+                builder: (_) => GroupInfoPage(
                   groupName: groupList[index]['name'],
-                  groupChatId: groupList[index]['id'],
+                  //groupChatId: groupList[index]['id'],
+                  groupId: groupList[index]['id'],
                 ),
               ),
             ),
