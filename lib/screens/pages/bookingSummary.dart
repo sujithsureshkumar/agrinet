@@ -36,10 +36,7 @@ class _BookingSummaryState extends State<BookingSummary> {
                   Column(
                       children: servicesProvider.bookingList.map((p) {
                         return BookingSummaryCard(
-                          status: "Rejected",
-                          serviceCategory: "Rubber",
-                          price: p.price,
-                          farmerName: p.farmName
+                          booking: p,
                         );
                       }).toList()
                   ),

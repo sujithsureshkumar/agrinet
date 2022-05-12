@@ -1,3 +1,4 @@
+import 'package:AgriNet/models/farm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:AgriNet/services/firebase_api.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class FarmProvider extends ChangeNotifier {
       'name':name,
       'category': category,
       'subcategory': subCategory,
-      'category': category,
       'landarea':landarea,
       'location':GeoPoint(0,0),
       'imageUrl':[],
@@ -78,6 +78,28 @@ class FarmProvider extends ChangeNotifier {
       _groupList.add(result.get('name'));
     });
 
+    notifyListeners();
+  }
+
+  List<Farm> farmList=[];
+  Future<void> getFarmSnapShot(String uid) async {
+    //List<Product> newList = [];
+    QuerySnapshot _farmSnapShot = await FirebaseFirestore.instance.collection('farmUser')
+        .doc(uid)
+        .collection('farms')
+        .get();
+    farmList=_farmSnapShot.docs.map((snap) {
+      // final user = snap.data();
+      return Farm(
+          docid:snap.get('name'),
+          name: snap.get('name'),
+          category:snap.get('category'),
+          subCategory:snap.get('subcategory'),
+          location:snap.get('location'),
+        //serv_prov_name:
+      );
+
+    }).toList();
     notifyListeners();
   }
 }

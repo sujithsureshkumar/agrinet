@@ -1,18 +1,27 @@
+import 'package:AgriNet/models/booking.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class BookingSummaryCard extends StatefulWidget {
-  String status;
-  String serviceCategory;
-  String price;
-  String farmerName;
-  BookingSummaryCard({this.status,this.serviceCategory,this.price,this.farmerName});
+  Booking booking;
+  BookingSummaryCard({this.booking});
   @override
   _BookingSummaryCardState createState() => _BookingSummaryCardState();
 }
 
 class _BookingSummaryCardState extends State<BookingSummaryCard> {
+
+  @override
+  void initState () {
+    super.initState();
+    if(widget.booking.status=='Accepted' || widget.booking.status=='Rejected'){
+      setState(() {
+        buttonVisible=false;
+      });
+    }
+  }
   static final double radius = 20;
   bool buttonVisible=true;
 
@@ -34,14 +43,17 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
     });
   }*/
  accept() {
-    setState(() {
-      widget.status = 'Accepted';
-      buttonVisible=false;
-    });
+   updateBooking(widget.booking.docid,'Accepted')
+       .then((value) {
+     setState(() {
+       widget.booking.status = 'Accepted';
+       buttonVisible=false;
+     });
+       });
   }
   reject() {
     setState(() {
-      widget.status = 'Rejected';
+      widget.booking.status = 'Rejected';
       buttonVisible=false;
     });
   }
@@ -84,7 +96,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                             child: Column(
                                 children: [
                                   Text(
-                                    widget.status,
+                                    widget.booking.status,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 15,
@@ -94,7 +106,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                   ),
 
                                   Text(
-                                    "On Feb 16,22",
+                                    DateFormat.yMMMMd('en_US').format(widget.booking.statusOn),
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 12,
@@ -129,7 +141,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                         ),
                                       ),
                                       Text(
-                                        widget.serviceCategory,
+                                        "widget.booking.category",
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 15,
@@ -157,7 +169,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                         ),
                                       ),
                                       Text(
-                                        widget.price,
+                                        widget.booking.price,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 15,
@@ -244,7 +256,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
 
                           Expanded(
                             child: Text(
-                              widget.farmerName,
+                              widget.booking.farmName,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 15,

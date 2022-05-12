@@ -1,5 +1,6 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/farmListingCard.dart';
@@ -27,15 +28,15 @@ class _FarmListingState extends State<FarmListing> {
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(title: "My Listings"),
 
-      body: Consumer<ServicesProvider>(
-          builder: (context, servicesProvider, _)  {
+      body: Consumer<FarmProvider>(
+          builder: (context, farmProvider, _)  {
             return ListView(
               //padding: EdgeInsets.all(12),
               children: [
                 Column(
                   children: <Widget>[
                     Column(
-                        children: servicesProvider.serviceList.map((p) {
+                        children: farmProvider.serviceList.map((p) {
                           return FarmListingCard(service: p);
                         }).toList()
                     ),

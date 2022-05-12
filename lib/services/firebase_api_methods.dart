@@ -2,6 +2,7 @@
 
 import 'package:AgriNet/models/service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/users.dart';
 
@@ -88,7 +89,7 @@ Future updateImage(List<String> imageurlList, String docid) async {
       .catchError((error) => print("Failed to add image: $error"));
 }
 
-Future add_to_service_booking(String uid,String service_id,String category,
+/*Future add_to_service_booking(String uid,String service_id,String category,
     String price_per_unit,String no_of_service,String description ,List<String> imageurl) async {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
@@ -109,7 +110,7 @@ Future add_to_service_booking(String uid,String service_id,String category,
     return value.id;
   })
       .catchError((error) => print("Failed to add Service: $error"));
-}
+}*/
 
 Future UpdateImageFarmAdd(List<String> imageurlList,String uid, String docid,double latitude,double longitude) async {
   await FirebaseFirestore.instance.collection('farmUser')
@@ -143,10 +144,13 @@ Future sp_updateService(String docid,String service_name,String category,
 
 
 Future addBooking(Service service, Users user,String farmType,String farmName,Timestamp startTime,Timestamp endTime) async {
+  String _docid = Uuid().v1();
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Bookings');
   return serviceProvidersCollectionReference
-      .add({
+      .doc(_docid)
+      .set({
+    'docid':_docid,
     'farmType':farmType,
     'farmName':farmName,
     'price':service.price,
@@ -154,10 +158,12 @@ Future addBooking(Service service, Users user,String farmType,String farmName,Ti
     'spid':service.serv_prov_id,
     'spName':service.spName,
     'serviceName':service.name,
+    //'serviceCategory':service.,
     'startTime': startTime,
     'endTime': endTime,
     'createdOn':FieldValue.serverTimestamp(),
-
+    'status':'Pending',
+    'statusOn':FieldValue.serverTimestamp(),
 
 
   })
@@ -186,6 +192,18 @@ Future addReview(String docid,String uid,String image,String name, String rating
     'reviewList': FieldValue.arrayUnion([uid]), // John Doe
 
   });
+}
+
+Future updateBooking(String docid,String status) async {
+  await FirebaseFirestore.instance.collection('Bookings')
+      .doc(docid)
+      .update({
+    'status': status,
+    'statusOn':FieldValue.serverTimestamp(),
+    //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
+  })
+      .then((value) => print("Updated Booking"))
+      .catchError((error) => print("Failed to Update Booking: $error"));
 }
 
 /// Check If Document Exists

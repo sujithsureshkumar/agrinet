@@ -24,20 +24,37 @@ class _AddServiceState extends State<AddService> {
     _asyncMethod();
   }
   List<String> catList=[];
-  String dropdownValue = '';
+  Map<String, dynamic> CategoryList;
+  String categoryValue = '';
+  String subCategoryValue;
+  List<String> subCategory;
+  List<String> _tempList=[];
   _asyncMethod() async {
-    QuerySnapshot categorySnapShot =
+    DocumentSnapshot categorySnapShot =
     await FirebaseFirestore.instance
-        .collection('category')
+        .collection('Category')
+        .doc('serviceCategory')
         .get();
 
-    dropdownValue = categorySnapShot.docs[0].id;
-    categorySnapShot.docs.forEach((result) {
-      catList.add(result.id);
-    });
+    CategoryList = (categorySnapShot.data()as Map<String, dynamic>)['serviceCategory'];
+
+    catList = CategoryList.keys.toList();
+    categoryValue = catList[0];
+    print(CategoryList);
     print(catList);
 
     setState((){});
+  }
+
+  _newGetList() async {
+    _tempList=[];
+    CategoryList[categoryValue].forEach((result){
+      _tempList.add(result);
+    });
+    setState(() {
+      subCategory=_tempList;
+      subCategoryValue=null;
+    });
   }
   List<String> imageUrlList=["https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2Fnoimage.png?alt=media&token=47ee7a64-0059-4527-a72f-3b983957d887"];
   bool circular = false;
@@ -68,7 +85,11 @@ class _AddServiceState extends State<AddService> {
             SizedBox(
               height: 20,
             ),
-            catagoryTextField(),
+            categoryTextField(),
+            SizedBox(
+              height: 20,
+            ),
+            subCategoryTextField(),
             SizedBox(
               height: 20,
             ),
@@ -196,9 +217,9 @@ class _AddServiceState extends State<AddService> {
     );
   }
 
-  Widget catagoryTextField() {
+  Widget categoryTextField() {
     return DropdownButtonFormField(
-      value: dropdownValue,
+      value: categoryValue,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -216,12 +237,13 @@ class _AddServiceState extends State<AddService> {
       ),
       icon: Padding(
           padding: EdgeInsets.only(left: 20),
-          child: Icon(Icons.arrow_circle_down_sharp)),
+          child: Icon(Icons.keyboard_arrow_down)),
       style: const TextStyle(color: Colors.teal, fontSize: 16),
       isExpanded: true,
       onChanged: (newValue) {
         setState(() {
-          dropdownValue = newValue;
+          categoryValue = newValue;
+          _newGetList();
         });
       },
       items: catList
@@ -231,6 +253,43 @@ class _AddServiceState extends State<AddService> {
           child: Text(value),
         );
       }).toList(),
+    );
+  }
+
+  Widget subCategoryTextField() {
+    return DropdownButtonFormField(
+      value: subCategoryValue,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
+      ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.keyboard_arrow_down)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          subCategoryValue = newValue;
+        });
+      },
+      items: subCategory?.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      })?.toList(),
     );
   }
 

@@ -235,6 +235,7 @@ class ServicesProvider extends ChangeNotifier {
     bookingList=_bookingSnapShot.docs.map((snap) {
       // final user = snap.data();
       return Booking(
+          docid: snap.get('docid'),
           farmType: snap.get('farmType'),
           farmName:snap.get('farmName'),
           uid: snap.get('uid'),
@@ -246,6 +247,8 @@ class ServicesProvider extends ChangeNotifier {
         Startdate:snap.get('startTime').toDate(),
         Enddate:snap.get('endTime').toDate(),
         createdOn: snap.get('createdOn').toDate(),
+        status:snap.get('status'),
+        statusOn:snap.get('statusOn').toDate(),
       );
 
     }).toList();
