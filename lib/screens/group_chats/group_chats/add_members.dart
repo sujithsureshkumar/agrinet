@@ -1,4 +1,5 @@
 //import 'package:chat_app/group_chats/create_group/create_group.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,9 @@ class _AddMembersInGroupState extends State<AddMembersInGroup> {
           "email": map['email'],
           "uid": map['uid'],
           "isAdmin": true,
+          'myFarm':'No farm attached',
+          'myFarmId':'',
+          'isFarmSet':false,
         });
       });
     });
@@ -89,6 +93,9 @@ class _AddMembersInGroupState extends State<AddMembersInGroup> {
           "email": userMap['email'],
           "uid": userMap['uid'],
           "isAdmin": false,
+          'myFarm':'No farm attached',
+          'myFarmId':'',
+          'isFarmSet':false,
         });
 
         userMap = null;
@@ -109,9 +116,7 @@ class _AddMembersInGroupState extends State<AddMembersInGroup> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Add Members"),
-      ),
+      appBar:DefaultAppBar(title: "Add Members"),
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -21,40 +21,223 @@ class _CreateGroupState extends State<CreateGroup> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool isLoading = false;
+  bool textBoxShow=false;
+  final _globalkey = GlobalKey<FormState>();
+
+  checkUsernameIsUnique(String name)async
+  {
+    QuerySnapshot querySnapshot;
+    /* setState(() {
+      loading=true;
+    });*/
+    querySnapshot=await FirebaseFirestore.instance
+        .collection('groups')
+        .where("name",isEqualTo: name)
+        .get();
+    print(querySnapshot.docs.isNotEmpty);
+    return querySnapshot.docs.isEmpty;
+  }
 
   void createGroup() async {
-    setState(() {
-      isLoading = true;
-    });
 
-    String groupId = Uuid().v1();
+    if (_globalkey.currentState.validate()) {
+      checkUsernameIsUnique(_groupName.text).then((val) async {
+        if(val)
+        {
 
-    await _firestore.collection('groups').doc(groupId).set({
-      "members": widget.membersList,
-      "id": groupId,
-    });
+          setState(() {
+            isLoading = true;
+          });
+          String groupId = Uuid().v1();
 
-    for (int i = 0; i < widget.membersList.length; i++) {
-      String uid = widget.membersList[i]['uid'];
+          await _firestore.collection('groups').doc(groupId).set({
+            "members": widget.membersList,
+            "id": groupId,
+            "name": _groupName.text,
+            'farmSetCount':0,
+          });
 
-      await _firestore
-          .collection('users')
-          .doc(uid)
-          .collection('groups')
-          .doc(groupId)
-          .set({
-        "name": _groupName.text,
-        "id": groupId,
+          for (int i = 0; i < widget.membersList.length; i++) {
+            String uid = widget.membersList[i]['uid'];
+
+            await _firestore
+                .collection('users')
+                .doc(uid)
+                .collection('groups')
+                .doc(groupId)
+                .set({
+              "name": _groupName.text,
+              "id": groupId,
+              'category': categoryValue,
+              'subcategory': subCategoryValue,
+              'myFarm':'No farm attached',
+              'myFarmId':'',
+              'isFarmSet':false,
+            });
+          }
+
+          await _firestore.collection('groups').doc(groupId).collection('chats').add({
+            "message": "${_auth.currentUser.displayName} Created This Group.",
+            "type": "notify",
+          });
+
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => GroupChatHomeScreen()), (route) => false);
+
+        }
+        else{
+          setState(() {
+            textBoxShow = true;
+          });
+        }
+//username is taken
       });
     }
 
-    await _firestore.collection('groups').doc(groupId).collection('chats').add({
-      "message": "${_auth.currentUser.displayName} Created This Group.",
-      "type": "notify",
-    });
+  }
 
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => GroupChatHomeScreen()), (route) => false);
+  Widget nameTextField() {
+    return TextFormField(
+      controller: _groupName,
+      validator: (value) {
+        if (value.isEmpty) return "Name can't be empty";
+
+        return null;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        // prefixIcon: Icon(
+        //   Icons.agriculture,
+        //   color: Colors.green,
+        // ),
+        labelText: "Farm Name",
+        helperText: "Name can't be empty",
+        hintText: "Enter Group Name",
+      ),
+    );
+  }
+
+  Widget categoryTextField() {
+    return DropdownButtonFormField(
+      value: categoryValue,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
+      ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.keyboard_arrow_down)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          categoryValue = newValue;
+          _newGetList();
+        });
+      },
+      items: catList
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget subCategoryTextField() {
+    return DropdownButtonFormField(
+      value: subCategoryValue,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
+      ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.keyboard_arrow_down)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          subCategoryValue = newValue;
+        });
+      },
+      items: subCategory?.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      })?.toList(),
+    );
+  }
+
+  @override
+  void initState () {
+    super.initState();
+    _asyncMethod();
+  }
+  List<String> catList=[];
+  Map<String, dynamic> CategoryList;
+  String categoryValue = '';
+  String subCategoryValue;
+  List<String> subCategory;
+  List<String> _tempList=[];
+  _asyncMethod() async {
+    DocumentSnapshot categorySnapShot =
+    await FirebaseFirestore.instance
+        .collection('Category')
+        .doc('category')
+        .get();
+
+    CategoryList = (categorySnapShot.data()as Map<String, dynamic>)['category'];
+
+    catList = CategoryList.keys.toList();
+    categoryValue = catList[0];
+    print(CategoryList);
+    print(catList);
+
+    setState((){});
+  }
+
+  _newGetList() async {
+    _tempList=[];
+    CategoryList[categoryValue].forEach((result){
+      _tempList.add(result);
+    });
+    setState(() {
+      subCategory=_tempList;
+      subCategoryValue=null;
+    });
   }
 
   @override
@@ -72,38 +255,38 @@ class _CreateGroupState extends State<CreateGroup> {
         alignment: Alignment.center,
         child: CircularProgressIndicator(),
       )
-          : Column(
+          : Form(
+          key: _globalkey,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              child: Column(
         children: [
-          SizedBox(
-            height: size.height / 10,
+          textBoxShow?SizedBox(
+            height: 20,
+            child:Text("This name is already exist"),
+          ): SizedBox(
+            height: 20,
           ),
-          Container(
-            height: size.height / 14,
-            width: size.width,
-            alignment: Alignment.center,
-            child: Container(
-              height: size.height / 14,
-              width: size.width / 1.15,
-              child: TextField(
-                controller: _groupName,
-                decoration: InputDecoration(
-                  hintText: "Enter Group Name",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+              nameTextField(),
+              SizedBox(
+                height: size.height / 50,
               ),
-            ),
-          ),
-          SizedBox(
-            height: size.height / 50,
-          ),
-          ElevatedButton(
-            onPressed: createGroup,
-            child: Text("Create Group"),
-          ),
+               categoryTextField(),
+               SizedBox(
+                  height: size.height / 50,
+                ),
+              subCategoryTextField(),
+              SizedBox(
+                  height: size.height / 50,
+               ),
+              ElevatedButton(
+                onPressed: createGroup,
+                child: Text("Create Group"),
+              ),
         ],
       ),
+            ),
+          ),
     );
   }
 }

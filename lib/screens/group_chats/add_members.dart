@@ -21,7 +21,9 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Map<String, dynamic> userMap;
   bool isLoading = false;
+  bool isAlreadyExist = false;
   List membersList = [];
+  //List<Map<String, dynamic>> membersList = [];
 
   @override
   void initState() {
@@ -61,18 +63,48 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
   }
 
   void onAddMembers() async {
-    membersList.add(userMap);
+    isAlreadyExist = false;
 
-    await _firestore.collection('groups').doc(widget.groupChatId).update({
-      "members": membersList,
+    for (int i = 0; i < membersList.length; i++) {
+      if (membersList[i]['uid'] == userMap['uid']) {
+        isAlreadyExist = true;
+      }
+    }
+    if (!isAlreadyExist) {
+
+        membersList.add({
+          "name": userMap['name'],
+          "email": userMap['email'],
+          "uid": userMap['uid'],
+          "isAdmin": false,
+          'myFarm':'No farm attached',
+          'myFarmId':'',
+          'isFarmSet':false,
+        });
+
+        await _firestore.collection('groups').doc(widget.groupChatId).update({
+          "members": membersList,
+        });
+
+        await _firestore
+            .collection('users')
+            .doc(userMap['uid'])
+            .collection('groups')
+            .doc(widget.groupChatId)
+            .set({
+          "name": widget.name,
+          "id": widget.groupChatId,
+          'myFarm':'No farm attached',
+          'myFarmId':'',
+          'isFarmSet':false,
+
+        });
+
+    }
+    setState(() {
     });
 
-    await _firestore
-        .collection('users')
-        .doc(userMap['uid'])
-        .collection('groups')
-        .doc(widget.groupChatId)
-        .set({"name": widget.name, "id": widget.groupChatId});
+
   }
 
   @override
@@ -86,7 +118,13 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: size.height / 20,
+              height: 30,
+            ),
+            isAlreadyExist?SizedBox(
+              height: 20,
+              child:Text("This name is already exist"),
+            ): SizedBox(
+              height: 20,
             ),
             Container(
               height: size.height / 14,

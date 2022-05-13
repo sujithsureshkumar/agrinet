@@ -56,6 +56,7 @@ class _AddFarmState extends State<AddFarm> {
     });
   }
 
+  bool textBoxShow=false;
   bool circular = false;
   final _globalkey = GlobalKey<FormState>();
   TextEditingController _name = TextEditingController();
@@ -73,6 +74,12 @@ class _AddFarmState extends State<AddFarm> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           children: <Widget>[
             // imageProfile(),
+            textBoxShow?SizedBox(
+              height: 20,
+              child:Text("This name is already exist"),
+            ): SizedBox(
+              height: 20,
+            ),
             SizedBox(
               height: 20,
             ),
@@ -94,19 +101,34 @@ class _AddFarmState extends State<AddFarm> {
             ),
             InkWell(
               onTap: () async {
-                setState(() {
-                  circular = true;
-                });
                  if (_globalkey.currentState.validate()) {
-                   FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
-                   await farmProvider.farmer_addfarm(user.uid,_name.text, categoryValue,
-                     subCategoryValue, _landarea.text,).then((value) => {
-                     Navigator.of(context).push(
-                       MaterialPageRoute(
-                         builder: (ctx) => AddImageFarm(),
-                       ),
-                     )
-                   });
+                   checkUsernameIsUnique(user.uid,_name.text).then((val) async {
+                     if(val)
+                     {
+                       setState(() {
+                         circular = true;
+                       });
+                       FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
+                       await farmProvider.farmer_addfarm(user.uid,_name.text, categoryValue,
+                         subCategoryValue, _landarea.text,).then((value) => {
+                         Navigator.of(context).push(
+                           MaterialPageRoute(
+                             builder: (ctx) => AddImageFarm(),
+                           ),
+                         )
+                       });
+                     }
+                     else{
+                       setState(() {
+                         textBoxShow = true;
+                       });
+                     }
+//username is taken
+                     });
+
+
+
+
                  }
               },
               child: Center(
@@ -137,6 +159,24 @@ class _AddFarmState extends State<AddFarm> {
       ),
     );
   }
+
+  checkUsernameIsUnique(String uid,String name)async
+  {
+    QuerySnapshot querySnapshot;
+   /* setState(() {
+      loading=true;
+    });*/
+    querySnapshot=await FirebaseFirestore.instance
+        .collection('farmUser')
+        .doc(uid)
+        .collection('farms')
+        .where("name",isEqualTo: name)
+        .get();
+    print(querySnapshot.docs.isNotEmpty);
+    return querySnapshot.docs.isEmpty;
+  }
+
+
 
   Widget nameTextField() {
     return TextFormField(

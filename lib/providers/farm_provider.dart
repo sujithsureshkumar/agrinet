@@ -13,8 +13,8 @@ class FarmProvider extends ChangeNotifier {
 
   Future farmer_addfarm(String uid,String name,String category,String subCategory,
       String landarea) async {
-    //_docid = Uuid().v1();
-    _docid =name;
+    _docid = Uuid().v1();
+    //_docid =name;
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final CollectionReference serviceProvidersCollectionReference = await firebaseFirestore.collection('farmUser');
     //return
@@ -22,6 +22,7 @@ class FarmProvider extends ChangeNotifier {
         .collection("farms")
         .doc(_docid)
         .set({
+       'docid': _docid,
       'name':name,
       'category': category,
       'subcategory': subCategory,
@@ -66,18 +67,25 @@ class FarmProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<dynamic> tempList;
   Future<void> fetchUserFarm(String uid) async {
     _groupList=[];
-    QuerySnapshot userFarmSnapShot =
+    DocumentSnapshot userFarmSnapShot =
     await FirebaseFirestore.instance
         .collection('farmUser')
         .doc(uid)
-        .collection('farms')
+        .collection('allfarms')
+        .doc('allFarm')
         .get();
 
-    userFarmSnapShot.docs.forEach((result) {
-      _groupList.add(result.get('name'));
+    tempList = (userFarmSnapShot.data()as Map<String, dynamic>)['allFarm'];
+
+    tempList.forEach((result){
+      _groupList.add(result);
     });
+    /*userFarmSnapShot.docs.forEach((result) {
+      _groupList.add(result.get('name'));
+    });*/
 
     notifyListeners();
   }
@@ -92,7 +100,7 @@ class FarmProvider extends ChangeNotifier {
     farmList=_farmSnapShot.docs.map((snap) {
       // final user = snap.data();
       return Farm(
-          docid:snap.get('name'),
+          docid:snap.get('docid'),
           name: snap.get('name'),
           category:snap.get('category'),
           subCategory:snap.get('subcategory'),
