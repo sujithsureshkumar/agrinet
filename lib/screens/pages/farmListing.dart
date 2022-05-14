@@ -62,7 +62,7 @@ class _FarmListingState extends State<FarmListing> {
                   text: "Add Farm",
                   icon: Icons.add,width: size.width*0.35,
                   onPressed: () {
-                    Navigator.of(context).push
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (ctx) => AddFarm(),
                       ),
