@@ -143,7 +143,9 @@ Future sp_updateService(String docid,String service_name,String category,
 }
 
 
-Future addBooking(Service service, Users user,String farmType,String farmName,Timestamp startTime,Timestamp endTime) async {
+Future addBooking(Service service, Users user,
+    String farmType,String farmName,String serviceCategory,
+    String serviceSubCategory,Timestamp startTime,Timestamp endTime) async {
   String _docid = Uuid().v1();
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Bookings');
@@ -158,7 +160,8 @@ Future addBooking(Service service, Users user,String farmType,String farmName,Ti
     'spid':service.serv_prov_id,
     'spName':service.spName,
     'serviceName':service.name,
-    //'serviceCategory':service.,
+    'serviceCategory':serviceCategory,
+    'serviceSubCategory':serviceSubCategory,
     'startTime': startTime,
     'endTime': endTime,
     'createdOn':FieldValue.serverTimestamp(),
@@ -204,6 +207,25 @@ Future updateBooking(String docid,String status) async {
   })
       .then((value) => print("Updated Booking"))
       .catchError((error) => print("Failed to Update Booking: $error"));
+}
+
+Future getFarmDetails(String farmType,String uid,String name) async {
+  if(farmType=='Individual') {
+    return await FirebaseFirestore.instance
+        .collection('farmUser')
+        .doc(uid)
+        .collection("farms")
+        .where("name", isEqualTo: name)
+        .get();
+  }
+  else if(farmType=='Groups'){
+    return await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('groups')
+        .where("name", isEqualTo: name)
+        .get();
+  }
 }
 
 /// Check If Document Exists

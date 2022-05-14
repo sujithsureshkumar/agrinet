@@ -22,7 +22,7 @@ class FarmProvider extends ChangeNotifier {
         .collection("farms")
         .doc(_docid)
         .set({
-       'docid': _docid,
+        'docid': _docid,
       'name':name,
       'category': category,
       'subcategory': subCategory,
@@ -114,4 +114,67 @@ class FarmProvider extends ChangeNotifier {
     }).toList();
     notifyListeners();
   }
+
+  List _groupInfoList = [];
+  List<String> _groupNameList=[];
+  List<String> get groupNameList => _groupNameList;
+  List<String> get groupInfoList => _groupInfoList;
+  Future<void> fetchUserFarmWithInfo(String uid) async {
+    _groupInfoList=[];
+    _groupNameList=[];
+    await FirebaseFirestore.instance
+        .collection('farmUser')
+        .doc(uid)
+        .collection('farms')
+        .get().then((value) {
+      _groupInfoList = value.docs;
+    });
+    _groupInfoList.forEach((result) {
+      _groupNameList.add(result['name']);
+    });
+
+    notifyListeners();
+  }
+
+  Future<String> selectedUserFarmDocid(String name) async {
+    String docid;
+    _groupInfoList.forEach((element) {
+      if (element['name'] == name) {
+        docid = element['docid'];
+      }
+    });
+    return docid;
+  }
+
+  Future<String> updateFarmGroup(String docid,String uid,List membersList,String farmName,String farmid) async {
+
+    for (int i = 0; i < membersList.length; i++) {
+      if (membersList[i]['uid'] == uid) {
+        membersList[i]['myFarm']=farmName;
+        membersList[i]['myFarmId']=farmid;
+        membersList[i]['isFarmSet']=true;
+      }
+    }
+
+    await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(docid)
+        .update({
+      "members": membersList,
+    });
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('groups')
+        .doc(docid)
+        .update({
+
+      'myFarm':farmName,
+      'myFarmId':farmid,
+      'isFarmSet':true,
+
+    });
+  }
+
 }

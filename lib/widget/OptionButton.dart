@@ -20,7 +20,7 @@ class OptionButton extends StatelessWidget {
     return Container(
       width: width,
       child: FlatButton(
-          color: COLOR_DARK_BLUE,
+          color: kPrimaryColor,
           splashColor: Colors.white.withAlpha(55),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),

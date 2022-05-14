@@ -9,7 +9,8 @@ class Booking {
   String spid;
   String spName;
   String serviceName;
-  //String serviceCategory;
+  String serviceCategory;
+  String serviceSubCategory;
   DateTime Startdate;
   DateTime Enddate;
   DateTime createdOn;
@@ -25,7 +26,8 @@ class Booking {
     @required this.phone_number,
     @required this.spid,
     @required this.serviceName,
-    //@required this.serviceCategory,
+    @required this.serviceCategory,
+    @required this.serviceSubCategory,
     @required this.spName,
     @required this.Startdate,
     @required this.Enddate,

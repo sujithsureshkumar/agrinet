@@ -141,7 +141,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                         ),
                                       ),
                                       Text(
-                                        "widget.booking.category",
+                                        widget.booking.serviceCategory,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 15,

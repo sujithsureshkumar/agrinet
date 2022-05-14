@@ -272,17 +272,22 @@ class _DateFarmSelectionState extends State<DateFarmSelection> {
                       && servicesProvider.startTimeStamp!=null
                       && servicesProvider.endTimeStamp!=null) {
 
-                    await addBooking(widget.service,widget.user,_myState,_myStateList,
-                        servicesProvider.startTimeStamp,servicesProvider.endTimeStamp).then((value) => {
-                           Navigator.of(context).push(
-                               MaterialPageRoute(
-                                   builder: (ctx) => Success(),
-                                    ),
-                              )
-                           });
+              getFarmDetails(_myState,widget.user.uid,_myStateList).then((value) async {
 
-                  }else{
-                    print("null for date");
+                Map<String, dynamic> farmMap = value.docs[0].data();
+                await addBooking(widget.service,widget.user,_myState,_myStateList,farmMap['category'],
+                    farmMap['subcategory'],servicesProvider.startTimeStamp,servicesProvider.endTimeStamp).then((value) => {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => Success(),
+                    ),
+                  )
+                });
+
+                print(farmMap);
+              });
+
+
                   }
                   //return addBooking(servicesProvider.startTimeStamp,servicesProvider.endTimeStamp);
                 },

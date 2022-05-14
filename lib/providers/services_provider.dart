@@ -241,6 +241,8 @@ class ServicesProvider extends ChangeNotifier {
           uid: snap.get('uid'),
           price: snap.get('price'),
       //phone_number= json['spid'];
+        serviceCategory: snap.get('serviceCategory'),
+         serviceSubCategory: snap.get('serviceSubCategory'),
          spid:snap.get('spid'),
          spName: snap.get('spName'),
          serviceName: snap.get('serviceName'),

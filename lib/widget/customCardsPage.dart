@@ -1,5 +1,6 @@
 import 'package:AgriNet/screens/group_chats/group_chat_screen.dart';
 import 'package:AgriNet/screens/pages/bookingListing.dart';
+import 'package:AgriNet/screens/pages/farmListing.dart';
 import 'package:AgriNet/screens/pages/groupInfoPage.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:AgriNet/screens/pages/wishlist_catalog.dart';
@@ -51,7 +52,7 @@ class CustomCardsPage extends StatelessWidget {
                           () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                 builder: (ctx) => ServiceCatalogue()
+                                 builder: (ctx) => FarmListing()
                                ),
                              );
                           },

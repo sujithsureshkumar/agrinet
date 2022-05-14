@@ -2,6 +2,7 @@ import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/screens/group_chats/add_members.dart';
 import 'package:AgriNet/screens/group_chats/group_chat_room.dart';
 import 'package:AgriNet/screens/group_chats/group_chat_screen.dart';
+import 'package:AgriNet/screens/pages/farmAttachPage.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/stickyLabel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,8 +10,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class GroupInfoPage extends StatefulWidget {
-  final String groupId, groupName;
-  GroupInfoPage({this.groupId, this.groupName,Key key}) : super(key: key);
+  final String groupId, groupName,myFarmName,category,subCategory;
+  final bool isFarmSet;
+  GroupInfoPage({
+    this.groupId,
+    this.groupName,
+    this.myFarmName,
+    this.category,
+    this.subCategory,
+    this.isFarmSet,
+    Key key}) : super(key: key);
 
   @override
   _GroupInfoPageState createState() => _GroupInfoPageState();
@@ -163,41 +172,69 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                             children: [
                               SizedBox(width: 10.0,),
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "My Farm",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (ctx) => FarmAttachPage(
+                                          category: widget.category,
+                                          subCategory:widget.subCategory ,
+                                          groupId: widget.groupId,
+                                          memberList:membersList,
+                                        ),
                                       ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Farm",
+                                    );
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "My Farm",
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.bold
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Status",
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              widget.myFarmName,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                              child: Align(
+                                                  alignment: Alignment.centerRight,
+                                                  child: Icon( Icons.chevron_right, ))
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: widget.isFarmSet?Text(
+                                          "Attached",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ):Text(
+                                          "",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        )
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
@@ -235,14 +272,26 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                                   //width: 10.0,
                                   height: 30,
                                 ),
-                                Text(
-                                  "Chat",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                                      child: Icon( Icons.chat, ),
+                                    ),
+                                    Text(
+                                      "Chat",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                     Expanded(
+                                       child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Icon( Icons.chevron_right, )),
+                                     ),
+                                    
+
+
 
                                 SizedBox(
                                   //width: 10.0,
@@ -283,7 +332,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
 
                 Flexible(
                   child: ListView.builder(
-                    itemCount: 2,//membersList.length,
+                    itemCount: membersList.length,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
