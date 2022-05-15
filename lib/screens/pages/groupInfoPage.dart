@@ -2,6 +2,7 @@ import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/screens/group_chats/add_members.dart';
 import 'package:AgriNet/screens/group_chats/group_chat_room.dart';
 import 'package:AgriNet/screens/group_chats/group_chat_screen.dart';
+import 'package:AgriNet/screens/pages/farmArrrangingNew.dart';
 import 'package:AgriNet/screens/pages/farmAttachPage.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/stickyLabel.dart';
@@ -290,6 +291,67 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                                             child: Icon( Icons.chevron_right, )),
                                      ),
                                     
+
+
+
+                                SizedBox(
+                                  //width: 10.0,
+                                  height: 30,
+                                ),
+
+                              ],
+                            )
+                        )
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0,left: 10,right: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => FarmArrangingNew(
+                            memberList:membersList,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      //elevation: 5.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0.0),
+                        ),
+                        child:Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+                            child:Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  //width: 10.0,
+                                  height: 30,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                                  child: Icon( Icons.chat, ),
+                                ),
+                                Text(
+                                  "Chat",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Icon( Icons.chevron_right, )),
+                                ),
+
 
 
 

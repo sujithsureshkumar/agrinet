@@ -47,6 +47,7 @@ dependencies:
   url_launcher: ^6.1.0
   geolocator: ^8.2.1
   geocoding: ^2.0.4
+  faker: ^2.0.0
 
 
 dev_dependencies:

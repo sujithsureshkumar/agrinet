@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(create: (context) => ImgProvider()),
       ChangeNotifierProvider(create: (context) => FarmProvider()),
 
+
     ],
         child: MaterialApp(
           // Initialize FlutterFire

@@ -9,6 +9,7 @@ class Farm {
   GeoPoint location;
   List<String> imageUrl;
   DateTime createdOn;
+  double lat,long;
 
 
   Farm({
@@ -20,6 +21,8 @@ class Farm {
     @required this.landarea,
     @required this.imageUrl,
     @required this.createdOn,
+    @required this.lat,
+    @required this.long,
   });
 
 }
