@@ -2,6 +2,7 @@ import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/reviewModal.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:intl/intl.dart';
 
 class ReviewUI extends StatelessWidget {
   //final String image, name, date, comment;
@@ -71,7 +72,8 @@ class ReviewUI extends StatelessWidget {
               ),
               SizedBox(width: kFixPadding),
               Text(
-                serviceReview.date,
+                DateFormat.yMMMMd('en_US').format(serviceReview.createOn)
+                ,
                 style: TextStyle(fontSize: 18.0),
               ),
             ],

@@ -186,7 +186,8 @@ Future addReview(String docid,String uid,String image,String name, String rating
     'name': name, // Stokes and Sons
     'rating': rating,
     'comment': comment,
-    'createdOn':FieldValue.serverTimestamp()
+    'createdOn':FieldValue.serverTimestamp(),
+    'docid':uid
   });
 
   await FirebaseFirestore.instance.collection('services')

@@ -1,6 +1,8 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/models/reviewModal.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/screens/pages/dateFarmSelection.dart';
 import 'package:AgriNet/screens/pages/reviews.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
@@ -27,9 +29,11 @@ class ServiceDetails extends StatefulWidget {
 }
 
 class _ServiceDetailsState extends State<ServiceDetails> {
+
   int currentIndex = 0;
   PageController pageController = PageController(initialPage: 0);
   bool isMore = false;
+
 
   List<String> productSize = ["S", "M", "L", "XL"];
 
@@ -54,9 +58,14 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       throw 'Could not launch $url';
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
+    servicesProvider.getReview(widget.service.docid);
+    servicesProvider.editReviewShow=widget.service.reviewList.contains(user.uid);
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(
@@ -363,31 +372,44 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 ),
               ],
             ),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return ReviewUI(
-                  serviceReview:reviewList[index],
-                  onPressed: () => print("More Action $index"),
-                  onTap: () => setState(() {
-                    isMore = !isMore;
-                  }),
-                  isLess: isMore,
-                );
-              },
-              separatorBuilder: (context, index) {
-                return Divider(
-                  thickness: 2.0,
-                  color: kAccentColor,
-                );
-              },
-            ),
+
+            Consumer<ServicesProvider>(
+                 builder: (context, servicesProvider, _) {
+                   return servicesProvider.reviewList==[] ?SizedBox(height: kLessPadding)
+                       :ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
+                      itemCount: servicesProvider.reviewList.length,
+                        //itemCount:1,
+                      itemBuilder: (context, index) {
+                        return ReviewUI(
+                          serviceReview:servicesProvider.reviewList[index],
+                          onPressed: () => print("More Action $index"),
+                          onTap: () => setState(() {
+                            isMore = !isMore;
+                          }),
+                          isLess: isMore,
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return Divider(
+                          thickness: 2.0,
+                          color: kAccentColor,
+                        );
+                      },
+                    );
+                 }
+               ),
+
             kSmallDivider,
-            widget.service.reviewList.contains(user.uid)?
-            Container():ReviewEditUI(service: widget.service,),
+            Consumer<ServicesProvider>(
+                builder: (context, servicesProvider, _) {
+                return
+                  servicesProvider.editReviewShow?
+                Container():ReviewEditUI(service: widget.service,);
+              }
+            ),
             kSmallDivider,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

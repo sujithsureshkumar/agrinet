@@ -2,6 +2,7 @@ import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/reviewModal.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
+import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class ReviewEditUI extends StatefulWidget {
 }
 
 class _ReviewEditUIState extends State<ReviewEditUI> {
-
   double ratingValue;
   final _globalkey = GlobalKey<FormState>();
   TextEditingController _comment= TextEditingController();
@@ -55,6 +55,7 @@ class _ReviewEditUIState extends State<ReviewEditUI> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
     return Form(
       key: _globalkey,
       child: Container(
@@ -108,7 +109,8 @@ class _ReviewEditUIState extends State<ReviewEditUI> {
                           "Anonymus",
                           ratingValue.toString(),
                         _comment.text,
-                      );
+                      ).then((value) => servicesProvider.getReview(widget.service.docid))
+                          .then((value) => servicesProvider.editReviewShow=true);
               }
                 },
                 ratio:0.9,

@@ -133,16 +133,16 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                     Positioned(
                       bottom: -60.0,
                       child: Container(
-                        height: 125.0,
-                        width: 125.0,
+                        height: 155.0,
+                        width: 180.0,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100.0),
+                          borderRadius: BorderRadius.circular(30.0),
                           border: Border.all(
                             color: kWhiteColor,
                             width: kLess,
                           ),
                           image: DecorationImage(
-                            image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sa_II3GuTyXT0EGyW7sKvep9GTL1lmIZW2RjO98L8DgGeZ4iD4ussfCcQgW22FiFnMo&usqp=CAU"),
+                            image: NetworkImage("https://www.seekpng.com/png/detail/913-9135029_agriculture-farm-clip-art-field-elements-farm.png"),
                           ),
                         ),
                       ),
@@ -334,12 +334,9 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                                   //width: 10.0,
                                   height: 30,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
-                                  child: Icon( Icons.chat, ),
-                                ),
+
                                 Text(
-                                  "Chat",
+                                  "Arrange Farm order",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18.0,

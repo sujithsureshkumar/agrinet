@@ -3,9 +3,11 @@ class ReviewModal {
   String name;
   double rating;
   String date;
+  DateTime createOn;
   String comment;
+  String docid;
 
-  ReviewModal({this.image, this.name, this.rating, this.date, this.comment});
+  ReviewModal({this.image, this.name, this.rating, this.date, this.comment,this.createOn,this.docid});
 
   ReviewModal.fromJson(Map<String, dynamic> json) {
     image = json['image'];

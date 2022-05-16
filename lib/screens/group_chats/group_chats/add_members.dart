@@ -42,6 +42,7 @@ class _AddMembersInGroupState extends State<AddMembersInGroup> {
           'myFarm':'No farm attached',
           'myFarmId':'',
           'isFarmSet':false,
+          'location':GeoPoint(0,0),
         });
       });
     });
@@ -96,6 +97,7 @@ class _AddMembersInGroupState extends State<AddMembersInGroup> {
           'myFarm':'No farm attached',
           'myFarmId':'',
           'isFarmSet':false,
+          'location':GeoPoint(0,0),
         });
 
         userMap = null;

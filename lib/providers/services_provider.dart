@@ -1,4 +1,5 @@
 import 'package:AgriNet/models/booking.dart';
+import 'package:AgriNet/models/reviewModal.dart';
 import 'package:AgriNet/models/serviceProvModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:AgriNet/services/firebase_api.dart';
@@ -171,6 +172,26 @@ class ServicesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  List<ReviewModal> reviewList=[] ;
+  Future<void> getReview(String serviceid) async {
+    QuerySnapshot _reviewSnapShot = await FirebaseFirestore
+        .instance.collection('services')
+        .doc(serviceid).collection("Review")
+        .get();
+    reviewList=_reviewSnapShot.docs.map((snap) {
+      return ReviewModal(
+          image:snap.get('image'),
+          name: snap.get('name'),
+          rating: double.parse(snap.get("rating")) ,
+          createOn:snap.get('createdOn').toDate(),
+          comment:snap.get('comment'),
+      );
+
+    }).toList();
+    notifyListeners();
+  }
+
   /*Future<void> getserviceSnapShot1() async {
     newList = [];
     Service obj;
@@ -208,7 +229,7 @@ class ServicesProvider extends ChangeNotifier {
     notifyListeners();
   }*/
 
-  bool _reviewExist=false;
+  /*bool _reviewExist=false;
   bool get reviewExist => _reviewExist;
   Future<bool> checkIfReviewExists(String docId) async {
     _reviewExist=false;
@@ -223,7 +244,10 @@ class ServicesProvider extends ChangeNotifier {
       throw e;
     }
     notifyListeners();
-  }
+  }*/
+
+
+
 
   List<Booking> bookingList;
   Future<void> getBookingSnapShot(String firestoreField,String uid) async {
@@ -256,5 +280,8 @@ class ServicesProvider extends ChangeNotifier {
     }).toList();
     notifyListeners();
   }
+
+
+  bool editReviewShow=false;
 
 }
