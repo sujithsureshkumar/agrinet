@@ -125,14 +125,16 @@ Future UpdateImageFarmAdd(List<String> imageurlList,String uid, String docid,dou
       .catchError((error) => print("Failed to add image: $error"));
 }
 
-Future sp_updateService(String docid,String service_name,String category,
-    String price_per_unit,String description ,List<String> imageurl) async {
+Future sp_updateService(String docid,String service_name,String category,String subCategory,
+    String price_per_unit,String equipments,String description ,List<String> imageurl) async {
   await FirebaseFirestore.instance.collection('services')
       .doc(docid)
       .update({
     'name': service_name,
     'category': category,
-    'price_per_unit':price_per_unit,
+    'subCategory': subCategory,
+    'price':price_per_unit,
+    'equipments':equipments,
     //'no_of_service':no_of_service,
     'description':description,
     'imageUrl':imageurl,
@@ -229,6 +231,17 @@ Future getFarmDetails(String farmType,String uid,String name) async {
   }
 }
 
+
+Future deleteService(String docid) async {
+  await FirebaseFirestore.instance.collection('services')
+      .doc(docid)
+      .delete()
+      .then((value) {
+        print("Updated Booking");
+
+      })
+      .catchError((error) => print("Failed to Update Booking: $error"));
+}
 /// Check If Document Exists
 
 

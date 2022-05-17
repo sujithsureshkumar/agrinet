@@ -1,5 +1,7 @@
 import 'package:AgriNet/models/service.dart';
+import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/imgProvider.dart';
+import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/addImageCard.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
@@ -29,32 +31,54 @@ class _EditServiceState extends State<EditService> {
     setState(() {
       _servicename.text = widget.service.name;
       _price.text=widget.service.price;
+      _equipmentDetail.text=widget.service.equipmentDetail;
+      _description.text=widget.service.description;
      // _controllerEmail.text = widget.email;
+      categoryValue=widget.service.category;
+      subCategoryValue=widget.service.subCategory;
     });
   }
 
-  List<String> catList = [];
-  String dropdownValue = '';
 
+
+  List<String> catList=[];
+  Map<String, dynamic> CategoryList;
+  String categoryValue = '';
+  String subCategoryValue;
+  List<String> subCategory;
+  List<String> _tempList=[];
   _asyncMethod() async {
-    QuerySnapshot categorySnapShot =
+    DocumentSnapshot categorySnapShot =
     await FirebaseFirestore.instance
-        .collection('category')
+        .collection('Category')
+        .doc('serviceCategory')
         .get();
 
-    dropdownValue = categorySnapShot.docs[0].id;
-    categorySnapShot.docs.forEach((result) {
-      catList.add(result.id);
-    });
+    CategoryList = (categorySnapShot.data()as Map<String, dynamic>)['serviceCategory'];
+
+    catList = CategoryList.keys.toList();
+    categoryValue = catList[0];
+    print(CategoryList);
     print(catList);
 
-    setState(() {});
+    setState((){});
+  }
+
+  _newGetList() async {
+    _tempList=[];
+    CategoryList[categoryValue].forEach((result){
+      _tempList.add(result);
+    });
+    setState(() {
+      subCategory=_tempList;
+      subCategoryValue=null;
+    });
   }
 
   bool circular = false;
   final _globalkey = GlobalKey<FormState>();
   TextEditingController _servicename = TextEditingController();
-  TextEditingController _category = TextEditingController();
+  //TextEditingController _category = TextEditingController();
   TextEditingController _price = TextEditingController();
   //TextEditingController _no_of_service = TextEditingController();
   TextEditingController _equipmentDetail= TextEditingController();
@@ -62,6 +86,9 @@ class _EditServiceState extends State<EditService> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Users>(context);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
+
     ImgProvider imgProvider = Provider.of<ImgProvider>(context, listen: false);
     //_price.text=widget.service.price;
     //_servicename.text=widget.service.name;
@@ -87,11 +114,14 @@ class _EditServiceState extends State<EditService> {
             primary: kWhiteColor,
             elevation: 2,
             backgroundColor: kLightColor),
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            //builder: (context) => DeliveryAddress(),
-          ),
-        ),
+        onPressed: () {
+          deleteService(widget.service.docid).then((value) =>
+              servicesProvider.getserviceListing(user.uid).then((value) =>
+              Navigator.of(context)
+                ..pop())
+          );
+
+        },
       ),
             ),
 
@@ -109,8 +139,8 @@ class _EditServiceState extends State<EditService> {
                       elevation: 2,
                       backgroundColor: kPrimaryColor,
                   ),
-                onPressed: () async => await sp_updateService(widget.service.docid,_servicename.text, _category.text,
-                    _price.text, _description.text,imgProvider.imageUrlList).then((value) => {
+                onPressed: () async => await sp_updateService(widget.service.docid,_servicename.text, categoryValue,
+                    subCategoryValue, _price.text,_equipmentDetail.text, _description.text,imgProvider.imageUrlList).then((value) => {
                   Navigator.of(context)
                     ..pop()
                     ..pop()
@@ -124,39 +154,46 @@ class _EditServiceState extends State<EditService> {
         ),
       ),
 
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        children: <Widget>[
-          // imageProfile(),
-          ViewImageCard(imageList:widget.service.imageUrl),
-          SizedBox(
-            height: 20,
-          ),
-          nameTextField(),
-          SizedBox(
-            height: 20,
-          ),
-          CategoryField(),
-          SizedBox(
-            height: 20,
-          ),
-          priceField(),
-         /* SizedBox(
-            height: 20,
-          ),*/
-          //titleTextField(),
-          SizedBox(
-            height: 20,
-          ),
-          equipmentDetailsField(),
-          SizedBox(
-            height: 20,
-          ),
-          descriptionField(),
-          SizedBox(
-            height: 20,
-          ),
-        ],
+      body: Form(
+        key: _globalkey,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          children: <Widget>[
+            // imageProfile(),
+            ViewImageCard(imageList:widget.service.imageUrl),
+            SizedBox(
+              height: 20,
+            ),
+            nameTextField(),
+            SizedBox(
+              height: 20,
+            ),
+            categoryTextField(),
+            SizedBox(
+              height: 20,
+            ),
+            subCategoryTextField(),
+            SizedBox(
+              height: 20,
+            ),
+            priceField(),
+           /* SizedBox(
+              height: 20,
+            ),*/
+            //titleTextField(),
+            SizedBox(
+              height: 20,
+            ),
+            equipmentDetailsField(),
+            SizedBox(
+              height: 20,
+            ),
+            descriptionField(),
+            SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -189,43 +226,6 @@ class _EditServiceState extends State<EditService> {
     );
   }
 
-  Widget CategoryField() {
-    return DropdownButtonFormField(
-      value: dropdownValue,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.teal,
-            )),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
-        prefixIcon: Icon(
-          Icons.category,
-          color: Colors.green,
-        ),
-      ),
-      icon: Padding(
-          padding: EdgeInsets.only(left: 20),
-          child: Icon(Icons.keyboard_arrow_down)),
-      style: const TextStyle(color: Colors.teal, fontSize: 16),
-      isExpanded: true,
-      onChanged: (newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: catList
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
 
   Widget priceField() {
     return TextFormField(
@@ -284,6 +284,81 @@ class _EditServiceState extends State<EditService> {
       ),
     );
   }*/
+  Widget categoryTextField() {
+    return DropdownButtonFormField(
+      value: categoryValue,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
+      ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.keyboard_arrow_down)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          categoryValue = newValue;
+          _newGetList();
+        });
+      },
+      items: catList
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget subCategoryTextField() {
+    return DropdownButtonFormField(
+      value: subCategoryValue,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
+      ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.keyboard_arrow_down)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          subCategoryValue = newValue;
+        });
+      },
+      items: subCategory?.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      })?.toList(),
+    );
+  }
 
   Widget equipmentDetailsField() {
     return TextFormField(

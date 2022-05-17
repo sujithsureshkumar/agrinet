@@ -4,6 +4,9 @@ class Service {
   String name;
   List<String> imageUrl;
   String price;
+  String category;
+  String subCategory;
+  String equipmentDetail;
   bool isLiked;
   int likeCount;
   String docid;
@@ -15,12 +18,16 @@ class Service {
   String ifs_code;
   String account_number;
   List<String> reviewList;
+  DateTime createdOn;
 
 
   Service({
     @required this.name,
     @required this.imageUrl,
     @required this.price,
+    @required this.category,
+    @required this.subCategory,
+    @required this.equipmentDetail,
     @required this.isLiked,
     @required this.likeCount,
     @required this.docid,
@@ -32,6 +39,7 @@ class Service {
     @required this.ifs_code,
     @required this.account_number,
     @required this.reviewList,
+    @required this.createdOn
   });
 
 }

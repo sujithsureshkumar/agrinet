@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:AgriNet/screens/pages/addImageService.dart';
+import 'package:AgriNet/widget/addImageCard.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,6 +79,7 @@ class _AddServiceState extends State<AddService> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           children: <Widget>[
             // imageProfile(),
+            AddImageCard(),
             SizedBox(
               height: 20,
             ),
@@ -117,7 +119,7 @@ class _AddServiceState extends State<AddService> {
                     circular = true;
                   });
                   ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
-                await servicesProvider.sp_addservice(user.uid,_servicename.text, _category.text,
+                await servicesProvider.sp_addservice(user.uid,_servicename.text,categoryValue, subCategoryValue,
                       _price.text, _description.text,imageUrlList,_equipmentDetail.text,servicesProvider.serviceProvModel).then((value) => {
                   Navigator.of(context).push(
                   MaterialPageRoute(

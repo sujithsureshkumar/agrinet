@@ -2,6 +2,7 @@ import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -50,10 +51,10 @@ class _ServiceListingCardState extends State<ServiceListingCard> {
                             Text("Category",
                                 style: TextStyle(
                                     fontSize: 12.0, color: kLightColor)),
-                            Text("Date",
+                            Text(DateFormat.yMMMd().format(DateTime.now()),
                                 style: TextStyle(
                                     fontSize: 12.0, color: Color(0xFF90C440))),
-                            Text("\$ ${widget.service.name}"),
+                            Text(" ${widget.service.price} Rs"),
                           ],
                         ),
                       ),

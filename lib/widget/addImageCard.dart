@@ -88,48 +88,64 @@ class _AddImageCardState extends State<AddImageCard> {
     );
   }
 
-  Widget catalogueCard(String imagelink) {
+  Widget catalogueCard(List<String> imagelinkList,int index) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              /* builder: (ctx) => DetailScreen(
-                image:service.imageUrl ,
-                name:service.name ,
-                price: service.price,
-              ),*/
-            ),
-          );
-        },
-        child: Container(
-          height: 200,
-          child: Card(
-            //color: Colors.grey[800],
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        width: 200.0,
-                        height: 150.0,
-                        decoration: new BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            image: new DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(imagelink)
-                            )
-                        )),
-                  ),
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  /* builder: (ctx) => DetailScreen(
+                    image:service.imageUrl ,
+                    name:service.name ,
+                    price: service.price,
+                  ),*/
+                ),
+              );
+            },
+            child: Container(
+              height: 200,
+              child: Card(
+                //color: Colors.grey[800],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            width: 200.0,
+                            height: 150.0,
+                            decoration: new BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                image: new DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(imagelinkList[index])
+                                )
+                            )),
+                      ),
 
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+          Positioned(
+            child:IconButton(
+              icon: Icon(Icons.delete, color: kPrimaryColor),
+              onPressed: () {
+
+                setState(() {
+                  return imagelinkList.removeAt(index);
+                });
+              },
+
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -153,14 +169,18 @@ class _AddImageCardState extends State<AddImageCard> {
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     child: Row(
                       children: <Widget>[
-                        Row(
-                            children: [addImageCard()]
-                        ),
+                        addImageCard(),
 
-                        Row(
-                          children: imgProvider.imageUrlList.map((p) {
-                            return catalogueCard(p);
-                          }).toList(),
+                        SizedBox(
+                          height: 250.0,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: imgProvider.imageUrlList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                // return item
+                                return catalogueCard(imgProvider.imageUrlList,index);
+                              }),
                         ),
                       ],
                     ),

@@ -67,6 +67,9 @@ class ServicesProvider extends ChangeNotifier {
         //imageUrl: snap.get('imageUrl'),
         imageUrl: List.from(snap.get("imageUrl")),
         price:snap.get('price'),
+        category:snap.get('category'),
+        subCategory: snap.get('subCategory'),
+        equipmentDetail:snap.get('equipments') ,
         likeCount:snap.get('likecount'),
           description:snap.get('description'),
           serv_prov_id:snap.get('serv_prov_id'),
@@ -75,6 +78,7 @@ class ServicesProvider extends ChangeNotifier {
           account_holder_name:snap.get('account_holder_name'),
           ifs_code:snap.get('ifs_code'),
           account_number:snap.get('account_number'),
+          createdOn:snap.get('createdOn').toDate(),
           reviewList: List.from(snap.get("reviewList"))
         //serv_prov_name:
       );
@@ -115,7 +119,7 @@ class ServicesProvider extends ChangeNotifier {
 
     }).toList();*/
 
-  Future sp_addservice(String uid,String service_name,String category,
+  Future sp_addservice(String uid,String service_name,String category,String subCategory,
       String price_per_unit,String description ,List<String> imageurl,String equipments ,ServiceProvModel spData) async {
     _docid = Uuid().v1();
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -126,6 +130,7 @@ class ServicesProvider extends ChangeNotifier {
       'serv_prov_id': uid,
       'name': service_name,
       'category': category,
+      'subCategory': subCategory,
       'price':price_per_unit,
       //'no_of_service':no_of_service,
       'description':description,
@@ -138,6 +143,7 @@ class ServicesProvider extends ChangeNotifier {
       'account_holder_name':spData.account_holder_name,
       'ifs_code':spData.ifs_code,
       'account_number':spData.account_number,
+      'createdOn':FieldValue.serverTimestamp(),
       'reviewList':[],
 
 
