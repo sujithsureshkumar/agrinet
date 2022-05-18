@@ -1,5 +1,6 @@
 
 import 'package:AgriNet/providers/profile_data.dart';
+import 'package:AgriNet/screens/authenticate/loginScreen.dart';
 import 'package:AgriNet/screens/pages/labourHome.dart';
 import 'package:AgriNet/screens/pages/profilepage.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
@@ -246,7 +247,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
         ),
               ListTile(
                 onTap: () async{
-                  await _auth.signOut();
+                  await _auth.signOut().then((value) => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (ctx) => LoginScreen())));
                 },
                 leading: Icon(Icons.logout),
                 title: Text("Logout"),

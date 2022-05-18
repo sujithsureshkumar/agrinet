@@ -43,7 +43,8 @@ class _LaborProfileState extends State<LaborProfile> {
       body: Column(
         children: [
           Stack(
-            overflow: Overflow.visible,
+           // overflow: Overflow.visible,
+            clipBehavior: Clip.none,
             alignment: Alignment.center,
             children: [
               Container(

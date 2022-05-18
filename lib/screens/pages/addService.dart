@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:AgriNet/providers/imgProvider.dart';
 import 'package:AgriNet/screens/pages/addImageService.dart';
 import 'package:AgriNet/widget/addImageCard.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
@@ -71,6 +72,7 @@ class _AddServiceState extends State<AddService> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    ImgProvider imgProvider = Provider.of<ImgProvider>(context, listen: false);
     return Scaffold(
       appBar: DefaultAppBar(title: 'Add New Service'),
       body: Form(
@@ -120,14 +122,12 @@ class _AddServiceState extends State<AddService> {
                   });
                   ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
                 await servicesProvider.sp_addservice(user.uid,_servicename.text,categoryValue, subCategoryValue,
-                      _price.text, _description.text,imageUrlList,_equipmentDetail.text,servicesProvider.serviceProvModel).then((value) => {
-                  Navigator.of(context).push(
-                  MaterialPageRoute(
-                  builder: (ctx) => AddImageService(),
-                  ),
-                  )
+                      _price.text, _description.text,
+                    imgProvider.imageUrlList.length>0?imgProvider.imageUrlList:imageUrlList,
+                    _equipmentDetail.text,servicesProvider.serviceProvModel).then((value) => {
+                     Navigator.of(context)
+                    ..pop()
                   });
-
 
                 }
               },

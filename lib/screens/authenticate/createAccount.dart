@@ -1,5 +1,6 @@
 
 import 'package:AgriNet/screens/pages/home.dart';
+import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:flutter/material.dart';
 
 import 'package:AgriNet/services/auth.dart';
@@ -132,7 +133,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 isLoading = false;
               });
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => Home()));
+                  context, MaterialPageRoute(builder: (_) => ProfileSelection()));
               print("Account Created Successfully");
             } else {
               print("Login Failed");

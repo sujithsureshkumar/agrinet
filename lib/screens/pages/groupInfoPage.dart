@@ -112,7 +112,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
             mainAxisSize: MainAxisSize.min,
               children: [
                 Stack(
-                  overflow: Overflow.visible,
+                  //overflow: Overflow.visible,
                   alignment: Alignment.center,
                   children: [
                     Container(
