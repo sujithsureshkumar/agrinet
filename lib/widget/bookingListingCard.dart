@@ -1,13 +1,16 @@
+import 'package:AgriNet/models/booking.dart';
+import 'package:AgriNet/screens/pages/contractSigning.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class BookingListingCard extends StatefulWidget {
+  Booking booking;
   String status;
   String serviceCategory;
   String price;
   String farmerName;
-  BookingListingCard({this.status,this.serviceCategory,this.price,this.farmerName});
+  BookingListingCard({this.booking,this.status,this.serviceCategory,this.price,this.farmerName});
   @override
   _BookingListingCardState createState() => _BookingListingCardState();
 }
@@ -276,6 +279,15 @@ class _BookingListingCardState extends State<BookingListingCard> {
             color: Color(0xff7b4949)
         ),
         GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) =>ContractSigning(
+                  booking: widget.booking,
+                )
+              ),
+            );
+          },
           child: SizedBox(
             height: 40,
             child: Row(

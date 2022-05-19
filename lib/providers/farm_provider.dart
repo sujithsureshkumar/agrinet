@@ -40,7 +40,7 @@ class FarmProvider extends ChangeNotifier {
         .collection("allfarms")
         .doc("allFarm")
         .update({
-      'allFarm': FieldValue.arrayUnion([_docid])
+      'allFarm': FieldValue.arrayUnion([name])
     });
 
 

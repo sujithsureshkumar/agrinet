@@ -3,6 +3,7 @@ import 'package:AgriNet/screens/pages/addImageFarm.dart';
 import 'package:AgriNet/screens/pages/contractSigning.dart';
 import 'package:AgriNet/screens/pages/farmArranging.dart';
 import 'package:AgriNet/screens/pages/laborProfile.dart';
+import 'package:AgriNet/screens/pages/rasorpayPayment.dart';
 import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/test/location.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class LaborDashboard extends StatelessWidget {
   Items item3 = new Items(
     title: "Bank Account",
       icon: Icons.account_balance_wallet,
-      widget:FarmArranging()
+      widget:RasorpayPayment()
   );
   Items item4 = new Items(
     title: "Activity",

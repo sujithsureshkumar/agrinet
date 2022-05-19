@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: size.height / 40,
             ),
             GestureDetector(
-              onTap: () => Navigator.of(context).push(
+              onTap: () => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (_) => CreateAccount())),
               child: Text(
                 "Create Account",

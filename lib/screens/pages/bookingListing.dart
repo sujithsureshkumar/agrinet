@@ -40,7 +40,8 @@ class _BookingListingState extends State<BookingListing> {
                             status: "Rejected",
                             serviceCategory: "Rubber",
                             price: p.price,
-                            farmerName: p.farmName
+                            farmerName: p.farmName,
+                            booking: p,
                         );
                       }).toList()
                   ),
