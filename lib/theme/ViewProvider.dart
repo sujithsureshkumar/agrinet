@@ -1,11 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/src/rendering/box.dart';
 import "package:google_fonts/google_fonts.dart";
+
 class ViewProvider extends StatefulWidget {
   @override
   _ViewProviderState createState() => _ViewProviderState();
 }
 class _ViewProviderState extends State<ViewProvider> {
+  List _services = [];
+  static List<String> servicename=['POULTRY SERVICES','CROP HARVESTING','SOIL PREPARATION','HORTICULTURE SERVICES','MUSHROOM FARMING SERVICES'];
+  List a=["https://animalagalliance.org/wp-content/uploads/2019/10/cropped-Untitled-design-2-560x400.png",
+  "https://previews.123rf.com/images/mironovm/mironovm1707/mironovm170700013/81933875-combine-machine-is-harvesting-oats-on-farm-field-combine-harvester-working-on-a-wheat-field-combine-.jpg",
+  "https://assets.siccode.com/i-s-b/sic-code-071-soil-preparation-services.jpg",
+  "https://vinspirer.com/images/uploads/232dc9c564ed019ec63997bd04aa89c8.jpg",
+    "https://2.wlimg.com/product_images/bc-full/2019/8/4863773/mushroom-cultivation-training-1564991173-5031789.jpeg"];
 
 
   @override
@@ -23,8 +33,10 @@ class _ViewProviderState extends State<ViewProvider> {
     ),
 
       body:SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
+        child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+
+
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -46,7 +58,7 @@ class _ViewProviderState extends State<ViewProvider> {
             children: <Widget>[
               Align(
                 alignment: Alignment.center,
-                child: Text('GREEN TRAC FARM EQUIPMENTS',
+                child: Text('GREEN TRAC FARM SERVICES',
                   style:TextStyle(
                     fontSize: 20,
                     color: Colors.brown,
@@ -92,7 +104,7 @@ class _ViewProviderState extends State<ViewProvider> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text('Mike',
+                        child: Text('Kamal',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20.0,
@@ -107,7 +119,7 @@ class _ViewProviderState extends State<ViewProvider> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text('Paris, France',
+                        child: Text('Uttar Pradesh, India',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20.0,
@@ -138,7 +150,7 @@ class _ViewProviderState extends State<ViewProvider> {
 
               SizedBox(height:5),
 
-      /*Row(
+      Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Align(
@@ -151,17 +163,16 @@ class _ViewProviderState extends State<ViewProvider> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
+                  const Divider(
+                    color: Colors.grey,
+                    height: 20,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
                   ElevatedButton.icon(
                     onPressed: () {},
-              /*style: ElevatedButton.styleFrom(
-                  primary: Colors.blue, //background color of button
-                  side: BorderSide(width:4, color:Colors.brown), //border width and color
-                  elevation: 5, //elevation of button
-                  //shape: RoundedRectangleBorder( //to set border radius to button
-                  //borderRadius: BorderRadius.circular(40)
-                  // ),
-                  padding: EdgeInsets.all(20) //content padding inside button
-              ),*/
+
                     icon: Icon( // <-- Icon
                       Icons.star,
                       size: 11.0,
@@ -169,22 +180,7 @@ class _ViewProviderState extends State<ViewProvider> {
                     label: Text('Ratings'),
 
                   ),
-                  SizedBox(width: 50),
-                  /*ElevatedButton(
-                    child: Text(
-                      'Services',
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
-
-                    onPressed: () {
-
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
-                      elevation: MaterialStateProperty.all(4),),
-
-                  ),*/
-                  SizedBox(width: 50),
+                  SizedBox(width: 100),
 
                   ElevatedButton.icon(
                     onPressed: () {},
@@ -204,7 +200,7 @@ class _ViewProviderState extends State<ViewProvider> {
       ),
       ),
       ]
-      ),*/
+      ),
                const Divider(
                 color: Colors.grey,
                 height: 20,
@@ -212,105 +208,71 @@ class _ViewProviderState extends State<ViewProvider> {
                 indent: 10,
                 endIndent: 10,
               ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-        Align(
-        alignment: Alignment.centerLeft,
-
-            child: Container(
-                child: Column(
-                    children: <Widget>[
+              SizedBox(height:20),
 
 
-                Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-              ElevatedButton(
-                child: Text( 'Top Services',
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+              Flexible(
 
-                ),
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
 
-                onPressed: () {
+                  itemBuilder:(BuildContext ctx,int index){
+                return Padding(
+                    padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 48),
 
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.blueGrey.shade600, //background color of button
-                    side: BorderSide(width:4, color:Colors.brown), //border width and color
-                    elevation: 5, //elevation of button
-                    //shape: RoundedRectangleBorder( //to set border radius to button
-                        //borderRadius: BorderRadius.circular(40)
-                   // ),
-                    padding: EdgeInsets.all(20) //content padding inside button
-                )
 
-              ),
-                      SizedBox(width: 5),
-                      ElevatedButton(
-                          child: Text( 'Equipments',
-                            style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    child:Card(
 
-                          ),
 
-                          onPressed: () {
+                    elevation:20,
+                    //shape:Border.all(
+                    //    width:6,
+                    //color:Colors.blue.shade50),*/
 
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.blueGrey.shade600, //background color of button
-                              side: BorderSide(width:4, color:Colors.brown), //border width and color
-                              elevation: 5, //elevation of button
-                              //shape: RoundedRectangleBorder( //to set border radius to button
-                              //borderRadius: BorderRadius.circular(40)
-                              // ),
-                              padding: EdgeInsets.all(20) //content padding inside button
-                          )
+                       child:Stack(
+                    children:<Widget>[
 
+                      Image.network(a[index],
+
+
+                      ),
+
+                      Positioned(
+                        bottom:16,
+                      right:16,
+                      left:16,
+                      child:Text(
+                          servicename[index],
+                        style:TextStyle(
+                          fontWeight:  FontWeight.bold,
+                          color:Colors.white,fontSize:18
+                        )
                       )
+                      ),
 
-        ]
-    ),
-                Container(
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.all(12),
-                      child:Row(
-                        children:[
-                          buildCard(1),
-                          const SizedBox(width:12),
-                          buildCard(2),
-                          const SizedBox(width:12),
-                          buildCard(3),
-                          const SizedBox(width:12),
-                          buildCard(4),
-                          const SizedBox(width:12),
-                          buildCard(5),
-                          const SizedBox(width:12),
+                ],
 
-                        ]
-                      )
+                    ),
 
 
-                    ))]
+                    )
+                );
+              },itemCount:a.length)
 
-      )
-      )
-        )
-        ]),
-              const Divider(
-                color: Colors.grey,
-                height: 20,
-                thickness: 2,
-                indent: 10,
-                endIndent: 10,
-              ),
-            ])
-    )
-    )
-    );
+
+          ),
+
+              //
+
+
+
+
+    ])
+    )));
+    }
+
+
+
   }
-
-
-}
-
-
