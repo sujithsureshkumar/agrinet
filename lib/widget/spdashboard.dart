@@ -17,24 +17,7 @@ class SpDashboard extends StatelessWidget {
 
     body: Column(
       children: <Widget>[
-        // Container(
-        //     height: ((MediaQuery.of(context).size.height) -
-        //         appBarHeight -
-        //         navBarHeight -
-        //         extendedAppBarHeight -
-        //         topCardHeight) *
-        //         .35,
-        //     width: MediaQuery.of(context).size.width * .5,
-        //     child: customCard(
-        //       "Farm Groups", "Joy of Join Farming", Icons.groups,
-        //           () {
-        //         // Navigator.of(context).push(
-        //         //   MaterialPageRoute(
-        //         //       builder: (ctx) => GroupInfoPage()
-        //         //   ),
-        //         // );
-        //       },
-        //     )),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -42,13 +25,8 @@ class SpDashboard extends StatelessWidget {
                 height: 175.0,
                 width: MediaQuery.of(context).size.width,
                 child: customCard(
-                  "View Your Profile", "Now Here", Icons.search,
+                  "View Your Profile", "Come Back!", Icons.remove_red_eye,
                       () {
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //       builder: (ctx) => ServiceCatalogue()
-                    //   ),
-                    // );
                   },
                 )),
           ],
@@ -67,34 +45,10 @@ class SpDashboard extends StatelessWidget {
                         .85,
                     width: MediaQuery.of(context).size.width * .5,
                     child: customCard(
-                      "Your services", "Explore Now", Icons.miscellaneous_services,
+                      "Your services", "Key For All", Icons.add_task,
                           () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //       builder: (ctx) => FarmListing()
-                        //   ),
-                        // );
                       },
                     )),
-                // Container(
-                //   height: ((MediaQuery.of(context).size.height) -
-                //       appBarHeight -
-                //       navBarHeight -
-                //       extendedAppBarHeight -
-                //       topCardHeight) *
-                //       .35,
-                //   width: MediaQuery.of(context).size.width * .5,
-                //   child: customCard("Service Bookings", "History",
-                //     Icons.access_alarm,
-                //         () {
-                //       // Navigator.of(context).push(
-                //       //   MaterialPageRoute(
-                //       //       builder: (ctx) => BookingListing()
-                //       //   ),
-                //       // );
-                //     },
-                //   ),
-                // ),
               ],
             ),
             Column(
@@ -110,11 +64,6 @@ class SpDashboard extends StatelessWidget {
                     child: customCard(
                       "Find Labours", "Good At Task ", Icons.people,
                           () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //       builder: (ctx) => GroupInfoPage()
-                        //   ),
-                        // );
                       },
                     )),
                 Container(
@@ -126,37 +75,14 @@ class SpDashboard extends StatelessWidget {
                         .45,
                     width: MediaQuery.of(context).size.width * .5,
                     child: customCard(
-                      "Service requests", "History", Icons.hourglass_bottom,
+                      "Service requests", "Happy To Serve", Icons.hourglass_bottom,
                           () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //       builder: (ctx) => WishlistCatalog()
-                        //   ),
-                        // );
                       },
                     )),
               ],
             ),
           ],
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: <Widget>[
-        //     Container(
-        //         height: 175.0,
-        //         width: MediaQuery.of(context).size.width,
-        //         child: customCard(
-        //           "Contract Signing", "Now Easy", Icons.access_alarm,
-        //               () {
-        //             // Navigator.of(context).push(
-        //             //   MaterialPageRoute(
-        //             //       builder: (ctx) => ServiceCatalogue()
-        //             //   ),
-        //             // );
-        //           },
-        //         )),
-        //   ],
-        // ),
       ],
     )
     );
