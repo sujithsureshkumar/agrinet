@@ -170,7 +170,7 @@ class _ViewProviderState extends State<ViewProvider> {
                     indent: 10,
                     endIndent: 10,
                   ),
-                  ElevatedButton.icon(
+                 /* ElevatedButton.icon(
                     onPressed: () {},
 
                     icon: Icon( // <-- Icon
@@ -179,8 +179,8 @@ class _ViewProviderState extends State<ViewProvider> {
                     ),
                     label: Text('Ratings'),
 
-                  ),
-                  SizedBox(width: 100),
+                  ),*/
+                  //SizedBox(width: 100),
 
                   ElevatedButton.icon(
                     onPressed: () {},
