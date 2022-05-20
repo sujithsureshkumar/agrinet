@@ -1,4 +1,5 @@
 import 'package:AgriNet/models/labor.dart';
+import 'package:AgriNet/models/laborHiring.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:AgriNet/services/firebase_api.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,45 @@ class LaborProvider extends ChangeNotifier {
         .doc(uid)
         .get();
     _profileStatus = featureSnapShot.get('laborFormFill');
+    notifyListeners();
+  }
+
+  List<LaborHiring> LaborHiringList;
+  Future<void> getLaborHiringSnapShot(String firestoreField,String uid) async {
+    LaborHiringList = [];
+    QuerySnapshot _laborHiringSnapShot = await FirebaseFirestore.instance
+        .collection('laborHiring')
+        .where(firestoreField, isEqualTo: uid)
+        .get();
+    LaborHiringList=_laborHiringSnapShot.docs.map((snap) {
+      // final user = snap.data();
+      return LaborHiring(
+        docid: snap.get('docid'),
+        hiringType: snap.get('hiringType'),
+        hirerName:snap.get('hirerName'),
+        hirerLocality: snap.get('hirerLocality'),
+        hirerdistrict: snap.get('hirerdistrict'),
+        //phone_number= json['spid'];
+        hirerState: snap.get('hirerState'),
+        hirerPincode: snap.get('hirerPincode'),
+        hirerPhone_number:snap.get('hirerPhone_number'),
+        uid: snap.get('uid'),
+        laborPhone_number: snap.get('laborPhone_number'),
+        laborid: snap.get('laborid'),
+        laborName:snap.get('laborName'),
+        laborSkill: snap.get('laborSkill'),
+        laborlocality: snap.get('laborlocality'),
+        labordistrict: snap.get('labordistrict'),
+        laborstate: snap.get('laborstate'),
+        laborpincode: snap.get('laborpincode'),
+        Startdate:snap.get('startTime').toDate(),
+        Enddate:snap.get('endTime').toDate(),
+        createdOn: snap.get('createdOn').toDate(),
+        status:snap.get('status'),
+        statusOn:snap.get('statusOn').toDate(),
+      );
+
+    }).toList();
     notifyListeners();
   }
 }

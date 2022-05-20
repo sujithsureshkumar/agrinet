@@ -35,7 +35,7 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
     ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
-    servicesProvider.getServiceProviderDetails(user.uid);
+
     profile =Provider.of<ProfileData>(context, listen: false);
     profile.spFormFillCheck(user.uid);
     print(profile.profileStatus);
@@ -44,6 +44,7 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
         body: Consumer<ProfileData>(
           builder: (context, data, child)  {
             print(servicesProvider.serviceProvModel);
+            data.profileStatus ?null:servicesProvider.getServiceProviderDetails(user.uid);
             return data.profileStatus ?Center(
               child: Padding(
                 padding: const EdgeInsets.all(30.0),

@@ -1,3 +1,4 @@
+import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -127,6 +128,7 @@ class _FarmerOnboardingState extends State<FarmerOnboarding> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    FarmProvider farmerData =Provider.of<FarmProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Service Provider Onboarding '),
@@ -145,6 +147,7 @@ class _FarmerOnboardingState extends State<FarmerOnboarding> {
           } else {
             farmer_onboarding(user.uid,name.text,
                 phone_number.text,holder_name.text,acc_number.text,ifs_code.text,bank_name.text,false)
+                .then((value) => farmerData.spFormFillCheck(user.uid))
                 .then((value) => {
               Navigator.pop(context)
             });

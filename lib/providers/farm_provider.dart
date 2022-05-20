@@ -4,6 +4,8 @@ import 'package:AgriNet/services/firebase_api.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
+import '../models/laborHiring.dart';
+
 class FarmProvider extends ChangeNotifier {
   String _docid;
   String get docid => _docid;
@@ -184,5 +186,7 @@ class FarmProvider extends ChangeNotifier {
     _profileStatus = featureSnapShot.get("farmerFormFill");
     notifyListeners();
   }
+
+
 
 }

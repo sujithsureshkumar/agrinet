@@ -1,3 +1,4 @@
+import 'package:AgriNet/providers/laborProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -189,6 +190,7 @@ class _LabourOnboardingState extends State<LabourOnboarding> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    LaborProvider laborData =Provider.of<LaborProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Service Provider Onboarding '),
@@ -209,6 +211,7 @@ class _LabourOnboardingState extends State<LabourOnboarding> {
                 phone_number.text,skill.text,_locality.text,
                 _district.text,_state.text,pincode.text,holder_name.text,acc_number.text,
               ifs_code.text,bank_name.text,false)
+                .then((value) => laborData.spFormFillCheck(user.uid))
                 .then((value) => {
               Navigator.pop(context)
             });

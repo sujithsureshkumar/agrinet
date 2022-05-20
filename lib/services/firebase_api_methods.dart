@@ -1,5 +1,6 @@
 
 
+import 'package:AgriNet/models/labor.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
@@ -45,13 +46,11 @@ Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour,bo
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Users');
   serviceProvidersCollectionReference
       .doc(uid)
-      .set({
-    'farmer': farmer, // John Doe
-    'labour': serviceProvider, // Stokes and Sons
+      .update({
+    'farmer': farmer,
+    'labour': serviceProvider,
     'serviceProvider': labour,
     'spFormFill': spFormFill,
-    "farmerFormFill":true,
-    "laborFormFill":true,
   });
 }
 
@@ -323,6 +322,48 @@ Future labour_onboarding(String uid,String name,String phone_number,String skill
 
   })
       .catchError((error) => print("Failed to add user: $error"));
+}
+
+
+Future addLaborHiring(Labor labor, Users user,
+    String hiringType,String hirerName,String hirerLocality,
+    String hirerdistrict,String hirerState,String hirerPincode,String hirerPhone_number
+    ,Timestamp startTime,Timestamp endTime) async {
+  String _docid = Uuid().v1();
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('laborHiring');
+  return serviceProvidersCollectionReference
+      .doc(_docid)
+      .set({
+    'docid':_docid,
+    'hiringType':hiringType,
+    'hirerName':hirerName,
+    'hirerLocality':hirerLocality,
+    'hirerdistrict':hirerdistrict,
+    'hirerState':hirerState,
+    'hirerPincode':hirerPincode,
+    'hirerPhone_number':hirerPhone_number,
+    'uid':user.uid,
+    'laborPhone_number':labor.phone_number,
+    'laborid':labor.docid,
+    'laborName':labor.name,
+    'laborSkill':labor.skill,
+    'laborlocality':labor.locality,
+    'labordistrict':labor.district,
+    'laborstate':labor.state,
+    'laborpincode':labor.pincode,
+    'startTime': startTime,
+    'endTime': endTime,
+    'createdOn':FieldValue.serverTimestamp(),
+    'status':'Pending',
+    'statusOn':FieldValue.serverTimestamp(),
+
+
+  })
+      .then((value) {
+    print("start&end time Added");
+  })
+      .catchError((error) => print("Failed to add start&end time: $error"));
 }
 /// Check If Document Exists
 
