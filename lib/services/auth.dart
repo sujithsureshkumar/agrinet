@@ -83,7 +83,7 @@ class AuthService {
         "labour":false,
        "spFormFill":true,
         "farmerFormFill":true,
-        'laborFormFill':true,
+        "laborFormFill":true,
       });
 
      /* await _firestore.collection('farmUser').doc(user.uid).set({

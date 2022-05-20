@@ -1,3 +1,4 @@
+import 'package:AgriNet/providers/profile_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -156,6 +157,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    ProfileData profile =Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Service Provider Onboarding '),
@@ -174,7 +176,10 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
           } else {
             updateFirebaseProfileFillStatus(user.uid,false);
             sp_onboarding(user.uid,name.text,location.text,
-                phone_number.text,holder_name.text,acc_number.text,ifs_code.text,bank_name.text,pincode.text)
+                phone_number.text,holder_name.text,acc_number.text,ifs_code.text,bank_name.text,pincode.text).
+            then((value) {
+              profile.spFormFillCheck(user.uid);
+            })
                 .then((value) => {
               Navigator.pop(context)
             });

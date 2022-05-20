@@ -27,7 +27,10 @@ Future sp_onboarding(String uid,String name,
     'pincode': pincode,
 
   })
-      .then((value) => print("User Added"))
+      .then((value) async {
+        print("User Added");
+
+      })
       .catchError((error) => print("Failed to add user: $error"));
 }
 Future<void> updateFirebaseProfileFillStatus(String uid, bool formStatus) async {
@@ -47,7 +50,8 @@ Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour,bo
     'labour': serviceProvider, // Stokes and Sons
     'serviceProvider': labour,
     'spFormFill': spFormFill,
-
+    "farmerFormFill":true,
+    "laborFormFill":true,
   });
 }
 

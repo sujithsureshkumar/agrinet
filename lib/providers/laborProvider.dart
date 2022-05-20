@@ -6,11 +6,9 @@ import 'package:uuid/uuid.dart';
 
 class LaborProvider extends ChangeNotifier {
   List<Labor> laborList=[];
-  Future<void> getLaborSnapShot(String uid) async {
+  Future<void> getLaborSnapShot() async {
     //List<Product> newList = [];
     QuerySnapshot _laborSnapShot = await FirebaseFirestore.instance.collection('labor')
-        .doc(uid)
-        .collection('farms')
         .get();
     laborList=_laborSnapShot.docs.map((snap) {
       return Labor(
@@ -32,6 +30,18 @@ class LaborProvider extends ChangeNotifier {
       );
 
     }).toList();
+    notifyListeners();
+  }
+
+  bool _profileStatus = false;
+  bool get profileStatus => _profileStatus;
+  Future<bool> spFormFillCheck(String uid) async {
+    DocumentSnapshot featureSnapShot =
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .get();
+    _profileStatus = featureSnapShot.get('laborFormFill');
     notifyListeners();
   }
 }

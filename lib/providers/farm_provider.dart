@@ -37,10 +37,8 @@ class FarmProvider extends ChangeNotifier {
         .catchError((error) => print("Failed to add Farm: $error"));
 
    serviceProvidersCollectionReference.doc(uid)
-        .collection("allfarms")
-        .doc("allFarm")
         .update({
-      'allFarm': FieldValue.arrayUnion([name])
+     'allFarm': FieldValue.arrayUnion([name])
     });
 
 
@@ -74,8 +72,6 @@ class FarmProvider extends ChangeNotifier {
     await FirebaseFirestore.instance
         .collection('farmUser')
         .doc(uid)
-        .collection('allfarms')
-        .doc('allFarm')
         .get();
 
     tempList = (userFarmSnapShot.data()as Map<String, dynamic>)['allFarm'];
@@ -175,6 +171,18 @@ class FarmProvider extends ChangeNotifier {
       'isFarmSet':true,
 
     });
+  }
+
+  bool _profileStatus = false;
+  bool get profileStatus => _profileStatus;
+  Future<bool> spFormFillCheck(String uid) async {
+    DocumentSnapshot featureSnapShot =
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .get();
+    _profileStatus = featureSnapShot.get("farmerFormFill");
+    notifyListeners();
   }
 
 }
