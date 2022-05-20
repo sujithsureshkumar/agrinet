@@ -81,19 +81,20 @@ class AuthService {
         "farmer":false,
         "serviceProvider":false,
         "labour":false,
-       "spFormFill":true
+       "spFormFill":true,
+        "farmerFormFill":true,
       });
 
-      await _firestore.collection('farmUser').doc(user.uid).set({
+     /* await _firestore.collection('farmUser').doc(user.uid).set({
         'wishlist': []
-      });
+      });*/
 
-      await _firestore.collection('farmUser').doc(users.uid)
+    /*  await _firestore.collection('farmUser').doc(users.uid)
         .collection("allfarms")
         .doc("allFarm")
         .set({
     'allFarm': []
-    });
+    });*/
 
       return _userFromFirebaseUser(user);
     } catch (error) {

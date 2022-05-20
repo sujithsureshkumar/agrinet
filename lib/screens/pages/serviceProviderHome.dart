@@ -40,111 +40,112 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
     print(profile.profileStatus);
     return Scaffold(
         //backgroundColor: Colors.grey[900],
-        body: Stack(
-          children: [
-            Consumer<ProfileData>(
-              builder: (context, data, child) {
-                print(servicesProvider.serviceProvModel);
-                return data.profileStatus ?Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => SPOnBoarding(),
+        body: Consumer<ProfileData>(
+          builder: (context, data, child)  {
+            print(servicesProvider.serviceProvModel);
+            return data.profileStatus ?Center(
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => SPOnBoarding(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width:  MediaQuery
+                        .of(context)
+                        .size
+                        .width *0.8,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height*0.4,
+                    decoration: BoxDecoration(
+                      color:Color(0xffedf1f0),
+                      //border: Border.all(color: Colors.red[500],),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+
+                    child: Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            //flex: 2,
+                            child: Text(
+                              'WELCOME',
+                              style: TextStyle(
+                                color: Color(0xff27c791),
+                                fontSize: 35,
+                                fontWeight: FontWeight. bold,
+                                fontStyle: FontStyle.italic,
+                                letterSpacing: 5,
+                                //textAlign:Alignment.bottomRight,
+
+                              ),
+                            ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        width:  MediaQuery
-                            .of(context)
-                            .size
-                            .width *0.8,
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height*0.4,
-                        decoration: BoxDecoration(
-                          color:Color(0xffedf1f0),
-                          //border: Border.all(color: Colors.red[500],),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-
-                          child: Padding(
-                            padding: const EdgeInsets.all(28.0),
-                            child: Column(
-                              children: <Widget>[
-                                Expanded(
-                                  //flex: 2,
+                          Expanded(
+                            child: Text(
+                              'Service Provider',
+                              style: TextStyle(
+                                color: Color(0xff27c791),
+                                fontSize: 15,
+                                fontWeight: FontWeight. bold,
+                                fontStyle: FontStyle.italic,
+                                letterSpacing: 5,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'WELCOME',
-                                    style: TextStyle(
-                                        color: Color(0xff27c791),
-                                        fontSize: 35,
-                                      fontWeight: FontWeight. bold,
-                                        fontStyle: FontStyle.italic,
-                                        letterSpacing: 5,
-                                        //textAlign:Alignment.bottomRight,
-
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    'Service Provider',
+                                    'Complete Your Profile',
                                     style: TextStyle(
                                       color: Color(0xff27c791),
                                       fontSize: 15,
                                       fontWeight: FontWeight. bold,
                                       fontStyle: FontStyle.italic,
                                       letterSpacing: 5,
-                                    ),
-                                  ),
+                                    ),),
                                 ),
                                 Expanded(
-                                  child: Row(
-                                    children: [
-                                      Align(
-                                  alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Complete Your Profile',
-                                          style: TextStyle(
-                                          color: Color(0xff27c791),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight. bold,
-                                          fontStyle: FontStyle.italic,
-                                          letterSpacing: 5,
-                                        ),),
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                            child: Icon(
-                                              Icons.arrow_forward_sharp, size: 44.0 ,
-                                              color:Color(0xff27c791),
-                                            )
-                                        ),
-                                      ),
-                                    ],
+                                  child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Icon(
+                                        Icons.arrow_forward_sharp, size: 44.0 ,
+                                        color:Color(0xff27c791),
+                                      )
                                   ),
                                 ),
                               ],
                             ),
                           ),
-
+                        ],
                       ),
                     ),
-                  ),
-                ): StatsGrid();
-              }
-            ),
 
-            Positioned(
-            bottom:20,
-            child:NavigationServiceProvider()
-            ),
-          ],
+                  ),
+                ),
+              ),
+            ): Stack(
+              children: [
+                StatsGrid(),
+
+
+                Positioned(
+                bottom:20,
+                child:NavigationServiceProvider()
+                ),
+              ],
+            );
+          }
         ),
     );
 

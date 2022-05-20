@@ -242,6 +242,44 @@ Future deleteService(String docid) async {
       })
       .catchError((error) => print("Failed to Update Booking: $error"));
 }
+
+
+Future farmer_onboarding(String uid,String name,String phone_number,String account_holder_name,
+    String account_number,String ifs_code,String bank_name,bool formStatus ) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('farmUser');
+  return serviceProvidersCollectionReference
+      .doc(uid)
+      .set({
+    'name': name,
+    'phone_number':phone_number,
+    'account_holder_name':account_holder_name,
+    'account_number':account_number,
+    'ifs_code':ifs_code,
+    'bank_name':bank_name,
+    'wishlist':[],
+    'allFarm': [],
+
+  })
+      .then((value) async {
+        print("User Added");
+        firebaseFirestore.collection('Users')
+            .doc(uid)
+            .update({
+          'farmerFormFill': formStatus,
+        }).then((value) async {
+          print("Status Changed");
+          await firebaseFirestore.collection('farmUser').doc(uid)
+              .collection("allfarms")
+              .doc("allFarm")
+              .set({
+            'allFarm': []
+          });
+        });
+
+      })
+      .catchError((error) => print("Failed to add user: $error"));
+}
 /// Check If Document Exists
 
 
