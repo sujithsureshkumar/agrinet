@@ -1,23 +1,21 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/models/labor.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LabourCatalog extends StatefulWidget {
-  LabourCatalog({Key key}) : super(key: key);
+class LabourCard extends StatefulWidget {
+  final Labor labor;
+  LabourCard({this.labor,Key key}) : super(key: key);
 
   @override
-  _LabourCatalogState createState() => _LabourCatalogState();
+  _LabourCardState createState() => _LabourCardState();
 }
 
-class _LabourCatalogState extends State<LabourCatalog> {
+class _LabourCardState extends State<LabourCard> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kWhiteColor,
-      appBar: DefaultAppBar(title: "Labours"),
-
-      body:Card(
+    return Card(
         elevation: 5.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(0.0),
@@ -49,7 +47,7 @@ class _LabourCatalogState extends State<LabourCatalog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "Name",
+                          widget.labor.name,
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 18.0,
@@ -57,7 +55,7 @@ class _LabourCatalogState extends State<LabourCatalog> {
                         ),
                         ),
                       Text(
-                        "Designation",
+                        widget.labor.skill,
                         style: TextStyle(
                             color: Colors.grey,
                         ),
@@ -86,7 +84,6 @@ class _LabourCatalogState extends State<LabourCatalog> {
             ],
           )
         )
-      )
-    );
+      );
   }
 }

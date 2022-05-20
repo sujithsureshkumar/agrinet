@@ -1,6 +1,7 @@
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/providers/imgProvider.dart';
+import 'package:AgriNet/providers/laborProvider.dart';
 import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/providers/users_provider.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
     ChangeNotifierProvider(create: (context) => ServicesProvider()),
       ChangeNotifierProvider(create: (context) => ImgProvider()),
       ChangeNotifierProvider(create: (context) => FarmProvider()),
-
+      ChangeNotifierProvider(create: (context) => LaborProvider()),
 
     ],
         child: MaterialApp(

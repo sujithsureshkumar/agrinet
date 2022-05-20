@@ -1,6 +1,7 @@
 import 'package:AgriNet/screens/pages/addService.dart';
 import 'package:AgriNet/screens/pages/bookingSummary.dart';
-import 'package:AgriNet/screens/pages/labour_Catalog.dart';
+import 'package:AgriNet/screens/pages/laborCatalog.dart';
+import 'package:AgriNet/widget/labourCard.dart';
 import 'package:AgriNet/screens/pages/serviceDetails.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:flutter/material.dart';
@@ -184,7 +185,7 @@ class NavigationServiceProvider extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (ctx) => LabourCatalog(),
+                              builder: (ctx) => LaborCatalog(),
                             ),
                           );
                         },
