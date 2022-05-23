@@ -1,3 +1,6 @@
+import 'package:AgriNet/screens/pages/bookingSummary.dart';
+import 'package:AgriNet/screens/pages/laborCatalog.dart';
+import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:flutter/material.dart';
 import 'package:AgriNet/widget/customCard.dart';
 class SpDashboard extends StatelessWidget {
@@ -39,6 +42,11 @@ class SpDashboard extends StatelessWidget {
                         child: customCard(
                           "Your services", "Key For All", Icons.add_task,
                               () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (ctx) => ServiceListing()
+                                  ),
+                                );
                           },
                         )),
                   ],
@@ -56,6 +64,11 @@ class SpDashboard extends StatelessWidget {
                         child: customCard(
                           "Find Labours", "Good At Task ", Icons.people,
                               () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (ctx) => LaborCatalog()
+                                  ),
+                                );
                           },
                         )),
                     Container(
@@ -69,6 +82,11 @@ class SpDashboard extends StatelessWidget {
                         child: customCard(
                           "Service requests", "Happy To Serve", Icons.hourglass_bottom,
                               () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (ctx) => BookingSummary()
+                                  ),
+                                );
                           },
                         )),
                   ],

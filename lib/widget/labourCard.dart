@@ -1,5 +1,6 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/labor.dart';
+import 'package:AgriNet/screens/pages/laborHireAddressDateForm.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,14 @@ class _LabourCardState extends State<LabourCard> {
                           )
                         )
                     ),
-                  //onPressed: () =>
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => LaborHireAddressDateForm(labor: widget.labor,),
+                      ),
+                    );
+
+                  },
                 ),
               ),
             ],

@@ -34,7 +34,7 @@ class _LabourOnboardingState extends State<LabourOnboarding> {
 
         return null;
       },
-      enabled:false,
+      enabled:true,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -70,7 +70,7 @@ class _LabourOnboardingState extends State<LabourOnboarding> {
             ),
             TextField(
               controller: phone_number,
-              obscureText: true,
+              //obscureText: true,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),

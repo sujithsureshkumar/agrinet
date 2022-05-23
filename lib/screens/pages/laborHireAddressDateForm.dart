@@ -1,8 +1,12 @@
 import 'dart:io';
+import 'package:AgriNet/models/labor.dart';
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
+import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/screens/pages/addImageFarm.dart';
 import 'package:AgriNet/screens/pages/addImageService.dart';
+import 'package:AgriNet/screens/pages/success.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/date_range_picker_widget.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +14,14 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:AgriNet/services/addservice.dart';
 
-class AddFarm extends StatefulWidget {
-  AddFarm({Key key}) : super(key: key);
+class LaborHireAddressDateForm extends StatefulWidget {
+  final Labor labor;
+  LaborHireAddressDateForm({this.labor,Key key}) : super(key: key);
 
   @override
-  _AddFarmState createState() => _AddFarmState();
+  _LaborHireAddressDateFormState createState() => _LaborHireAddressDateFormState();
 }
-class _AddFarmState extends State<AddFarm> {
+class _LaborHireAddressDateFormState extends State<LaborHireAddressDateForm> {
 
   bool circular = false;
   final _globalkey = GlobalKey<FormState>();
@@ -27,6 +32,7 @@ class _AddFarmState extends State<AddFarm> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    ServicesProvider servicesProvider = Provider.of<ServicesProvider >(context, listen: false);
     return Scaffold(
       appBar: DefaultAppBar(title: "More Details"),
       body: Form(
@@ -60,8 +66,17 @@ class _AddFarmState extends State<AddFarm> {
             ),
             InkWell(
               onTap: () async {
-                if (_globalkey.currentState.validate()) {
-
+                if (_globalkey.currentState.validate()&& servicesProvider.startTimeStamp!=null
+                    && servicesProvider.endTimeStamp!=null) {
+                  await addLaborHiring(widget.labor, user,
+                      "hiringType","hirerName",_locality.text,
+                      _district.text,_state.text,_pincode.text,"hirerPhone_number"
+                      ,servicesProvider.startTimeStamp,servicesProvider.endTimeStamp)
+                      .then((value) =>  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => Success(),
+                    ),
+                  ));
                 }
               },
               child: Center(
