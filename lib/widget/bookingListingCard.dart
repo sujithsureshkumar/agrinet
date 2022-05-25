@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class BookingListingCard extends StatefulWidget {
-  Booking booking;
+  final Booking booking;
   String status;
-  String serviceCategory;
-  String price;
-  String farmerName;
+  final String serviceCategory;
+  final String price;
+  final String farmerName;
   BookingListingCard({this.booking,this.status,this.serviceCategory,this.price,this.farmerName});
   @override
   _BookingListingCardState createState() => _BookingListingCardState();
@@ -97,7 +97,9 @@ class _BookingListingCardState extends State<BookingListingCard> {
                                 ),
 
                                 Text(
-                                  "On Feb 16,22",
+                                  //"On Feb 16,22",
+                                  DateFormat.yMMMd().format(widget.booking.statusOn),
+
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 12,
@@ -132,7 +134,7 @@ class _BookingListingCardState extends State<BookingListingCard> {
                                       ),
                                     ),
                                     Text(
-                                      "On Feb 16,22",
+                                        DateFormat.yMMMd().format(widget.booking.createdOn),
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontSize: 15,
@@ -216,7 +218,7 @@ class _BookingListingCardState extends State<BookingListingCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Name",
+                            widget.booking.serviceName,
                             style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 18.0,
@@ -224,7 +226,7 @@ class _BookingListingCardState extends State<BookingListingCard> {
                             ),
                           ),
                           Text(
-                            "Designation",
+                            widget.booking.spName,
                             style: TextStyle(
                               color: Colors.grey,
                             ),
@@ -271,7 +273,7 @@ class _BookingListingCardState extends State<BookingListingCard> {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            ' Order date:24-12-22\nService Period:24-12-22 to 01-02-21 ',
+            ' booking date:${DateFormat.yMMMd().format(widget.booking.createdOn)}\nService Period:${DateFormat.yMMMd().format(widget.booking.Startdate)} to ${DateFormat.yMMMd().format(widget.booking.Enddate)}',
             style: TextStyle(fontSize: 13, height: 1.4),
           ),
         ),

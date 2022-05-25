@@ -52,9 +52,12 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
        });
   }
   reject() {
-    setState(() {
-      widget.booking.status = 'Rejected';
-      buttonVisible=false;
+    updateBooking(widget.booking.docid,'Rejected')
+        .then((value) {
+      setState(() {
+        widget.booking.status = 'Rejected';
+        buttonVisible=false;
+      });
     });
   }
 
@@ -141,7 +144,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                         ),
                                       ),
                                       Text(
-                                        widget.booking.serviceCategory,
+                                        widget.booking.serviceName,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 15,
@@ -245,7 +248,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                       Row(
                         children: [
                           Text(
-                            "Customer:",
+                            "Farm Name:",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 15,
@@ -352,7 +355,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            ' Order date:24-12-22\nService Period:24-12-22 to 01-02-21 ',
+            ' Request date:${DateFormat.yMMMd().format(widget.booking.createdOn)}\nService Period:${DateFormat.yMMMd().format(widget.booking.Startdate)} to ${DateFormat.yMMMd().format(widget.booking.Enddate)}',
             style: TextStyle(fontSize: 13, height: 1.4),
           ),
         ),

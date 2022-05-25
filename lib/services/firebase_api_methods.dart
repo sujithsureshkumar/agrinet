@@ -215,6 +215,8 @@ Future updateBooking(String docid,String status) async {
       .catchError((error) => print("Failed to Update Booking: $error"));
 }
 
+
+
 Future getFarmDetails(String farmType,String uid,String name) async {
   if(farmType=='Individual') {
     return await FirebaseFirestore.instance
