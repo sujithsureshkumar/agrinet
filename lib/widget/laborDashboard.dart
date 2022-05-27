@@ -4,6 +4,7 @@ import 'package:AgriNet/screens/pages/contractSigning.dart';
 import 'package:AgriNet/screens/pages/farmArranging.dart';
 import 'package:AgriNet/screens/pages/laborHireAddressDateForm.dart';
 import 'package:AgriNet/screens/pages/laborProfile.dart';
+import 'package:AgriNet/screens/pages/paymentHistory.dart';
 import 'package:AgriNet/screens/pages/rasorpayPayment.dart';
 import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/test/location.dart';
@@ -31,7 +32,7 @@ class LaborDashboard extends StatelessWidget {
   Items item4 = new Items(
     title: "Activity",
       icon: Icons.local_activity,
-      widget:LaborHireAddressDateForm()
+      widget:PaymentHistory(),
   );
   Items item5 = new Items(
     title: "To do",

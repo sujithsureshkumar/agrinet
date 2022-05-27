@@ -266,6 +266,7 @@ class ServicesProvider extends ChangeNotifier {
       // final user = snap.data();
       return Booking(
           docid: snap.get('docid'),
+          bookingId: snap.get('bookingId'),
           farmType: snap.get('farmType'),
           farmName:snap.get('farmName'),
           uid: snap.get('uid'),

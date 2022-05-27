@@ -273,9 +273,10 @@ class _DateFarmSelectionState extends State<DateFarmSelection> {
                       && servicesProvider.endTimeStamp!=null) {
 
               getFarmDetails(_myState,widget.user.uid,_myStateList).then((value) async {
-
+                final now = DateTime.now();
+                String bookingId=now.microsecondsSinceEpoch.toString();
                 Map<String, dynamic> farmMap = value.docs[0].data();
-                await addBooking(widget.service,widget.user,_myState,_myStateList,farmMap['category'],
+                await addBooking(widget.service,widget.user,bookingId,_myState,_myStateList,farmMap['category'],
                     farmMap['subcategory'],servicesProvider.startTimeStamp,servicesProvider.endTimeStamp).then((value) => {
                   Navigator.of(context).push(
                     MaterialPageRoute(

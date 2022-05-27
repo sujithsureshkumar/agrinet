@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 class Booking {
   String docid;
+  String bookingId;
   String farmType;
   String farmName;
   String price;
@@ -31,6 +32,7 @@ class Booking {
 
   Booking({
     @required this.docid,
+    @required this.bookingId,
     @required this.farmType,
     @required this.farmName,
     @required this.price,

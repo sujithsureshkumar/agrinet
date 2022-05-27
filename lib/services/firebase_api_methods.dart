@@ -148,7 +148,7 @@ Future sp_updateService(String docid,String service_name,String category,String 
 }
 
 
-Future addBooking(Service service, Users user,
+Future addBooking(Service service, Users user,String bookingId,
     String farmType,String farmName,String serviceCategory,
     String serviceSubCategory,Timestamp startTime,Timestamp endTime) async {
   String _docid = Uuid().v1();
@@ -158,6 +158,7 @@ Future addBooking(Service service, Users user,
       .doc(_docid)
       .set({
     'docid':_docid,
+    'bookingId':bookingId,
     'farmType':farmType,
     'farmName':farmName,
     'price':service.price,
@@ -396,6 +397,46 @@ Future updatelabourProfile(String uid,String name,String phone_no,String skill) 
 
   })
       .catchError((error) => print("Failed to update: $error"));
+}
+
+Future capturePaymentDetails(String uid, String fromType, String fromName, String fromOwnerName, String price,
+String toid, String toType, String toName, String toOwnerName, String bookingId, String status, String payment_id,
+String payment_order_id, String payment_signature, String farmerPaymentDirection, String spPaymentDirection,
+String laborPaymentDirection
+    ) async {
+  String _docid = Uuid().v1();
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('payment');
+  return serviceProvidersCollectionReference
+      .doc(_docid)
+      .set({
+    'docid':_docid,
+    'fromType':fromType,
+    'fromName':fromName,
+    'fromOwnerName':fromOwnerName,
+    'price':price,
+    'uid':uid,
+    'toid':toid,
+    'toType':toType,
+    'toName':toName,
+    'toOwnerName':toOwnerName,
+    'bookingId':bookingId,
+    'createdOn':FieldValue.serverTimestamp(),
+    'status':status,
+    'paymentDate':FieldValue.serverTimestamp(),
+    'payment_id':payment_id,
+   'payment_order_id':payment_order_id,
+    'payment_signature':payment_signature,
+    'farmerPaymentDirection':farmerPaymentDirection,
+    'spPaymentDirection':spPaymentDirection,
+   'laborPaymentDirection':laborPaymentDirection,
+
+  })
+      .then((value) async {
+    print("Payment Capture Successfuly");
+
+  })
+      .catchError((error) => print("Failed to Capture Payment: $error"));
 }
 /// Check If Document Exists
 
