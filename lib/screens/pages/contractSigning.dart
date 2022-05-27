@@ -1,6 +1,8 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/booking.dart';
 import 'package:AgriNet/models/service.dart';
+import 'package:AgriNet/screens/pages/success.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/defaultBackButton.dart';
 import 'package:AgriNet/widget/headerLabel.dart';
@@ -9,7 +11,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:toast/toast.dart';
 
 class ContractSigning extends StatefulWidget {
-  final Booking booking;
+  Booking booking;
   ContractSigning({this.booking,Key key,}) : super(key: key);
 
   @override
@@ -20,6 +22,7 @@ class _ContractSigningState extends State<ContractSigning> {
 
   Razorpay razorpay;
   TextEditingController textEditingController = new TextEditingController();
+  bool isSelected=false;
 
   @override
   void initState() {
@@ -63,9 +66,25 @@ class _ContractSigningState extends State<ContractSigning> {
 
   }
 
-  void handlerPaymentSuccess(){
+  Future<void> handlerPaymentSuccess(PaymentSuccessResponse response) async {
     print("Pament success");
-    Toast.show("Pament success");
+    //Toast.show("Pament success");
+    await capturePaymentDetails(widget.booking.uid, widget.booking.farmType, widget.booking.farmName, "farm owner",
+        widget.booking.price, widget.booking.spid, widget.booking.serviceCategory,
+        widget.booking.serviceName, widget.booking.spName, widget.booking.bookingId, "success",
+        response.paymentId, response.orderId, response.signature,
+    ).then((value) async {
+      updatePaymentInBookingFarmer(widget.booking.docid,response.paymentId,response.orderId, response.signature);
+    }).then((value) => Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => Success(
+          onPressed: () => Navigator.of(context)
+            ..pop(),
+          emptyMsg: "Payment Success !!",
+          subTitleText: 'Payment id:'+response.paymentId,
+        ),
+      ),
+    ),);
   }
 
   void handlerErrorFailure(){
@@ -83,11 +102,11 @@ class _ContractSigningState extends State<ContractSigning> {
     return Scaffold(
         backgroundColor: kWhiteColor,
         appBar: DefaultAppBar(
-        title: "Contract",
+        title: "More Details",
         child: DefaultBackButton(),
     ),
 
-      bottomNavigationBar: Material(
+      bottomNavigationBar: widget.booking.contractFarmer?widget.booking.isFarmerPaymentDone?null:Material(
         elevation: kLess,
         color: kWhiteColor,
         child: Row(
@@ -117,15 +136,42 @@ class _ContractSigningState extends State<ContractSigning> {
             ),
           ],
         ),
-      ),
+      ):null,
     body:Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
       children: [
+
+        widget.booking.isSpPaymentDone?Container():ListTile(
+          title: Text(
+            'Is Contract Sign needed From Service Provider Side',
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          trailing: widget.booking.contractSp
+              ? Icon(
+            Icons.toggle_on,
+            color: Colors.green[700],
+            size: 50,
+          )
+              : Icon(
+            Icons.toggle_off,
+            color: Colors.grey,
+            size: 50,
+          ),
+          onTap: () async {
+
+            setState(() {
+              widget.booking.contractSp = !widget.booking.contractSp;
+              });
+            await updateContractSignInBookingSp(widget.booking.docid,widget.booking.contractSp);
+          },
+        ),
       HeaderLabel(
-      headerText: "Please Sign the contract",
+      headerText: "Service Details",
       ),
 
       SizedBox(
@@ -181,12 +227,29 @@ class _ContractSigningState extends State<ContractSigning> {
           height: kDefaultPadding,
         ),
 
-        Text("Advance Amount: 300",
+        widget.booking.contractFarmer?widget.booking.isFarmerPaymentDone?HeaderLabel(
+          headerText: "Payment Rs 300 Done Successfuly",
+        ):HeaderLabel(
+          headerText: "Please Sign the contract by Paying the Amount",
+        ):HeaderLabel(
+          headerText: "No Contract Sign request by Service Provider",
+        ),
+
+        SizedBox(
+          height: kDefaultPadding,
+        ),
+
+        widget.booking.contractFarmer?widget.booking.isFarmerPaymentDone?Text("Payment Rs 300 Done Successfuly",
           style: TextStyle (
               color: kLightColor,
               fontSize: 18
           ),
-        ),
+        ):Text("Advance Amount: 300",
+          style: TextStyle (
+              color: kLightColor,
+              fontSize: 18
+          ),
+        ):Container(),
 
       ]
       ),

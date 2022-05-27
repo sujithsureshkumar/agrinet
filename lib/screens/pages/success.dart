@@ -5,7 +5,10 @@ import 'package:AgriNet/widget/subTitle.dart';
 import 'package:flutter/material.dart';
 
 class Success extends StatefulWidget {
-  Success({Key key}) : super(key: key);
+  final Function onPressed;
+  final String emptyMsg;
+  final String subTitleText;
+  Success({Key key,this.onPressed,this.emptyMsg,this.subTitleText}) : super(key: key);
 
   @override
   _SuccessState createState() => _SuccessState();
@@ -21,17 +24,20 @@ class _SuccessState extends State<Success> {
         children: [
           EmptySection(
             emptyImg: "https://c.tenor.com/0AVbKGY_MxMAAAAM/check-mark-verified.gif",
-            emptyMsg: 'Successful !!',
+            //emptyMsg: 'Successful !!',
+              emptyMsg:widget.emptyMsg,
           ),
           SubTitle(
-            subTitleText: 'Your Request was Sent successfully',
+            //subTitleText: 'Your Request was Sent successfully',
+              subTitleText:widget.subTitleText,
           ),
           DefaultButton(
             btnText: 'Ok',
-            onPressed: () => Navigator.of(context)
+            onPressed: widget.onPressed,
+           /* onPressed: () => Navigator.of(context)
               ..pop()
               ..pop()
-              ..pop(),
+              ..pop(),*/
             ratio:0.5,
             color:kPrimaryColor,
             textColor: kWhiteColor,

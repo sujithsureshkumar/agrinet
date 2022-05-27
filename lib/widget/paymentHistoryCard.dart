@@ -1,10 +1,12 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/models/payment.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PaymentHistoryCard extends StatefulWidget {
+  final Payment payment;
 
-
-  PaymentHistoryCard ({Key key}): super(key: key);
+  PaymentHistoryCard ({Key key,this.payment}): super(key: key);
 
   @override
   _PaymentHistoryCardState createState() => _PaymentHistoryCardState();
@@ -47,7 +49,8 @@ class _PaymentHistoryCardState extends State<PaymentHistoryCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'name',
+                          //'name',
+                          "to "+widget.payment.toName,
                           style: TextStyle(
                               fontSize: 15,
                               color: kDarkColor,
@@ -56,7 +59,7 @@ class _PaymentHistoryCardState extends State<PaymentHistoryCard> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'date',
+                          DateFormat.yMMMd().format(widget.payment.createdOn),
                           style: TextStyle(
                               fontSize: 12,
                               color: kDarkColor.withOpacity(0.5),
@@ -75,7 +78,7 @@ class _PaymentHistoryCardState extends State<PaymentHistoryCard> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    'price',
+                    widget.payment.price + " Rs",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,

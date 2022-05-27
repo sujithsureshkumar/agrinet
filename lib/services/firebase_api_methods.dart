@@ -401,8 +401,7 @@ Future updatelabourProfile(String uid,String name,String phone_no,String skill) 
 
 Future capturePaymentDetails(String uid, String fromType, String fromName, String fromOwnerName, String price,
 String toid, String toType, String toName, String toOwnerName, String bookingId, String status, String payment_id,
-String payment_order_id, String payment_signature, String farmerPaymentDirection, String spPaymentDirection,
-String laborPaymentDirection
+String payment_order_id, String payment_signature,
     ) async {
   String _docid = Uuid().v1();
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -427,9 +426,10 @@ String laborPaymentDirection
     'payment_id':payment_id,
    'payment_order_id':payment_order_id,
     'payment_signature':payment_signature,
-    'farmerPaymentDirection':farmerPaymentDirection,
-    'spPaymentDirection':spPaymentDirection,
-   'laborPaymentDirection':laborPaymentDirection,
+    //'farmerPaymentDirection':farmerPaymentDirection,
+    //'spPaymentDirection':spPaymentDirection,
+   //'laborPaymentDirection':laborPaymentDirection,
+    //'participants':[uid,toid],
 
   })
       .then((value) async {
@@ -437,6 +437,69 @@ String laborPaymentDirection
 
   })
       .catchError((error) => print("Failed to Capture Payment: $error"));
+}
+
+Future updatePaymentInBookingFarmer(String docid,String farmer_payment_id,String farmer_order_id,
+    String farmer_signature
+    ) async {
+  await FirebaseFirestore.instance.collection('Bookings')
+      .doc(docid)
+      .update({
+    'statusOn':FieldValue.serverTimestamp(),
+    //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
+    'isFarmerPaymentDone':true,
+    'farmerPaymentDate':FieldValue.serverTimestamp(),
+    "farmer_payment_id": farmer_payment_id,
+    "farmer_order_id": farmer_order_id,
+    "farmer_signature": farmer_signature,
+  })
+      .then((value) => print("Updated Payment in Booking"))
+      .catchError((error) => print("Failed to Updated Payment in Booking: $error"));
+}
+
+
+Future updateContractSignInBookingSp(String _docid,bool contractSp) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Bookings');
+  return serviceProvidersCollectionReference
+      .doc(_docid)
+      .update({
+    'contractSp':contractSp,
+  })
+      .then((value) {
+    print("updated");
+  })
+      .catchError((error) => print("Failed to update: $error"));
+}
+
+Future updateContractSignInBookingFarmer(String _docid,bool contractFarmer) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Bookings');
+  return serviceProvidersCollectionReference
+      .doc(_docid)
+      .update({
+    'contractFarmer':contractFarmer,
+  })
+      .then((value) {
+    print("updated");
+  })
+      .catchError((error) => print("Failed to update: $error"));
+}
+
+Future updatePaymentInBookingSp(String docid,String sp_payment_id,String sp_order_id,
+    String sp_signature
+    ) async {
+  await FirebaseFirestore.instance.collection('Bookings')
+      .doc(docid)
+      .update({
+    'spPaymentDate':FieldValue.serverTimestamp(),
+    'isSpPaymentDone':true,
+    "Sp_payment_id": sp_payment_id,
+    "Sp_order_id": sp_order_id,
+    "Sp_signature": sp_signature,
+  })
+      .then((value) => print("Updated Payment in Booking"))
+      .catchError((error) => print("Failed to Updated Payment in Booking: $error"));
 }
 /// Check If Document Exists
 

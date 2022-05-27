@@ -280,7 +280,12 @@ class _DateFarmSelectionState extends State<DateFarmSelection> {
                     farmMap['subcategory'],servicesProvider.startTimeStamp,servicesProvider.endTimeStamp).then((value) => {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) => Success(),
+                      builder: (ctx) => Success(
+                        onPressed: () => Navigator.of(context)
+                          ..pop(),
+                        emptyMsg: "Successful !!",
+                        subTitleText: 'Your Request was Sent successfully',
+                      ),
                     ),
                   )
                 });

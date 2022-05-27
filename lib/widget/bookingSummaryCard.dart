@@ -1,4 +1,5 @@
 import 'package:AgriNet/models/booking.dart';
+import 'package:AgriNet/screens/pages/spContractSign.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
@@ -365,6 +366,15 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
           color: Color(0xff7b4949)
       ),
         GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (ctx) =>SpContractSign(
+                    booking: widget.booking,
+                  )
+              ),
+            );
+          },
           child: SizedBox(
             height: 40,
             child: Row(

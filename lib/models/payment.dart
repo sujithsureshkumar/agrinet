@@ -17,9 +17,9 @@ class Payment {
   String payment_id;
   String payment_order_id;
   String payment_signature;
-  String farmerPaymentDirection;
-  String spPaymentDirection;
-  String laborPaymentDirection;
+  //String farmerPaymentDirection;
+  //String spPaymentDirection;
+  //String laborPaymentDirection;
   Payment({
     @required this.docid,
     @required this.fromType,
@@ -38,9 +38,9 @@ class Payment {
     @required this.payment_id,
     @required this.payment_order_id,
     @required this.payment_signature,
-    @required this.farmerPaymentDirection,
-    @required this.spPaymentDirection,
-    @required this.laborPaymentDirection,
+    //@required this.farmerPaymentDirection,
+    //@required this.spPaymentDirection,
+    //@required this.laborPaymentDirection,
   });
 
 }
