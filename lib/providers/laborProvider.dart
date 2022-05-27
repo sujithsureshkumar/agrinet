@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class LaborProvider extends ChangeNotifier {
+  bool loading=false;
   List<Labor> laborList=[];
   Future<void> getLaborSnapShot() async {
     //List<Product> newList = [];
@@ -84,4 +85,6 @@ class LaborProvider extends ChangeNotifier {
     }).toList();
     notifyListeners();
   }
+
+
 }

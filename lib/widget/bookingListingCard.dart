@@ -1,5 +1,6 @@
 import 'package:AgriNet/models/booking.dart';
 import 'package:AgriNet/screens/pages/contractSigning.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +17,16 @@ class BookingListingCard extends StatefulWidget {
 }
 
 class _BookingListingCardState extends State<BookingListingCard> {
+
+  @override
+  void initState () {
+    super.initState();
+    if(widget.booking.status=='Cancelled' || widget.booking.status=='Rejected'){
+      setState(() {
+        buttonVisible=false;
+      });
+    }
+  }
   static final double radius = 20;
   bool buttonVisible=true;
 
@@ -42,10 +53,16 @@ class _BookingListingCardState extends State<BookingListingCard> {
       buttonVisible=false;
     });
   }
+
+
   cancel() {
-    setState(() {
-      widget.status = 'Cancelled';
-      buttonVisible=false;
+    updateBooking(widget.booking.docid,'Cancelled')
+        .then((value) {
+      setState(() {
+        widget.booking.status = 'Cancelled';
+        widget.booking.statusOn = DateTime.now();
+        buttonVisible=false;
+      });
     });
   }
 
@@ -87,7 +104,7 @@ class _BookingListingCardState extends State<BookingListingCard> {
                           child: Column(
                               children: [
                                 Text(
-                                  widget.status,
+                                  widget.booking.status,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 15,
@@ -98,7 +115,7 @@ class _BookingListingCardState extends State<BookingListingCard> {
 
                                 Text(
                                   //"On Feb 16,22",
-                                  DateFormat.yMMMd().format(widget.booking.statusOn),
+                                  "${DateFormat.yMMMd().format(widget.booking.statusOn)}",
 
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(

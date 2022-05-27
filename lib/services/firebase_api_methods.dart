@@ -172,8 +172,18 @@ Future addBooking(Service service, Users user,
     'createdOn':FieldValue.serverTimestamp(),
     'status':'Pending',
     'statusOn':FieldValue.serverTimestamp(),
-
-
+    'contractFarmer':false,
+    'isFarmerPaymentDone':false,
+    'farmerPaymentDate':FieldValue.serverTimestamp(),
+    "farmer_payment_id": "pay_29QQoUBi66xm2f",
+    "farmer_order_id": "order_9A33XWu170gUtm",
+    "farmer_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d",
+    'contractSp':false,
+    'spPaymentDate':FieldValue.serverTimestamp(),
+    'isSpPaymentDone':false,
+    "Sp_payment_id": "pay_29QQoUBi66xm2f",
+    "Sp_order_id": "order_9A33XWu170gUtm",
+    "Sp_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d"
   })
       .then((value) {
     print("start&end time Added");
@@ -366,6 +376,26 @@ Future addLaborHiring(Labor labor, Users user,
     print("start&end time Added");
   })
       .catchError((error) => print("Failed to add start&end time: $error"));
+}
+
+
+Future updatelabourProfile(String uid,String name,String phone_no,String skill) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('labor');
+  return serviceProvidersCollectionReference
+      .doc(uid)
+      .update({
+    'docid':uid,
+    'name': name,
+    'phone_number':phone_no,
+    'skill':skill,
+
+  })
+      .then((value) async {
+    print("Labour Profile data updated");
+
+  })
+      .catchError((error) => print("Failed to update: $error"));
 }
 /// Check If Document Exists
 

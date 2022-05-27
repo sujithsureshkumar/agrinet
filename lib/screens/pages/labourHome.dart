@@ -1,5 +1,6 @@
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/laborProvider.dart';
+import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/screens/pages/labourOnboarding.dart';
 import 'package:AgriNet/widget/laborDashboard.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,10 @@ class _LabourHomeState extends State<LabourHome> {
     final user = Provider.of<Users>(context);
     LaborProvider laborData =Provider.of<LaborProvider>(context, listen: false);
     laborData.spFormFillCheck(user.uid);
+    ProfileData profile =Provider.of<ProfileData>(context, listen: false);
     return Consumer<LaborProvider>(
       builder: (context, laborProvider, _) {
+        laborProvider.profileStatus ?null:profile.getLaborDetails(user.uid);
         return laborProvider.profileStatus ?Center(
           child: Padding(
             padding: const EdgeInsets.all(30.0),
@@ -115,49 +118,59 @@ class _LabourHomeState extends State<LabourHome> {
           ),
         ):Stack(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            Consumer<ProfileData>(
+              builder: (context, data, child) {
+                return Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            "Johny",
-                            style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                             data.isloading?Container(
+                               height: 10,
+                               width: 10,
+                               alignment: Alignment.center,
+                               child: CircularProgressIndicator(),
+                             ) :Text(
+                                //"Johny",
+                              data.laborDetails.name,
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Home",
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        color: Color(0xffa29aac),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600)),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            "Home",
-                            style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                    color: Color(0xffa29aac),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600)),
-                          ),
+
                         ],
                       ),
-
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                LaborDashboard()
-              ],
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    LaborDashboard()
+                  ],
+                );
+              }
             ),
 
 

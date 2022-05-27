@@ -281,6 +281,18 @@ class ServicesProvider extends ChangeNotifier {
         createdOn: snap.get('createdOn').toDate(),
         status:snap.get('status'),
         statusOn:snap.get('statusOn').toDate(),
+        contractFarmer:snap.get('contractFarmer'),
+        isFarmerPaymentDone:snap.get('isFarmerPaymentDone'),
+        farmerPaymentDate:snap.get('farmerPaymentDate').toDate(),
+        farmer_payment_id:snap.get('farmer_payment_id'),
+        farmer_order_id:snap.get('farmer_order_id'),
+        farmer_signature:snap.get('farmer_signature'),
+        contractSp:snap.get('contractSp'),
+        spPaymentDate:snap.get('spPaymentDate').toDate(),
+        isSpPaymentDone:snap.get('isSpPaymentDone'),
+        sp_payment_id:snap.get('Sp_payment_id'),
+        sp_order_id:snap.get('Sp_order_id'),
+        sp_signature:snap.get('Sp_signature'),
       );
 
     }).toList();

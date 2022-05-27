@@ -1,3 +1,4 @@
+import 'package:AgriNet/models/labor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -154,6 +155,40 @@ class ProfileData extends ChangeNotifier{
     _loading=true;
    _loading2=true;
    notifyListeners();
+  }
+
+
+  Labor _labor;
+  Labor get laborDetails => _labor;
+  bool isloading =false;
+  Future<bool> getLaborDetails(String docid) async {
+    isloading = true;
+    DocumentSnapshot laborSnapShot =
+    await FirebaseFirestore.instance
+        .collection('labor')
+        .doc(docid)
+        .get();
+    //_serviceProviderName = spSnapShot.get('service_provider_name');
+    _labor=Labor(
+      docid:laborSnapShot.get('docid'),
+      name: laborSnapShot.get('name'),
+      phone_number:laborSnapShot.get('phone_number'),
+      skill:laborSnapShot.get('skill'),
+      locality: laborSnapShot.get('locality'),
+      district:laborSnapShot.get('district'),
+      state: laborSnapShot.get('state'),
+      pincode:laborSnapShot.get('pincode'),
+      account_holder_name:laborSnapShot.get('account_holder_name'),
+      account_number: laborSnapShot.get('account_number'),
+      ifs_code:laborSnapShot.get('ifs_code'),
+      bank_name:laborSnapShot.get('bank_name'),
+      imageUrl: laborSnapShot.get('imagerUrl'),
+      createdOn: laborSnapShot.get('createdOn').toDate(),
+      //serv_prov_name:
+    );
+
+    isloading =false;
+    notifyListeners();
   }
 
   /*void setProfile(int index){

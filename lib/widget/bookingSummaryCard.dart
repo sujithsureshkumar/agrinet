@@ -16,7 +16,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
   @override
   void initState () {
     super.initState();
-    if(widget.booking.status=='Accepted' || widget.booking.status=='Rejected'){
+    if(widget.booking.status=='Accepted' || widget.booking.status=='Rejected' || widget.booking.status=='Cancelled'){
       setState(() {
         buttonVisible=false;
       });
@@ -47,6 +47,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
        .then((value) {
      setState(() {
        widget.booking.status = 'Accepted';
+       widget.booking.statusOn = DateTime.now();
        buttonVisible=false;
      });
        });
@@ -56,6 +57,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
         .then((value) {
       setState(() {
         widget.booking.status = 'Rejected';
+        widget.booking.statusOn = DateTime.now();
         buttonVisible=false;
       });
     });
@@ -172,7 +174,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                         ),
                                       ),
                                       Text(
-                                        widget.booking.price,
+                                        "${widget.booking.price} Rs",
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 15,

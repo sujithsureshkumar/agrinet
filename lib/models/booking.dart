@@ -16,6 +16,18 @@ class Booking {
   DateTime createdOn;
   String status;
   DateTime statusOn;
+  bool contractFarmer;
+  bool isFarmerPaymentDone;
+  DateTime farmerPaymentDate;
+  String farmer_payment_id;
+  String farmer_order_id;
+  String farmer_signature;
+  bool contractSp;
+  DateTime spPaymentDate;
+  bool isSpPaymentDone;
+  String sp_payment_id;
+  String sp_order_id;
+  String sp_signature;
 
   Booking({
     @required this.docid,
@@ -34,6 +46,18 @@ class Booking {
     @required this.createdOn,
     @required this.status,
     @required this.statusOn,
+    @required this.contractFarmer,
+    @required this.isFarmerPaymentDone,
+    @required this.farmerPaymentDate,
+    @required this.farmer_payment_id,
+    @required this.farmer_order_id,
+    @required this.farmer_signature,
+    @required this.contractSp,
+    @required this.isSpPaymentDone,
+    @required this.spPaymentDate,
+    @required this.sp_payment_id,
+    @required this.sp_order_id,
+    @required this.sp_signature,
   });
 
   Booking.fromJson(Map<String, dynamic> json) {

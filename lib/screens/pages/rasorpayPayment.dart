@@ -1,3 +1,5 @@
+import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -12,6 +14,7 @@ class _RasorpayPaymentState extends State<RasorpayPayment> {
 
   Razorpay razorpay;
   TextEditingController textEditingController = new TextEditingController();
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -29,6 +32,20 @@ class _RasorpayPaymentState extends State<RasorpayPayment> {
     // TODO: implement dispose
     super.dispose();
     razorpay.clear();
+  }
+
+  snackBarMsg(BuildContext context, String msg) {
+    var sb = SnackBar(
+      elevation: kRadius,
+      content: Text(msg),
+      duration: Duration(seconds: 2),
+      action: SnackBarAction(
+        // textColor: kWhiteColor,
+        label: 'OK',
+        onPressed: () {},
+      ),
+    );
+    scaffoldKey.currentState.showSnackBar(sb);
   }
 
   void openCheckout(){
@@ -55,9 +72,15 @@ class _RasorpayPaymentState extends State<RasorpayPayment> {
 
   }
 
-  void handlerPaymentSuccess(){
-    print("Pament success");
-    Toast.show("Pament success");
+  void handlerPaymentSuccess(PaymentSuccessResponse response){
+    print("Pament success"+response.paymentId);
+    //Toast.show("Pament success"+response.paymentId);
+    //snackBarMsg(context, response.paymentId);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => Success()
+      ),
+    );
   }
 
   void handlerErrorFailure(){
