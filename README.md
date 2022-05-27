@@ -30,4 +30,4 @@ New branch named "Anonymus_login" created
 file missed during commit is rectified,Test run successful
 
 signin & register branch created
-basic version checkout
+basic version 2 checkout
