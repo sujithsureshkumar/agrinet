@@ -95,7 +95,7 @@ class CustomCardsPage extends StatelessWidget {
                           () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (ctx) => GroupInfoPage()
+                              builder: (ctx) => GroupChatHomeScreen(),
                           ),
                         );
                       },

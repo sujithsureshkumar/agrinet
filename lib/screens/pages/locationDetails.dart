@@ -46,7 +46,7 @@ class _LocationDetailsState extends State<LocationDetails> {
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
     return Scaffold(
-      appBar: DefaultAppBar(title: "Bank Account Details"),
+      appBar: DefaultAppBar(title: "Location Details"),
 
       bottomNavigationBar: Material(
         elevation: kLess,
@@ -59,7 +59,12 @@ class _LocationDetailsState extends State<LocationDetails> {
                 primary: kWhiteColor,
                 elevation: 2,
                 backgroundColor: kPrimaryColor),
-            //onPressed: () =>snackBarMsg(context,  'msg')
+            onPressed: () async {
+              if (_globalkey.currentState.validate()) {
+
+
+              }
+            }
           ),
         ),
 
@@ -73,53 +78,23 @@ class _LocationDetailsState extends State<LocationDetails> {
             SizedBox(
               height: 20,
             ),
-            nameTextField(locality,"Account holder name"),
+            nameTextField(locality,"Locality"),
             SizedBox(
               height: 20,
             ),
-            nameTextField(distric,"Account number"),
+            nameTextField(distric,"Distric"),
             SizedBox(
               height: 20,
             ),
-            nameTextField(state,"Account number"),
+            nameTextField(state,"State"),
             SizedBox(
               height: 20,
             ),
-            numberTextField(pincode,"ifsc code"),
+            numberTextField(pincode,"Pincode"),
             SizedBox(
               height: 20,
             ),
 
-            InkWell(
-              onTap: () async {
-                if (_globalkey.currentState.validate()) {
-
-
-                }
-              },
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: circular
-                        ? CircularProgressIndicator()
-                        : Text(
-                      "Submit",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

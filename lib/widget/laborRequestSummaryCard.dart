@@ -1,5 +1,6 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/laborHiring.dart';
+import 'package:AgriNet/screens/pages/laborContractSign.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,16 @@ class LaborRequestSummaryCard extends StatefulWidget {
 
 class _LaborRequestSummaryCardState extends State<LaborRequestSummaryCard> {
   bool buttonVisible=true;
+
+  @override
+  void initState () {
+    super.initState();
+    if(widget.laborHiring.status=='Accepted' || widget.laborHiring.status=='Rejected' || widget.laborHiring.status=='Cancelled'){
+      setState(() {
+        buttonVisible=false;
+      });
+    }
+  }
 
   Widget buttonWidget() {
     return  Padding(
@@ -117,7 +128,7 @@ class _LaborRequestSummaryCardState extends State<LaborRequestSummaryCard> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            //builder: (ctx) =>ContractSigning(booking: widget.booking,)
+                            builder: (ctx) =>LaborContractSign(laborHiring: widget.laborHiring,)
                           ),
                         );
                       },
@@ -151,7 +162,7 @@ class _LaborRequestSummaryCardState extends State<LaborRequestSummaryCard> {
                     SizedBox(
                       height:20,
                     ),
-                    buttonWidget(),
+                    buttonVisible?buttonWidget():Container(),
                   ],
                 ),
               ),

@@ -238,7 +238,7 @@ class _FarmHomeState extends State<FarmHome> {
                                       ),
                                     );
                                   },
-                                  icon: Icon(Icons.category,
+                                  icon: Icon(Icons.widgets,
                                     size: 33.0 ,
                                       color: Color(0xffedf1f0)
                                   ),

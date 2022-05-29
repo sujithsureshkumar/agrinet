@@ -42,7 +42,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
             ),
             TextField(
               controller: phone_number,
-              obscureText: true,
+              //obscureText: true,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),

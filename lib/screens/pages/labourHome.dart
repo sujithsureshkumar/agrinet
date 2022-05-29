@@ -120,7 +120,12 @@ class _LabourHomeState extends State<LabourHome> {
           children: <Widget>[
             Consumer<ProfileData>(
               builder: (context, data, child) {
-                return Column(
+                return data.isloading?Container(
+                  height: 20,
+                  width: 20,
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                ) : Column(
                   children: <Widget>[
                     SizedBox(
                       height: 10,
@@ -133,12 +138,7 @@ class _LabourHomeState extends State<LabourHome> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                             data.isloading?Container(
-                               height: 10,
-                               width: 10,
-                               alignment: Alignment.center,
-                               child: CircularProgressIndicator(),
-                             ) :Text(
+                            Text(
                                 //"Johny",
                               data.laborDetails.name,
                                 style: GoogleFonts.openSans(
@@ -167,7 +167,15 @@ class _LabourHomeState extends State<LabourHome> {
                     SizedBox(
                       height: 40,
                     ),
-                    LaborDashboard()
+                    LaborDashboard(
+                      account_holder_name: data.laborDetails.account_holder_name,
+                      account_number: data.laborDetails.account_number,
+                      ifsc_code: data.laborDetails.ifs_code,
+                      locality: data.laborDetails.locality,
+                      distric: data.laborDetails.district,
+                      state: data.laborDetails.state,
+                      pincode: data.laborDetails.pincode,
+                    )
                   ],
                 );
               }

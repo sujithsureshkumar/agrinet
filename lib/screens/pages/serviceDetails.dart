@@ -5,6 +5,7 @@ import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/screens/pages/dateFarmSelection.dart';
 import 'package:AgriNet/screens/pages/reviews.dart';
+import 'package:AgriNet/screens/pages/serviceProviderDetails.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:AgriNet/widget/defaultBackButton.dart';
 import 'package:AgriNet/widget/likeButtonWidget.dart';
@@ -238,7 +239,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: Text(
-                      "${826} Requests",
+                      //"${826} Requests",
+                      '',
                       style: TextStyle(
                         color: kDarkColor.withOpacity(0.4),
                         fontSize: 18.0,
@@ -252,14 +254,38 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             kSmallDivider,
             // for shirt or Other Products who has the Size
             Padding(
-              padding: EdgeInsets.only(left: kDefaultPadding),
+              padding: EdgeInsets.fromLTRB(kDefaultPadding,20,0,0),
               child: GestureDetector(
-                onTap: () => print("Selected Service Provider"),
-                child: Text(
-                  widget.service.spName,
-                  style: TextStyle(
-                    fontSize: 17.0,
-                  ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => ServiceProviderDetails(
+                        service: widget.service,
+                      ),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      widget.service.spName,
+                      style: TextStyle(
+                        fontSize: 17.0,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon( Icons.link, ),
+
+                    Text(
+                      "Click here for service Provider Details",
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.amberAccent
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -304,7 +330,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               margin: EdgeInsets.symmetric(
                   horizontal: kDefaultPadding, vertical: kLessPadding),
               child: Text(
-                "Tracter,Harvesting Machine",
+                //"Tracter,Harvesting Machine",
+                widget.service.equipmentDetail,
                 style: TextStyle(
                   fontSize: 18.0,
                 ),

@@ -12,6 +12,7 @@ class LabourOnboarding extends StatefulWidget {
 
 class _LabourOnboardingState extends State<LabourOnboarding> {
 
+  final _globalkey = GlobalKey<FormState>();
   int _activeStepIndex = 0;
   TextEditingController name = TextEditingController();
   TextEditingController skill = TextEditingController();
@@ -30,7 +31,7 @@ class _LabourOnboardingState extends State<LabourOnboarding> {
     return TextFormField(
       controller: name,
       validator: (value) {
-        if (value.isEmpty) return "Name can't be empty";
+        if (value.isEmpty) return "Location can't be empty";
 
         return null;
       },
@@ -58,8 +59,13 @@ class _LabourOnboardingState extends State<LabourOnboarding> {
       content: Container(
         child: Column(
           children: [
-            TextField(
+            TextFormField(
               controller: name,
+              validator: (value) {
+                if (value.isEmpty) return "Name can't be empty";
+
+                return null;
+              },
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Full Name',
@@ -68,8 +74,13 @@ class _LabourOnboardingState extends State<LabourOnboarding> {
             const SizedBox(
               height: 12,
             ),
-            TextField(
+            TextFormField(
               controller: phone_number,
+              validator: (value) {
+                if (value.isEmpty) return "Phone no. can't be empty";
+
+                return null;
+              },
               //obscureText: true,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
@@ -193,79 +204,101 @@ class _LabourOnboardingState extends State<LabourOnboarding> {
     LaborProvider laborData =Provider.of<LaborProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Service Provider Onboarding '),
+        title: const Text('Labor Onboarding '),
 
         backgroundColor:Colors.green,
       ),
-      body: Stepper(
-        type: StepperType.horizontal,
-        currentStep: _activeStepIndex,
-        steps: stepList(),
-        onStepContinue: () {
-          if (_activeStepIndex < (stepList().length - 1)) {
-            setState(() {
-              _activeStepIndex += 1;
-            });
-          } else {
+      body: Form(
+        key: _globalkey,
+        child: Stepper(
+          type: StepperType.horizontal,
+          currentStep: _activeStepIndex,
+          steps: stepList(),
+          onStepContinue: () {
+            if(_globalkey.currentState.validate()){
+              if (_activeStepIndex < (stepList().length - 1) ) {
+                setState(() {
+                  _activeStepIndex += 1;
+                });
+              } else {
+          if(_globalkey.currentState.validate()){
             labour_onboarding(user.uid,name.text,
                 phone_number.text,skill.text,_locality.text,
                 _district.text,_state.text,pincode.text,holder_name.text,acc_number.text,
-              ifs_code.text,bank_name.text,false)
+                ifs_code.text,bank_name.text,false)
                 .then((value) => laborData.spFormFillCheck(user.uid))
                 .then((value) => {
               Navigator.pop(context)
             });
           }
-        },
-        onStepCancel: () {
-          if (_activeStepIndex == 0) {
-            return;
-          }
-          setState(() {
-            _activeStepIndex -= 1;
-          });
-        },
-        onStepTapped: (int index) {
-          setState(() {
-            _activeStepIndex = index;
-          });
-        },
-        controlsBuilder: (BuildContext context, ControlsDetails details) {
-          final isLastStep = _activeStepIndex == stepList().length - 1;
-          return Container(
-            child: Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      //foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                    ),
-                    onPressed: details.onStepContinue,
-                    child: (isLastStep)
-                        ? const Text('Submit')
-                        : const Text('Next'),
-                  ),
-                ),
-                if (_activeStepIndex > 0)
-                  const SizedBox(
-                    width: 10,
-                  ),
-                if (_activeStepIndex > 0)
+
+              }
+            }
+            if (_activeStepIndex < (stepList().length - 1) ) {
+              setState(() {
+                _activeStepIndex += 1;
+              });
+            } else {
+              labour_onboarding(user.uid,name.text,
+                  phone_number.text,skill.text,_locality.text,
+                  _district.text,_state.text,pincode.text,holder_name.text,acc_number.text,
+                ifs_code.text,bank_name.text,false)
+                  .then((value) => laborData.spFormFillCheck(user.uid))
+                  .then((value) => {
+                Navigator.pop(context)
+              });
+            }
+          },
+          onStepCancel: () {
+            if (_activeStepIndex == 0) {
+              return;
+            }
+            setState(() {
+              _activeStepIndex -= 1;
+            });
+          },
+          onStepTapped: (int index) {
+            setState(() {
+              _activeStepIndex = index;
+            });
+          },
+          controlsBuilder: (BuildContext context, ControlsDetails details) {
+            final isLastStep = _activeStepIndex == stepList().length - 1;
+            return Container(
+              child: Row(
+                children: [
                   Expanded(
                     child: ElevatedButton(
                       style: ButtonStyle(
                         //foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                       ),
-                      onPressed: details.onStepCancel,
-                      child: const Text('Back'),
+                      onPressed: details.onStepContinue,
+                      child: (isLastStep)
+                          ? const Text('Submit')
+                          : const Text('Next'),
                     ),
-                  )
-              ],
-            ),
-          );
-        },
+                  ),
+                  if (_activeStepIndex > 0)
+                    const SizedBox(
+                      width: 10,
+                    ),
+                  if (_activeStepIndex > 0)
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          //foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                        ),
+                        onPressed: details.onStepCancel,
+                        child: const Text('Back'),
+                      ),
+                    )
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

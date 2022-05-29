@@ -87,6 +87,42 @@ class ServicesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  List<Service> spFilterServiceList=[];
+  Future<void> spFilteredserviceSnapShot(spid) async {
+    //List<Product> newList = [];
+    QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('services')
+        .where('serv_prov_id', isEqualTo: spid)
+        .get();
+    spFilterServiceList=_serviceSnapShot.docs.map((snap) {
+      // final user = snap.data();
+      return Service(
+          isLiked:wishlist.contains(snap.get('docid'))?true:false,
+          docid:snap.get('docid'),
+          name: snap.get('name'),
+          //imageUrl: snap.get('imageUrl'),
+          imageUrl: List.from(snap.get("imageUrl")),
+          price:snap.get('price'),
+          category:snap.get('category'),
+          subCategory: snap.get('subCategory'),
+          equipmentDetail:snap.get('equipments') ,
+          likeCount:snap.get('likecount'),
+          description:snap.get('description'),
+          serv_prov_id:snap.get('serv_prov_id'),
+          spName:snap.get('spName'),
+          phone_number:snap.get('phone_number'),
+          account_holder_name:snap.get('account_holder_name'),
+          ifs_code:snap.get('ifs_code'),
+          account_number:snap.get('account_number'),
+          createdOn:snap.get('createdOn').toDate(),
+          reviewList: List.from(snap.get("reviewList"))
+        //serv_prov_name:
+      );
+
+    }).toList();
+    notifyListeners();
+  }
+
   Future<void> getserviceSnapShotForWishlist() async {
     QuerySnapshot _serviceSnapShot = await FirebaseFirestore.instance.collection('services').get();
     serviceWishlist=_serviceSnapShot.docs.map((snap) {

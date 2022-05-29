@@ -1,4 +1,5 @@
 
+import 'package:AgriNet/screens/pages/bankAccountDetails.dart';
 import 'package:AgriNet/screens/pages/laborProfile.dart';
 import 'package:AgriNet/screens/pages/laborRequestSummary.dart';
 import 'package:AgriNet/screens/pages/locationDetails.dart';
@@ -10,42 +11,65 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LaborDashboard extends StatelessWidget {
+  final String account_holder_name;
+  final String account_number;
+  final String ifsc_code;
+  final String locality;
+  final String distric;
+  final String state;
+  final String pincode;
+  LaborDashboard({Key key,this.account_holder_name,this.account_number,this.ifsc_code,
+  this.locality,this.distric,this.state,this.pincode}): super(key: key);
 
-  Items item1 = new Items(
-      title: "Profile",
-      icon:Icons.person,
-      widget:LaborProfile()
-  );
 
 
-  Items item2 = new Items(
-    title: "Location",
-      icon:Icons.location_on,
-      widget:LocationDetails()
-  );
-  Items item3 = new Items(
-    title: "Bank Account",
-      icon: Icons.account_balance_wallet,
-      widget:RasorpayPayment()
-  );
-  Items item4 = new Items(
-    title: "Requests",
-      icon: Icons.local_activity,
-      widget:laborRequestSummary(),
-  );
-  Items item5 = new Items(
-    title: "To do",
-      icon:Icons.person,
-      widget:LaborProfile()
-  );
-  Items item6 = new Items(
-    title: "Settings",
-      icon:Icons.person,
-      widget:Success()
-  );
+
 
   @override
   Widget build(BuildContext context) {
+
+    Items item1 = new Items(
+        title: "Profile",
+        icon:Icons.person,
+        widget:LaborProfile()
+    );
+
+
+    Items item2 = new Items(
+        title: "Location",
+        icon:Icons.location_on,
+        widget:LocationDetails(
+          locality: locality,
+          distric: distric,
+          state: state,
+          pincode: pincode,
+        )
+    );
+    Items item3 = new Items(
+        title: "Bank Account",
+        icon: Icons.account_balance_wallet,
+        widget:BankAccountDetails(
+          account_holder_name: account_holder_name,
+          account_number: account_number,
+          ifsc_code: ifsc_code,
+        )
+    );
+    Items item4 = new Items(
+      title: "Requests",
+      icon: Icons.local_activity,
+      widget:laborRequestSummary(),
+    );
+    Items item5 = new Items(
+        title: "To do",
+        icon:Icons.person,
+        widget:LaborProfile()
+    );
+    Items item6 = new Items(
+        title: "Settings",
+        icon:Icons.person,
+        widget:Success()
+    );
+
     List<Items> myList = [item1, item2, item3, item4,];
     var color = 0xff453658;
     return Flexible(

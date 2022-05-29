@@ -2,6 +2,7 @@ import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/laborHiring.dart';
 import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
+import 'package:AgriNet/screens/pages/otherPartyContractSign.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,16 @@ class LaborRequestHistoryCard extends StatefulWidget {
 
 class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
   bool buttonVisible=true;
+
+  @override
+  void initState () {
+    super.initState();
+    if(widget.laborHiring.status=='Cancelled' || widget.laborHiring.status=='Rejected'){
+      setState(() {
+        buttonVisible=false;
+      });
+    }
+  }
 
   Widget buttonWidget() {
     return  Padding(
@@ -93,7 +104,7 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              //builder: (ctx) =>ContractSigning(booking: widget.booking,)
+                              builder: (ctx) =>OtherParyContractSign(laborHiring: widget.laborHiring,)
                           ),
                         );
                       },
@@ -127,7 +138,7 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
                     SizedBox(
                       height:10,
                     ),
-                    buttonWidget(),
+                    !widget.laborHiring.isLaborPaymentDone?buttonVisible?buttonWidget():Container():Container(),
                   ],
                 ),
               ),

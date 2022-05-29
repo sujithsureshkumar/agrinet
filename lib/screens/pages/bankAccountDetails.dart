@@ -56,7 +56,12 @@ class _BankAccountDetailsState extends State<BankAccountDetails> {
                   primary: kWhiteColor,
                   elevation: 2,
                   backgroundColor: kPrimaryColor),
-              //onPressed: () =>snackBarMsg(context,  'msg')
+              onPressed: () async {
+                if (_globalkey.currentState.validate()) {
+
+
+                }
+              }
           ),
         ),
 
@@ -83,36 +88,6 @@ class _BankAccountDetailsState extends State<BankAccountDetails> {
               height: 20,
             ),
 
-            InkWell(
-              onTap: () async {
-                if (_globalkey.currentState.validate()) {
-
-
-                }
-              },
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: circular
-                        ? CircularProgressIndicator()
-                        : Text(
-                      "Submit",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
