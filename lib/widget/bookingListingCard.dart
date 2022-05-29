@@ -179,7 +179,7 @@ class _BookingListingCardState extends State<BookingListingCard> {
                 detailWidget(),
                 Divider(),
                 buildText(context),
-                buttonVisible?buttonWidget():Container(),
+                !widget.booking.isSpPaymentDone?buttonVisible?buttonWidget():Container():Container(),
               ],
             ),
           ),

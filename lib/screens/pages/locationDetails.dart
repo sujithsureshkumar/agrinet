@@ -1,84 +1,100 @@
 import 'dart:io';
-import 'package:AgriNet/models/labor.dart';
+import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
-import 'package:AgriNet/providers/services_provider.dart';
 import 'package:AgriNet/screens/pages/addImageFarm.dart';
 import 'package:AgriNet/screens/pages/addImageService.dart';
-import 'package:AgriNet/screens/pages/success.dart';
-import 'package:AgriNet/services/firebase_api_methods.dart';
-import 'package:AgriNet/widget/date_range_picker_widget.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:AgriNet/services/addservice.dart';
 
-class LaborHireAddressDateForm extends StatefulWidget {
-  final Labor labor;
-  LaborHireAddressDateForm({this.labor,Key key}) : super(key: key);
+class LocationDetails extends StatefulWidget {
+  final String locality;
+  final String distric;
+  final String state;
+  final String pincode;
+  LocationDetails({Key key,this.locality,this.distric,this.state,this.pincode}) : super(key: key);
 
   @override
-  _LaborHireAddressDateFormState createState() => _LaborHireAddressDateFormState();
+  _LocationDetailsState createState() => _LocationDetailsState();
 }
-class _LaborHireAddressDateFormState extends State<LaborHireAddressDateForm> {
+class _LocationDetailsState extends State<LocationDetails> {
 
+  @override
+  void initState () {
+    super.initState();
+    locality.text=widget.locality;
+    distric.text=widget.distric;
+    state.text=widget.state;
+    pincode.text=widget.pincode;
+  }
+
+
+
+
+
+  bool textBoxShow=false;
   bool circular = false;
   final _globalkey = GlobalKey<FormState>();
-  TextEditingController _locality= TextEditingController();
-  TextEditingController _district= TextEditingController();
-  TextEditingController _state= TextEditingController();
-  TextEditingController _pincode= TextEditingController();
+  TextEditingController locality = TextEditingController();
+  TextEditingController distric= TextEditingController();
+  TextEditingController state= TextEditingController();
+  TextEditingController pincode= TextEditingController();
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
-    ServicesProvider servicesProvider = Provider.of<ServicesProvider >(context, listen: false);
     return Scaffold(
-      appBar: DefaultAppBar(title: "More Details"),
+      appBar: DefaultAppBar(title: "Bank Account Details"),
+
+      bottomNavigationBar: Material(
+        elevation: kLess,
+        color: kWhiteColor,
+        child:Padding(
+          padding: EdgeInsets.only(left: 10,right: 10),
+          child:TextButton(
+            child: Text("Update", style: TextStyle(fontSize: 18.0)),
+            style: TextButton.styleFrom(
+                primary: kWhiteColor,
+                elevation: 2,
+                backgroundColor: kPrimaryColor),
+            //onPressed: () =>snackBarMsg(context,  'msg')
+          ),
+        ),
+
+      ),
       body: Form(
         key: _globalkey,
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           children: <Widget>[
-            // imageProfile(),
+
             SizedBox(
               height: 20,
             ),
-            nameTextField(_locality,"locality"),
+            nameTextField(locality,"Account holder name"),
             SizedBox(
               height: 20,
             ),
-            nameTextField(_district,"district"),
+            nameTextField(distric,"Account number"),
             SizedBox(
               height: 20,
             ),
-            nameTextField(_state,"state"),
+            nameTextField(state,"Account number"),
             SizedBox(
               height: 20,
             ),
-            pincodeTextField(),
+            numberTextField(pincode,"ifsc code"),
             SizedBox(
               height: 20,
             ),
-            DateRangePickerWidget(),
-            SizedBox(
-              height: 20,
-            ),
+
             InkWell(
               onTap: () async {
-                if (_globalkey.currentState.validate()&& servicesProvider.startTimeStamp!=null
-                    && servicesProvider.endTimeStamp!=null) {
-                  final now = DateTime.now();
-                  String hiringId=now.microsecondsSinceEpoch.toString();
-                  await addLaborHiring(widget.labor, user,hiringId,
-                      "hiringType","hirerName",_locality.text,
-                      _district.text,_state.text,_pincode.text,"hirerPhone_number"
-                      ,servicesProvider.startTimeStamp,servicesProvider.endTimeStamp)
-                      .then((value) =>  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => Success(),
-                    ),
-                  ));
+                if (_globalkey.currentState.validate()) {
+
+
                 }
               },
               child: Center(
@@ -113,11 +129,11 @@ class _LaborHireAddressDateFormState extends State<LaborHireAddressDateForm> {
 
 
 
-  Widget nameTextField(TextEditingController name,String label) {
+  Widget nameTextField(TextEditingController name,String labelText) {
     return TextFormField(
       controller: name,
       validator: (value) {
-        if (value.isEmpty) return "Name can't be empty";
+        if (value.isEmpty) return "Field can't be empty";
 
         return null;
       },
@@ -135,8 +151,8 @@ class _LaborHireAddressDateFormState extends State<LaborHireAddressDateForm> {
         //   Icons.agriculture,
         //   color: Colors.green,
         // ),
-        labelText: label,
-        //helperText: "Name can't be empty",
+        labelText: labelText,
+        // helperText: "Name can't be empty",
       ),
     );
   }
@@ -146,12 +162,12 @@ class _LaborHireAddressDateFormState extends State<LaborHireAddressDateForm> {
 
 
 
-  Widget pincodeTextField() {
+  Widget numberTextField(TextEditingController phone_no,String labelText) {
     return TextFormField(
-      controller: _pincode,
+      controller: phone_no,
       keyboardType:TextInputType.number,
       validator: (value) {
-        if (value.isEmpty) return "Enter acres of land";
+        if (value.isEmpty) return "Field can't be empty";
 
         return null;
       },
@@ -169,8 +185,8 @@ class _LaborHireAddressDateFormState extends State<LaborHireAddressDateForm> {
         //   Icons.person,
         //   color: Colors.green,
         // ),
-        labelText: "Pincode",
-        helperText: "Enter in digits",
+        labelText: labelText,
+        //helperText: "Enter in digits",
 
       ),
     );

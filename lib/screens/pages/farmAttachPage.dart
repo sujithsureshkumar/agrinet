@@ -22,7 +22,7 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
     FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
-    farmProvider.fetchUserFarmWithInfo(user.uid);
+    farmProvider.fetchUserFarmWithInfo(user.uid,widget.subCategory);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: kWhiteColor,
@@ -42,11 +42,13 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
 
               if (_globalkey.currentState.validate()){
                 farmProvider.selectedUserFarmDocid(_dropdownvalue).then((value) async {
-                  farmProvider.updateFarmGroup(widget.groupId, user.uid, widget.memberList, _dropdownvalue, value)
+                  farmProvider.updateFarmGroup(widget.groupId, user.uid, widget.memberList, _dropdownvalue,
+                      value[0],value[1])
                       .then((value) => {
                        Navigator.of(context)
                       ..pop()
-                  });
+                  }).then((value) => setState(() {
+                  }));
                 });
               }
             },

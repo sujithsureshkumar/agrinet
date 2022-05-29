@@ -50,14 +50,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     "ahttps://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/folderName%2FimageName?alt=media&token=77b4fba1-5afd-4c85-a86a-d4c44f3f0ecf",
   ];
 
-  _launchCaller() async {
-    const url = "tel:1234567";
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+
 
 
   @override
@@ -74,55 +67,62 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       bottomNavigationBar: Material(
         elevation: kLess,
         color: kWhiteColor,
-        child: Row(
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: 8.0, left: 8.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: kPrimaryColor, width: 2.0),
-              ),
-              child: IconButton(
-                icon: Icon(Icons.phone, color: kPrimaryColor),
-                onPressed: () => _launchCaller(),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 8.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: kPrimaryColor, width: 2.0),
-              ),
-              child: IconButton(
-                icon: Icon(Icons.chat, color: kPrimaryColor),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    //builder: (context) => Message(),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                height: 52.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 8.0, left: 8.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: kPrimaryColor, width: 2.0),
                 ),
-                child: FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: kLessPadding),
-                  color: kPrimaryColor,
-                  textColor: kWhiteColor,
-                  child: Text("Proceed", style: TextStyle(fontSize: 18.0)),
+                child: IconButton(
+                  icon: Icon(Icons.phone, color: kPrimaryColor),
+                  onPressed: () async {
+                    String telephoneNumber = widget.service.phone_number;
+                    String telephoneUrl = "tel:$telephoneNumber";
+                    launchUrl (Uri.parse(telephoneUrl));
+                  },
+                ),
+              ),
+             /* Container(
+                margin: EdgeInsets.only(right: 8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: kPrimaryColor, width: 2.0),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.chat, color: kPrimaryColor),
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => DateFarmSelection(
-                        service:widget.service,
-                        user: widget.user,
+                      //builder: (context) => Message(),
+                    ),
+                  ),
+                ),
+              ),*/
+              Expanded(
+                child: Container(
+                  height: 52.0,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: kPrimaryColor, width: 2.0),
+                  ),
+                  child: FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: kLessPadding),
+                    color: kPrimaryColor,
+                    textColor: kWhiteColor,
+                    child: Text("Proceed", style: TextStyle(fontSize: 18.0)),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DateFarmSelection(
+                          service:widget.service,
+                          user: widget.user,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(

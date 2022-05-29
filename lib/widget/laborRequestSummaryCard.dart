@@ -1,7 +1,5 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/laborHiring.dart';
-import 'package:AgriNet/models/service.dart';
-import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
@@ -9,39 +7,65 @@ import 'package:intl/intl.dart';
 
 
 
-class LaborRequestHistoryCard extends StatefulWidget {
+class LaborRequestSummaryCard extends StatefulWidget {
 
   LaborHiring laborHiring;
-  LaborRequestHistoryCard ({this.laborHiring});
+  LaborRequestSummaryCard ({this.laborHiring});
 
   @override
-  _LaborRequestHistoryCardState createState() => _LaborRequestHistoryCardState();
+  _LaborRequestSummaryCardState createState() => _LaborRequestSummaryCardState();
 }
 
-class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
+class _LaborRequestSummaryCardState extends State<LaborRequestSummaryCard> {
   bool buttonVisible=true;
 
   Widget buttonWidget() {
     return  Padding(
       padding: const EdgeInsets.all(8.0),
-      child: MyButton(name:"Cancel",
-          //onPressed: () =>cancel(),
-          ratio: 0.82,
-          color: Color(0xff86d76d)
+      child: Row(
+        children: [
+          MyButton(name:"Accept",
+            onPressed: () =>accept(),
+            ratio: 0.41,
+            color: Color(0xffd782d6),
+          ),
+
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: MyButton(name:"Reject",
+                  onPressed: () =>reject(),
+                  ratio: 0.41,
+                  color: Color(0xff86d76d)
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  cancel() {
-    updateLaborHiring(widget.laborHiring.docid,'Cancelled')
+  accept() {
+    updateLaborHiring(widget.laborHiring.docid,'Accepted')
         .then((value) {
       setState(() {
-        widget.laborHiring.status = 'Cancelled';
+        widget.laborHiring.status = 'Accepted';
         widget.laborHiring.statusOn = DateTime.now();
         buttonVisible=false;
       });
     });
   }
+  reject() {
+    updateLaborHiring(widget.laborHiring.docid,'Rejected')
+        .then((value) {
+      setState(() {
+        widget.laborHiring.status = 'Rejected';
+        widget.laborHiring.statusOn = DateTime.now();
+        buttonVisible=false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -67,13 +91,13 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
                     SizedBox(
                       height:10,
                     ),
-                    Text("Labor Name        :   "+widget.laborHiring.laborName,
+                    Text("Hirer Name        :   "+widget.laborHiring.hirerName,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 17.0)),
                     SizedBox(
                       height:10,
                     ),
-                    Text("Labor Work Skill     :   "+widget.laborHiring.laborSkill,
+                    Text("Hirer Type     :   "+widget.laborHiring.hiringType,
                         style: TextStyle(
                             fontSize: 15.0, color: kLightColor)),
                     SizedBox(
@@ -93,7 +117,7 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              //builder: (ctx) =>ContractSigning(booking: widget.booking,)
+                            //builder: (ctx) =>ContractSigning(booking: widget.booking,)
                           ),
                         );
                       },
@@ -125,7 +149,7 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
                       ),
                     ),
                     SizedBox(
-                      height:10,
+                      height:20,
                     ),
                     buttonWidget(),
                   ],

@@ -32,6 +32,7 @@ class FarmProvider extends ChangeNotifier {
       'location':GeoPoint(0,0),
         'createdOn':FieldValue.serverTimestamp(),
       'imageUrl':["https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2Fnoimage.png?alt=media&token=47ee7a64-0059-4527-a72f-3b983957d887"],
+        'locationSet':false,
     })
         .then((value) {
       print("new Farm Added");
@@ -117,13 +118,15 @@ class FarmProvider extends ChangeNotifier {
   List<String> _groupNameList=[];
   List<String> get groupNameList => _groupNameList;
   List<String> get groupInfoList => _groupInfoList;
-  Future<void> fetchUserFarmWithInfo(String uid) async {
+  Future<void> fetchUserFarmWithInfo(String uid,String subCategory) async {
     _groupInfoList=[];
     _groupNameList=[];
     await FirebaseFirestore.instance
         .collection('farmUser')
         .doc(uid)
         .collection('farms')
+        .where('locationSet', isEqualTo: true)
+        .where('subcategory', isEqualTo: subCategory)
         .get().then((value) {
       _groupInfoList = value.docs;
     });
@@ -134,23 +137,32 @@ class FarmProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> selectedUserFarmDocid(String name) async {
+
+  Future<List> selectedUserFarmDocid(String name) async {
     String docid;
+    dynamic location;
+    List _groupSelectInfoList ;
     _groupInfoList.forEach((element) {
       if (element['name'] == name) {
         docid = element['docid'];
+        location=element['location'];
+        //_groupSelectInfoList.add(element['docid']);
+        //_groupSelectInfoList.add(element['location']);
+        //_groupSelectInfoMap['location']=element['location'];
       }
     });
-    return docid;
+    return [docid,location];
   }
 
-  Future<String> updateFarmGroup(String docid,String uid,List membersList,String farmName,String farmid) async {
+  Future<String> updateFarmGroup(String docid,String uid,List membersList,String farmName,
+      String farmid,dynamic location) async {
 
     for (int i = 0; i < membersList.length; i++) {
       if (membersList[i]['uid'] == uid) {
         membersList[i]['myFarm']=farmName;
         membersList[i]['myFarmId']=farmid;
         membersList[i]['isFarmSet']=true;
+        membersList[i]['location']=location;
       }
     }
 
@@ -171,6 +183,7 @@ class FarmProvider extends ChangeNotifier {
       'myFarm':farmName,
       'myFarmId':farmid,
       'isFarmSet':true,
+      'location':location,
 
     });
   }

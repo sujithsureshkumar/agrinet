@@ -1,6 +1,5 @@
 import 'package:AgriNet/constants/constant.dart';
-import 'package:AgriNet/models/booking.dart';
-import 'package:AgriNet/models/service.dart';
+import 'package:AgriNet/models/laborHiring.dart';
 import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
@@ -10,15 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:toast/toast.dart';
 
-class SpContractSign extends StatefulWidget {
-  Booking booking;
-  SpContractSign({this.booking,Key key,}) : super(key: key);
+class LaborContractSign extends StatefulWidget {
+  LaborHiring laborHiring;
+  LaborContractSign({this.laborHiring,Key key,}) : super(key: key);
 
   @override
-  _SpContractSignState createState() => _SpContractSignState();
+  _LaborContractSignState createState() => _LaborContractSignState();
 }
 
-class _SpContractSignState extends State<SpContractSign> {
+class _LaborContractSignState extends State<LaborContractSign> {
 
   Razorpay razorpay;
   TextEditingController textEditingController = new TextEditingController();
@@ -45,7 +44,7 @@ class _SpContractSignState extends State<SpContractSign> {
   void openCheckout(){
     var options = {
       "key" : "rzp_test_balglISzQZ6UwH",
-      "amount" : 30000,
+      "amount" : 20000,
       "name" : "Sample App",
       "description" : "Payment for the some random Services",
       "prefill" : {
@@ -69,12 +68,14 @@ class _SpContractSignState extends State<SpContractSign> {
   Future<void> handlerPaymentSuccess(PaymentSuccessResponse response) async {
     print("Pament success");
     //Toast.show("Pament success");
-    await capturePaymentDetails(widget.booking.uid, widget.booking.farmType, widget.booking.farmName, "farm owner",
-        widget.booking.price, widget.booking.spid, widget.booking.serviceCategory,
-        widget.booking.serviceName, widget.booking.spName, widget.booking.bookingId, "success",
-        response.paymentId, response.orderId, response.signature,
+    await capturePaymentDetails(widget.laborHiring.laborid, widget.laborHiring.laborSkill,
+      widget.laborHiring.laborName, widget.laborHiring.laborName,
+      "200", widget.laborHiring.uid, widget.laborHiring.hiringType,
+      widget.laborHiring.hirerName, widget.laborHiring.hirerName, widget.laborHiring.hiringId, "success",
+      response.paymentId, response.orderId, response.signature,
     ).then((value) async {
-      updatePaymentInBookingSp(widget.booking.docid,response.paymentId,response.orderId, response.signature);
+      updatePaymentInBookingFarmer(widget.laborHiring.docid,response.paymentId,response.orderId,
+          response.signature);
     }).then((value) => Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => Success(
@@ -106,7 +107,8 @@ class _SpContractSignState extends State<SpContractSign> {
         child: DefaultBackButton(),
       ),
 
-      bottomNavigationBar:widget.booking.status == 'Accepted'? widget.booking.contractSp?widget.booking.isSpPaymentDone?null:Material(
+      bottomNavigationBar:widget.laborHiring.status == 'Accepted'? widget.laborHiring.contractLabor?
+      widget.laborHiring.isLaborPaymentDone?null:Material(
         elevation: kLess,
         color: kWhiteColor,
         child: Row(
@@ -137,21 +139,21 @@ class _SpContractSignState extends State<SpContractSign> {
           ],
         ),
       ):null:null,
-      body:widget.booking.status == 'Accepted'? Padding(
+      body:widget.laborHiring.status == 'Accepted'?Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
 
-              widget.booking.isFarmerPaymentDone?Container():ListTile(
+              widget.laborHiring.isOtherPartyPaymentDone?Container():ListTile(
                 title: Text(
                   'Is Contract Sign needed From Service Provider Side',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                trailing: widget.booking.contractFarmer
+                trailing: widget.laborHiring.contractOtherParty
                     ? Icon(
                   Icons.toggle_on,
                   color: Colors.green[700],
@@ -165,9 +167,10 @@ class _SpContractSignState extends State<SpContractSign> {
                 onTap: () async {
 
                   setState(() {
-                    widget.booking.contractFarmer = !widget.booking.contractFarmer;
+                    widget.laborHiring.contractOtherParty = !widget.laborHiring.contractOtherParty;
                   });
-                  await updateContractSignInBookingFarmer(widget.booking.docid,widget.booking.contractFarmer);
+                  await updateContractSignInLaborHIringOtherParty(widget.laborHiring.docid,
+                      widget.laborHiring.contractOtherParty);
                 },
               ),
               HeaderLabel(
@@ -178,7 +181,7 @@ class _SpContractSignState extends State<SpContractSign> {
                 height: kDefaultPadding,
               ),
 
-              Text("Farm Name: ${widget.booking.farmName}",
+              Text("Hirer Name: ${widget.laborHiring.hirerName}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -188,7 +191,7 @@ class _SpContractSignState extends State<SpContractSign> {
               SizedBox(
                 height: kDefaultPadding,
               ),
-              Text("Farmer Name: ${widget.booking.farmName}",
+              Text("Hiring For: ${widget.laborHiring.hiringType}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -198,7 +201,7 @@ class _SpContractSignState extends State<SpContractSign> {
               SizedBox(
                 height: kDefaultPadding,
               ),
-              Text("Farm Type: ${widget.booking.farmType}",
+              Text("Hirer locality: ${widget.laborHiring.hirerLocality}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -208,7 +211,7 @@ class _SpContractSignState extends State<SpContractSign> {
                 height: kDefaultPadding,
               ),
 
-              Text("Farm Type: ${widget.booking.farmType}",
+              Text("Hirer State: ${widget.laborHiring.hirerState}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -217,7 +220,7 @@ class _SpContractSignState extends State<SpContractSign> {
               SizedBox(
                 height: kDefaultPadding,
               ),
-              Text("Date Range:${widget.booking.Startdate} to ${widget.booking.Enddate}",
+              Text("Date Range:${widget.laborHiring.Startdate} to ${widget.laborHiring.Enddate}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -227,7 +230,7 @@ class _SpContractSignState extends State<SpContractSign> {
                 height: kDefaultPadding,
               ),
 
-              widget.booking.contractSp?widget.booking.isSpPaymentDone?HeaderLabel(
+              widget.laborHiring.contractLabor?widget.laborHiring.isLaborPaymentDone?HeaderLabel(
                 headerText: "Payment Rs 300 Done Successfuly",
               ):HeaderLabel(
                 headerText: "Please Sign the contract by Paying the Amount",
@@ -239,7 +242,8 @@ class _SpContractSignState extends State<SpContractSign> {
                 height: kDefaultPadding,
               ),
 
-              widget.booking.contractSp?widget.booking.isSpPaymentDone?Text("Payment Rs 300 Done Successfuly",
+              widget.laborHiring.contractLabor?widget.laborHiring.isLaborPaymentDone?
+              Text("Payment Rs 300 Done Successfuly",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -268,7 +272,7 @@ class _SpContractSignState extends State<SpContractSign> {
                 height: kDefaultPadding,
               ),
 
-              Text("Farm Name: ${widget.booking.farmName}",
+              Text("Hirer Name: ${widget.laborHiring.hirerName}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -278,7 +282,7 @@ class _SpContractSignState extends State<SpContractSign> {
               SizedBox(
                 height: kDefaultPadding,
               ),
-              Text("Farmer Name: ${widget.booking.farmName}",
+              Text("Hiring For: ${widget.laborHiring.hiringType}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -288,7 +292,7 @@ class _SpContractSignState extends State<SpContractSign> {
               SizedBox(
                 height: kDefaultPadding,
               ),
-              Text("Farm Type: ${widget.booking.farmType}",
+              Text("Hirer locality: ${widget.laborHiring.hirerLocality}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -298,7 +302,7 @@ class _SpContractSignState extends State<SpContractSign> {
                 height: kDefaultPadding,
               ),
 
-              Text("Farm Type: ${widget.booking.farmType}",
+              Text("Hirer State: ${widget.laborHiring.hirerState}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -307,7 +311,7 @@ class _SpContractSignState extends State<SpContractSign> {
               SizedBox(
                 height: kDefaultPadding,
               ),
-              Text("Date Range:${widget.booking.Startdate} to ${widget.booking.Enddate}",
+              Text("Date Range:${widget.laborHiring.Startdate} to ${widget.laborHiring.Enddate}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -318,11 +322,12 @@ class _SpContractSignState extends State<SpContractSign> {
               SizedBox(
                 height: kDefaultPadding,
               ),
+
 
 
             ]
         ),
-      )
+      ),
     );
   }
 }

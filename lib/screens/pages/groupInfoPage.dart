@@ -36,9 +36,9 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
   @override
   void initState() {
     super.initState();
-
     getGroupDetails();
   }
+
 
   Future getGroupDetails() async {
     await _firestore
@@ -159,33 +159,33 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
 
                 Padding(
                   padding: EdgeInsets.only(top: 108.0,left: 10,right: 10),
-                  child: Card(
-                      //elevation: 5.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0.0),
-                      ),
-                      child:Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
-                          child:Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(width: 10.0,),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (ctx) => FarmAttachPage(
-                                          category: widget.category,
-                                          subCategory:widget.subCategory ,
-                                          groupId: widget.groupId,
-                                          memberList:membersList,
-                                        ),
-                                      ),
-                                    );
-                                  },
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => FarmAttachPage(
+                            category: widget.category,
+                            subCategory:widget.subCategory ,
+                            groupId: widget.groupId,
+                            memberList:membersList,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Card(
+                        //elevation: 5.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0.0),
+                        ),
+                        child:Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+                            child:Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(width: 10.0,),
+                                Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
@@ -203,6 +203,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                                             alignment: Alignment.centerLeft,
                                             child: Text(
                                               widget.myFarmName,
+                                                //individualList[0]['myFarm'],
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 18.0,
@@ -236,11 +237,11 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                                       ),
                                     ],
                                   ),
-                                ),
-                              )
-                            ],
-                          )
-                      )
+                                )
+                              ],
+                            )
+                        )
+                    ),
                   ),
                 ),
 

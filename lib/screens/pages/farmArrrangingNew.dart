@@ -99,7 +99,7 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                                 //farmList[index]['location'].latitude.toString(),
                                   calculateDistance(
                                       farmList[index]['location'].latitude, farmList[index]['location'].longitude,
-                                      farmList[(index+1)%4]['location'].latitude, farmList[(index+1)%4]['location'].longitude)
+                                      farmList[(index+1)%farmList.length]['location'].latitude, farmList[(index+1)%farmList.length]['location'].longitude)
                                       .toString(),
                                 style: TextStyle(
                                     color: Colors.black,
@@ -246,6 +246,7 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
 
     body: ReorderableListView.builder(
       itemCount: widget.memberList.length,
+        //itemCount:3,
       onReorder: (oldIndex, newIndex) => setState(() {
         final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
 
@@ -254,7 +255,7 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
       }),
       itemBuilder: (context, index) {
         //final user = farms[index];
-
+        //print(widget.memberList);
         return buidFarmList(index, widget.memberList);
       },
     ),

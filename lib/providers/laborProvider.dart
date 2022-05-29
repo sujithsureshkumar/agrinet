@@ -58,6 +58,7 @@ class LaborProvider extends ChangeNotifier {
       // final user = snap.data();
       return LaborHiring(
         docid: snap.get('docid'),
+        hiringId:snap.get('hiringId'),
         hiringType: snap.get('hiringType'),
         hirerName:snap.get('hirerName'),
         hirerLocality: snap.get('hirerLocality'),
@@ -80,6 +81,19 @@ class LaborProvider extends ChangeNotifier {
         createdOn: snap.get('createdOn').toDate(),
         status:snap.get('status'),
         statusOn:snap.get('statusOn').toDate(),
+
+        contractLabor:snap.get('contractLabor'),
+        isLaborPaymentDone:snap.get('isLaborPaymentDone'),
+        laborPaymentDate:snap.get('laborPaymentDate').toDate(),
+        labor_payment_id:snap.get('labor_payment_id'),
+        labor_order_id:snap.get('labor_order_id'),
+        labor_signature:snap.get('labor_signature'),
+        contractOtherParty:snap.get('contractOtherParty'),
+        otherPartyPaymentDate:snap.get('otherPartyPaymentDate').toDate(),
+        isOtherPartyPaymentDone:snap.get('isOtherPartyPaymentDone'),
+        otherParty_payment_id:snap.get('otherParty_payment_id'),
+        otherParty_order_id:snap.get('otherParty_order_id'),
+        otherParty_signature:snap.get('otherParty_signature'),
       );
 
     }).toList();

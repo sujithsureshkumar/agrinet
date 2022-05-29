@@ -1,9 +1,7 @@
 
-import 'package:AgriNet/screens/pages/addImageFarm.dart';
-import 'package:AgriNet/screens/pages/contractSigning.dart';
-import 'package:AgriNet/screens/pages/farmArranging.dart';
-import 'package:AgriNet/screens/pages/laborHireAddressDateForm.dart';
 import 'package:AgriNet/screens/pages/laborProfile.dart';
+import 'package:AgriNet/screens/pages/laborRequestSummary.dart';
+import 'package:AgriNet/screens/pages/locationDetails.dart';
 import 'package:AgriNet/screens/pages/paymentHistory.dart';
 import 'package:AgriNet/screens/pages/rasorpayPayment.dart';
 import 'package:AgriNet/screens/pages/success.dart';
@@ -12,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LaborDashboard extends StatelessWidget {
+
   Items item1 = new Items(
       title: "Profile",
       icon:Icons.person,
@@ -22,7 +21,7 @@ class LaborDashboard extends StatelessWidget {
   Items item2 = new Items(
     title: "Location",
       icon:Icons.location_on,
-      widget:Location()
+      widget:LocationDetails()
   );
   Items item3 = new Items(
     title: "Bank Account",
@@ -30,9 +29,9 @@ class LaborDashboard extends StatelessWidget {
       widget:RasorpayPayment()
   );
   Items item4 = new Items(
-    title: "Activity",
+    title: "Requests",
       icon: Icons.local_activity,
-      widget:PaymentHistory(),
+      widget:laborRequestSummary(),
   );
   Items item5 = new Items(
     title: "To do",

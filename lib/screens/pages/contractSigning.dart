@@ -106,7 +106,7 @@ class _ContractSigningState extends State<ContractSigning> {
         child: DefaultBackButton(),
     ),
 
-      bottomNavigationBar: widget.booking.contractFarmer?widget.booking.isFarmerPaymentDone?null:Material(
+      bottomNavigationBar:widget.booking.status == 'Accepted'? widget.booking.contractFarmer?widget.booking.isFarmerPaymentDone?null:Material(
         elevation: kLess,
         color: kWhiteColor,
         child: Row(
@@ -136,8 +136,8 @@ class _ContractSigningState extends State<ContractSigning> {
             ),
           ],
         ),
-      ):null,
-    body:Padding(
+      ):null:null,
+    body:widget.booking.status == 'Accepted'?Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,6 +252,76 @@ class _ContractSigningState extends State<ContractSigning> {
         ):Container(),
 
       ]
+      ),
+    ):Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+
+            HeaderLabel(
+              headerText: "Service Details",
+            ),
+
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+
+            Text("Serive Name: ${widget.booking.serviceName}",
+              style: TextStyle (
+                  color: kLightColor,
+                  fontSize: 18
+              ),
+            ),
+
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+            Text("Serive Provider Name: ${widget.booking.spName}",
+              style: TextStyle (
+                  color: kLightColor,
+                  fontSize: 18
+              ),
+            ),
+
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+            Text("Category: ${widget.booking.serviceCategory}",
+              style: TextStyle (
+                  color: kLightColor,
+                  fontSize: 18
+              ),
+            ),
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+
+            Text("SubCategory: ${widget.booking.serviceSubCategory}",
+              style: TextStyle (
+                  color: kLightColor,
+                  fontSize: 18
+              ),
+            ),
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+            Text("Date Range:${widget.booking.Startdate} to ${widget.booking.Enddate}",
+              style: TextStyle (
+                  color: kLightColor,
+                  fontSize: 18
+              ),
+            ),
+
+
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+
+
+
+          ]
       ),
     ),
     );

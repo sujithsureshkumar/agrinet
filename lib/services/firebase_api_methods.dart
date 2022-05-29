@@ -122,6 +122,7 @@ Future UpdateImageFarmAdd(List<String> imageurlList,String uid, String docid,dou
       .update({
     'imageUrl':imageurlList,
     'location':GeoPoint(latitude,longitude),
+    'locationSet':true,
     //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
   })
       .then((value) => print("Image added"))
@@ -338,7 +339,7 @@ Future labour_onboarding(String uid,String name,String phone_number,String skill
 }
 
 
-Future addLaborHiring(Labor labor, Users user,
+Future addLaborHiring(Labor labor, Users user,String hiringId,
     String hiringType,String hirerName,String hirerLocality,
     String hirerdistrict,String hirerState,String hirerPincode,String hirerPhone_number
     ,Timestamp startTime,Timestamp endTime) async {
@@ -349,6 +350,7 @@ Future addLaborHiring(Labor labor, Users user,
       .doc(_docid)
       .set({
     'docid':_docid,
+    'hiringId':hiringId,
     'hiringType':hiringType,
     'hirerName':hirerName,
     'hirerLocality':hirerLocality,
@@ -371,12 +373,37 @@ Future addLaborHiring(Labor labor, Users user,
     'status':'Pending',
     'statusOn':FieldValue.serverTimestamp(),
 
+    'contractLabor':false,
+    'isLaborPaymentDone':false,
+    'laborPaymentDate':FieldValue.serverTimestamp(),
+    "labor_payment_id": "pay_29QQoUBi66xm2f",
+    "labor_order_id": "order_9A33XWu170gUtm",
+    "labor_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d",
+    'contractOtherParty':false,
+    'otherPartyPaymentDate':FieldValue.serverTimestamp(),
+    'isOtherPartyPaymentDone':false,
+    "otherParty_payment_id": "pay_29QQoUBi66xm2f",
+    "otherParty_order_id": "order_9A33XWu170gUtm",
+    "otherParty_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d"
+
 
   })
       .then((value) {
-    print("start&end time Added");
+    print("addLaborHiring Added");
   })
-      .catchError((error) => print("Failed to add start&end time: $error"));
+      .catchError((error) => print("Failed to addLaborHiring: $error"));
+}
+
+Future updateLaborHiring(String docid,String status) async {
+  await FirebaseFirestore.instance.collection('laborHiring')
+      .doc(docid)
+      .update({
+    'status': status,
+    'statusOn':FieldValue.serverTimestamp(),
+    //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
+  })
+      .then((value) => print("Updated Booking"))
+      .catchError((error) => print("Failed to Update Booking: $error"));
 }
 
 
@@ -479,6 +506,34 @@ Future updateContractSignInBookingFarmer(String _docid,bool contractFarmer) asyn
       .doc(_docid)
       .update({
     'contractFarmer':contractFarmer,
+  })
+      .then((value) {
+    print("updated");
+  })
+      .catchError((error) => print("Failed to update: $error"));
+}
+
+Future updateContractSignInLaborHIringOtherParty(String _docid,bool contractOtherParty) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('laborHiring');
+  return serviceProvidersCollectionReference
+      .doc(_docid)
+      .update({
+    'contractOtherParty':contractOtherParty,
+  })
+      .then((value) {
+    print("updated");
+  })
+      .catchError((error) => print("Failed to update: $error"));
+}
+
+Future updateContractSignInLaborHIringLabor(String _docid,bool contractLabor) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('laborHiring');
+  return serviceProvidersCollectionReference
+      .doc(_docid)
+      .update({
+    'contractLabor':contractLabor,
   })
       .then((value) {
     print("updated");

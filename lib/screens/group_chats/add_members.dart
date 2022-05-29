@@ -98,6 +98,7 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
           'myFarm':'No farm attached',
           'myFarmId':'',
           'isFarmSet':false,
+          'location':GeoPoint(0,0),
 
         });
 
