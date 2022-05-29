@@ -4,6 +4,7 @@ import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/screens/pages/addImageFarm.dart';
 import 'package:AgriNet/screens/pages/addImageService.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class LocationDetails extends StatefulWidget {
   _LocationDetailsState createState() => _LocationDetailsState();
 }
 class _LocationDetailsState extends State<LocationDetails> {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState () {
@@ -31,7 +33,20 @@ class _LocationDetailsState extends State<LocationDetails> {
     pincode.text=widget.pincode;
   }
 
-
+  snackBarMsg(BuildContext context, String msg) {
+    var sb = SnackBar(
+      elevation: kRadius,
+      content: Text(msg),
+      backgroundColor: kAccentColor,
+      duration: Duration(seconds: 2),
+      action: SnackBarAction(
+        textColor: kWhiteColor,
+        label: 'OK',
+        onPressed: () {},
+      ),
+    );
+    scaffoldKey.currentState.showSnackBar(sb);
+  }
 
 
 
@@ -61,8 +76,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                 backgroundColor: kPrimaryColor),
             onPressed: () async {
               if (_globalkey.currentState.validate()) {
-
-
+                updatelocation('labor',user.uid,locality.text,
+                    distric.text,
+                    state.text,
+                    pincode.text).then((value) => snackBarMsg(context, "Success"));
               }
             }
           ),

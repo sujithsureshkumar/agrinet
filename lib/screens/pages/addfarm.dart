@@ -22,6 +22,7 @@ class _AddFarmState extends State<AddFarm> {
     super.initState();
     _asyncMethod();
   }
+
   List<String> catList=[];
   Map<String, dynamic> CategoryList;
   String categoryValue = '';
@@ -111,7 +112,7 @@ class _AddFarmState extends State<AddFarm> {
                        FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
                        await farmProvider.farmer_addfarm(user.uid,_name.text, categoryValue,
                          subCategoryValue, _landarea.text,).then((value) => {
-                         Navigator.of(context).push(
+                         Navigator.of(context).pushReplacement(
                            MaterialPageRoute(
                              builder: (ctx) => AddImageFarm(),
                            ),

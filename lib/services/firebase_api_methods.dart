@@ -426,6 +426,46 @@ Future updatelabourProfile(String uid,String name,String phone_no,String skill) 
       .catchError((error) => print("Failed to update: $error"));
 }
 
+Future updateBankAccount(String firestorefield,String uid,String account_holder_name,
+    String account_number,String ifsc_code) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection(firestorefield);
+  return serviceProvidersCollectionReference
+      .doc(uid)
+      .update({
+    'account_holder_name':account_holder_name,
+    'account_number':account_number,
+    'ifs_code':ifsc_code,
+
+  })
+      .then((value) async {
+    print("Labour Profile data updated");
+
+  })
+      .catchError((error) => print("Failed to update: $error"));
+}
+
+Future updatelocation(String firestorefield,String uid,String _locality,
+    String _district,String _state,String pincode) async {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection(firestorefield);
+  //'labor'
+  return serviceProvidersCollectionReference
+      .doc(uid)
+      .update({
+    'locality':_locality,
+    'district':_district,
+    'state':_state,
+    'pincode':pincode,
+
+  })
+      .then((value) async {
+    print("Labour location data updated");
+
+  })
+      .catchError((error) => print("Failed to update: $error"));
+}
+
 Future capturePaymentDetails(String uid, String fromType, String fromName, String fromOwnerName, String price,
 String toid, String toType, String toName, String toOwnerName, String bookingId, String status, String payment_id,
 String payment_order_id, String payment_signature,

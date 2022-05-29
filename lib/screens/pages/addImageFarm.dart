@@ -229,6 +229,8 @@ class _AddImageFarmState extends State<AddImageFarm> {
 
   @override
   void dispose() {
+    ImgProvider imgProvider = Provider.of<ImgProvider>(context, listen: false);
+    imgProvider.imageUrlList.clear();
     super.dispose();
   }
 

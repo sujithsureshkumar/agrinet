@@ -25,6 +25,14 @@ class _AddServiceState extends State<AddService> {
     super.initState();
     _asyncMethod();
   }
+
+  @override
+  void dispose() {
+    ImgProvider imgProvider = Provider.of<ImgProvider>(context, listen: false);
+    imgProvider.imageUrlList.clear();
+    super.dispose();
+  }
+
   List<String> catList=[];
   Map<String, dynamic> CategoryList;
   String categoryValue = '';

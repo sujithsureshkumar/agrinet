@@ -4,6 +4,7 @@ import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/screens/pages/addImageFarm.dart';
 import 'package:AgriNet/screens/pages/addImageService.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,12 +15,13 @@ class BankAccountDetails extends StatefulWidget {
   final String account_holder_name;
   final String account_number;
   final String ifsc_code;
-  BankAccountDetails({Key key,this.account_holder_name,this.account_number,this.ifsc_code}) : super(key: key);
+  BankAccountDetails({Key key,this.account_holder_name,this.account_number,this.ifsc_code,}) : super(key: key);
 
   @override
   _BankAccountDetailsState createState() => _BankAccountDetailsState();
 }
 class _BankAccountDetailsState extends State<BankAccountDetails> {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState () {
@@ -29,6 +31,20 @@ class _BankAccountDetailsState extends State<BankAccountDetails> {
     _ifsc_code.text=widget.ifsc_code;
   }
 
+  snackBarMsg(BuildContext context, String msg) {
+    var sb = SnackBar(
+      elevation: kRadius,
+      content: Text(msg),
+      backgroundColor: kAccentColor,
+      duration: Duration(seconds: 2),
+      action: SnackBarAction(
+        textColor: kWhiteColor,
+        label: 'OK',
+        onPressed: () {},
+      ),
+    );
+    scaffoldKey.currentState.showSnackBar(sb);
+  }
 
 
 
@@ -58,8 +74,9 @@ class _BankAccountDetailsState extends State<BankAccountDetails> {
                   backgroundColor: kPrimaryColor),
               onPressed: () async {
                 if (_globalkey.currentState.validate()) {
-
-
+                  updateBankAccount('labor',user.uid,account_holder_name.text,
+                      _account_number.text,
+                      _ifsc_code.text,).then((value) => snackBarMsg(context, "Success"));
                 }
               }
           ),
