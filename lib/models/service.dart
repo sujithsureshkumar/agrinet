@@ -19,7 +19,6 @@ class Service {
   String account_number;
   List<String> reviewList;
   DateTime createdOn;
-
   String locality;
   String district;
   String state;
@@ -45,7 +44,6 @@ class Service {
     @required this.account_number,
     @required this.reviewList,
     @required this.createdOn,
-
     @required this.locality,
     @required this.district,
     @required this.state,

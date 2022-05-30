@@ -5,6 +5,7 @@ import 'package:AgriNet/screens/pages/bookingSummary.dart';
 import 'package:AgriNet/screens/pages/dateFarmSelection.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:AgriNet/screens/pages/farmerOnboarding.dart';
+import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
 import 'package:AgriNet/screens/pages/wishlist_catalog.dart';
@@ -308,7 +309,8 @@ class _FarmHomeState extends State<FarmHome> {
                                   onPressed: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (ctx) => WishlistCatalog(),
+                                        builder: (ctx) => ProfileSelection(),
+                                            //WishlistCatalog(),
                                       ),
                                     );
                                   },

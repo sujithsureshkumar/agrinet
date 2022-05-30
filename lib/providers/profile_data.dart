@@ -27,9 +27,9 @@ class ProfileData extends ChangeNotifier{
   ];
 
   List<Profile> _profileSelect = [
-    Profile("Farmer", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCtIuT92c5b4YgL4lqKnww5Gn12arzdaARA&usqp=CAU", false),
-    Profile("Service Provider", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFMyf6QUQof7CNOUniNSeEU-EE0a8DgQZAaQ&usqp=CAU", false),
-    Profile("Labour", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_oUHRKOiReFYPu9v4ZWyARmtRv4oaEgkbw&usqp=CAU", false),
+    Profile("Farmer", "https://png.pngtree.com/thumb_back/fw800/back_our/20190623/ourmid/pngtree-summer-summer-green-background-banner-image_252424.jpg", false),
+    Profile("Service Provider", "https://i.pinimg.com/originals/d1/eb/9b/d1eb9b366cfb90bb317ec56c6f1b2d3d.jpg", false),
+    Profile("Labour", "https://png.pngtree.com/thumb_back/fh260/background/20190220/ourmid/pngtree-ocean-blue-summer-banner-image_8350.jpg", false),
   ];
 
   List<Profile> _selectedProfiles = [];

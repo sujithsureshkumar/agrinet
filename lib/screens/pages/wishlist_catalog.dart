@@ -19,8 +19,9 @@ class _WishlistCatalogState extends State<WishlistCatalog> {
     ServicesProvider servicesProvider = Provider.of<ServicesProvider>(
         context, listen: false);
     final user = Provider.of<Users>(context);
-    servicesProvider.fetchFirebaseWishlist(user.uid);
-    servicesProvider.getserviceSnapShotForWishlist();
+    servicesProvider.fetchFirebaseWishlist(user.uid).then(
+            (value) => servicesProvider.getserviceSnapShotForWishlist());
+
     return Scaffold(
         appBar:DefaultAppBar(title: "Favourite"),
         body: Consumer<ServicesProvider>(

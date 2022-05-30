@@ -152,7 +152,10 @@ class _AddServiceState extends State<AddService> {
                 await servicesProvider.sp_addservice(user.uid,_servicename.text,categoryValue, subCategoryValue,
                       _price.text, _description.text,
                     imgProvider.imageUrlList.length>0?imgProvider.imageUrlList:imageUrlList,
-                    _equipmentDetail.text,servicesProvider.serviceProvModel).then((value) => {
+                    _equipmentDetail.text,servicesProvider.serviceProvModel,
+                    locality.text,
+                    distric.text,state.text,pincode.text
+                ).then((value) => {
                      Navigator.of(context)
                     ..pop()
                   });

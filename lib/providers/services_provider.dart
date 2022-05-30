@@ -79,7 +79,11 @@ class ServicesProvider extends ChangeNotifier {
           ifs_code:snap.get('ifs_code'),
           account_number:snap.get('account_number'),
           createdOn:snap.get('createdOn').toDate(),
-          reviewList: List.from(snap.get("reviewList"))
+          reviewList: List.from(snap.get("reviewList"),),
+        locality: snap.get('locality'),
+        district: snap.get('district'),
+        state: snap.get('state'),
+        pincode: snap.get('pincode'),
         //serv_prov_name:
       );
 
@@ -115,7 +119,11 @@ class ServicesProvider extends ChangeNotifier {
           ifs_code:snap.get('ifs_code'),
           account_number:snap.get('account_number'),
           createdOn:snap.get('createdOn').toDate(),
-          reviewList: List.from(snap.get("reviewList"))
+          reviewList: List.from(snap.get("reviewList")),
+        locality: snap.get('locality'),
+        district: snap.get('district'),
+        state: snap.get('state'),
+        pincode: snap.get('pincode'),
         //serv_prov_name:
       );
 
@@ -128,13 +136,30 @@ class ServicesProvider extends ChangeNotifier {
     serviceWishlist=_serviceSnapShot.docs.map((snap) {
       if(wishlist.contains(snap.get('docid'))) {
         return Service(
-          isLiked: wishlist.contains(snap.get('docid')) ? true : false,
-          docid: snap.get('docid'),
+          isLiked:wishlist.contains(snap.get('docid'))?true:false,
+          docid:snap.get('docid'),
           name: snap.get('name'),
           //imageUrl: snap.get('imageUrl'),
           imageUrl: List.from(snap.get("imageUrl")),
-          price: snap.get('price'),
-          likeCount: snap.get('likecount'),
+          price:snap.get('price'),
+          category:snap.get('category'),
+          subCategory: snap.get('subCategory'),
+          equipmentDetail:snap.get('equipments') ,
+          likeCount:snap.get('likecount'),
+          description:snap.get('description'),
+          serv_prov_id:snap.get('serv_prov_id'),
+          spName:snap.get('spName'),
+          phone_number:snap.get('phone_number'),
+          account_holder_name:snap.get('account_holder_name'),
+          ifs_code:snap.get('ifs_code'),
+          account_number:snap.get('account_number'),
+          createdOn:snap.get('createdOn').toDate(),
+          reviewList: List.from(snap.get("reviewList")),
+          locality: snap.get('locality'),
+          district: snap.get('district'),
+          state: snap.get('state'),
+          pincode: snap.get('pincode'),
+
         );
       }
 
@@ -156,7 +181,9 @@ class ServicesProvider extends ChangeNotifier {
     }).toList();*/
 
   Future sp_addservice(String uid,String service_name,String category,String subCategory,
-      String price_per_unit,String description ,List<String> imageurl,String equipments ,ServiceProvModel spData) async {
+      String price_per_unit,String description ,List<String> imageurl,String equipments ,ServiceProvModel spData,
+      String _locality,
+      String _district,String _state,String pincode) async {
     _docid = Uuid().v1();
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
@@ -181,6 +208,11 @@ class ServicesProvider extends ChangeNotifier {
       'account_number':spData.account_number,
       'createdOn':FieldValue.serverTimestamp(),
       'reviewList':[],
+
+      'locality':_locality,
+      'district':_district,
+      'state':_state,
+      'pincode':pincode,
 
 
     })
@@ -330,6 +362,7 @@ class ServicesProvider extends ChangeNotifier {
         sp_payment_id:snap.get('Sp_payment_id'),
         sp_order_id:snap.get('Sp_order_id'),
         sp_signature:snap.get('Sp_signature'),
+        farmLocation: snap.get('farmLocation'),
       );
 
     }).toList();

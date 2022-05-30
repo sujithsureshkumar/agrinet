@@ -2,6 +2,7 @@
 import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/screens/authenticate/loginScreen.dart';
 import 'package:AgriNet/screens/pages/labourHome.dart';
+import 'package:AgriNet/screens/pages/paymentHistory.dart';
 import 'package:AgriNet/screens/pages/profilepage.dart';
 import 'package:AgriNet/screens/pages/serviceProviderHome.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
@@ -184,7 +185,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                   decoration: BoxDecoration(
                     image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: NetworkImage("https://media.istockphoto.com/photos/summer-sunset-with-a-red-barn-in-rural-montana-and-rocky-mountains-picture-id863542630?k=20&m=863542630&s=612x612&w=0&h=4-udm8ANCd3yZwfEW00QDBrqnwYXFaOGhbM2Rlcobdk="),
+                    image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq20VSp1ZPAJ00A4EaQtARiqvA3N4HDW3-yQ&usqp=CAU"),
 
                     ),
                 ),
@@ -198,7 +199,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                 GestureDetector(
                 child:CircleAvatar(
                       radius: 42,
-                      backgroundImage: NetworkImage("http://cdn.onlinewebfonts.com/svg/img_364496.png"),
+                      backgroundImage: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sa_II3GuTyXT0EGyW7sKvep9GTL1lmIZW2RjO98L8DgGeZ4iD4ussfCcQgW22FiFnMo&usqp=CAU"),
                       ),
                   onTap: () {
                     Navigator.of(context).push(
@@ -212,7 +213,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                    height: 10,
                     ),
               Text(
-                    'Gabc efg',
+                    'Name',
                   style: GoogleFonts.sanchez(
                   fontSize: 15,
                 color: Colors.black,
@@ -245,6 +246,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
           leading: Icon(Icons.person),
           title: Text("Profile"),
         ),
+              ListTile(
+                onTap: () async{
+                  await _auth.signOut().then((value) => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (ctx) => PaymentHistory())));
+                },
+                leading: Icon(Icons.payments),
+                title: Text("Payment History"),
+              ),
               ListTile(
                 onTap: () async{
                   await _auth.signOut().then((value) => Navigator.of(context).pushReplacement(

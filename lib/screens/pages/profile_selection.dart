@@ -1,5 +1,6 @@
 import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/screens/pages/home.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/profile.dart';
@@ -29,11 +30,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
     final user = Provider.of<Users>(context);
     ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile Selection"),
-        centerTitle: true,
-        backgroundColor: Colors.green[700],
-      ),
+      appBar:  DefaultAppBar(title: "Project Selection"),
       body: SafeArea(
         child: Container(
           child: Column(
@@ -57,7 +54,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                 child: SizedBox(
                   width: double.infinity,
                   child: RaisedButton(
-                    color: Colors.green[700],
+                    color: Colors.cyan,
                     child: Text(
                         "Proceed (${profileProvider.count})",
                         style: TextStyle(

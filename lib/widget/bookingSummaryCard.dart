@@ -4,6 +4,8 @@ import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/mybutton.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BookingSummaryCard extends StatefulWidget {
   Booking booking;
@@ -13,6 +15,17 @@ class BookingSummaryCard extends StatefulWidget {
 }
 
 class _BookingSummaryCardState extends State<BookingSummaryCard> {
+
+  String location = 'loading..';
+
+  Future<void> GetAddressFromLatLong(GeoPoint locat)async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(locat.latitude, locat.longitude);
+    print(placemarks);
+    Placemark place= placemarks[0];
+    location = place.locality;
+    setState(()  {
+    });
+  }
 
   @override
   void initState () {
@@ -87,6 +100,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
 
   @override
   Widget build(BuildContext context) {
+    GetAddressFromLatLong(widget.booking.farmLocation);
     print(DateFormat.yMMMd().format(DateTime.now()));
 
     print(DateFormat.yMMMMd('en_US').format(DateTime.now()));
@@ -304,7 +318,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                           ),
                           Expanded(
                             child: Text(
-                              "Thalapuzha, Manandavady,wayanad",
+                              location,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 10,

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class Booking {
   String docid;
   String bookingId;
@@ -29,6 +30,7 @@ class Booking {
   String sp_payment_id;
   String sp_order_id;
   String sp_signature;
+  GeoPoint farmLocation;
 
   Booking({
     @required this.docid,
@@ -60,6 +62,7 @@ class Booking {
     @required this.sp_payment_id,
     @required this.sp_order_id,
     @required this.sp_signature,
+    @required this.farmLocation,
   });
 
   Booking.fromJson(Map<String, dynamic> json) {

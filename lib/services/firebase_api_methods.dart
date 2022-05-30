@@ -60,7 +60,7 @@ Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour,bo
 
 
 Future sp_addservice(String uid,String service_name,String category,
-    String price_per_unit,String description ,List<String> imageurl) async {
+    String price_per_unit,String description ,List<String> imageurl,) async {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('services');
   return serviceProvidersCollectionReference
@@ -151,7 +151,8 @@ Future sp_updateService(String docid,String service_name,String category,String 
 
 Future addBooking(Service service, Users user,String bookingId,
     String farmType,String farmName,String serviceCategory,
-    String serviceSubCategory,Timestamp startTime,Timestamp endTime) async {
+    String serviceSubCategory,Timestamp startTime,Timestamp endTime
+    ,farmLocation) async {
   String _docid = Uuid().v1();
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Bookings');
@@ -185,7 +186,11 @@ Future addBooking(Service service, Users user,String bookingId,
     'isSpPaymentDone':false,
     "Sp_payment_id": "pay_29QQoUBi66xm2f",
     "Sp_order_id": "order_9A33XWu170gUtm",
-    "Sp_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d"
+    "Sp_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d",
+
+    "farmLocation":farmLocation,
+
+
   })
       .then((value) {
     print("start&end time Added");

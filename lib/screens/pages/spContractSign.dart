@@ -70,7 +70,7 @@ class _SpContractSignState extends State<SpContractSign> {
     print("Pament success");
     //Toast.show("Pament success");
     await capturePaymentDetails(widget.booking.uid, widget.booking.farmType, widget.booking.farmName, "farm owner",
-        widget.booking.price, widget.booking.spid, widget.booking.serviceCategory,
+      "300", widget.booking.spid, widget.booking.serviceCategory,
         widget.booking.serviceName, widget.booking.spName, widget.booking.bookingId, "success",
         response.paymentId, response.orderId, response.signature,
     ).then((value) async {
