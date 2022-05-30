@@ -1,9 +1,12 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/farm.dart';
 import 'package:AgriNet/models/service.dart';
+import 'package:AgriNet/providers/farm_provider.dart';
+import 'package:AgriNet/screens/pages/addImageFarm.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -19,11 +22,13 @@ class FarmListingCard extends StatefulWidget {
 class _FarmListingCardState extends State<FarmListingCard> {
   @override
   Widget build(BuildContext context) {
+    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
     return GestureDetector(
       onTap: () {
+        farmProvider.setDocid(widget.farm.docid);
         Navigator.of(context).push(
           MaterialPageRoute(
-             // builder: (ctx) => EditService(service: widget.farm)
+             builder: (ctx) => AddImageFarm()
           ),
         );
       },
@@ -39,16 +44,26 @@ class _FarmListingCardState extends State<FarmListingCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.farm.name,
+                    Text("Farm Name :  "+widget.farm.name,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: kFixPadding)),
-                    Text("Category",
+                    SizedBox(
+                      height:10,
+                    ),
+                    Text("Farm Category :  "+widget.farm.subCategory ,
                         style: TextStyle(
                             fontSize: 12.0, color: kLightColor)),
-                    Text("Date",
+                    SizedBox(
+                      height:10,
+                    ),
+                    Text("Farm Added On :  "+DateFormat.yMMMd().format(widget.farm.createdOn,),
                         style: TextStyle(
                             fontSize: 12.0, color: Color(0xFF90C440))),
-                    Text("\$ ${widget.farm.name}"),
+                    SizedBox(
+                      height:10,
+                    ),
+                    widget.farm.locationSet?Text("Farm Location add status : Completed"):
+                    Text("Farm Location add status : Pending"),
                   ],
                 ),
               ),

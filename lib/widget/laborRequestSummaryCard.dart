@@ -56,6 +56,28 @@ class _LaborRequestSummaryCardState extends State<LaborRequestSummaryCard> {
     );
   }
 
+  Widget completeButtonWidget() {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MyButton(name:"Completed",
+          onPressed: () =>completed(),
+          ratio: 0.82,
+          color: Color(0xff86d76d)
+      ),
+    );
+  }
+
+
+  completed() {
+    updateLaborHiring(widget.laborHiring.docid,'Completed')
+        .then((value) {
+      setState(() {
+        widget.laborHiring.status = 'Completed';
+        widget.laborHiring.statusOn = DateTime.now();
+        buttonVisible=false;
+      });
+    });
+  }
   accept() {
     updateLaborHiring(widget.laborHiring.docid,'Accepted')
         .then((value) {
@@ -162,7 +184,8 @@ class _LaborRequestSummaryCardState extends State<LaborRequestSummaryCard> {
                     SizedBox(
                       height:20,
                     ),
-                    buttonVisible?buttonWidget():Container(),
+                   // buttonVisible?buttonWidget():Container(),
+                    widget.laborHiring.status!='Completed'?buttonVisible?buttonWidget():completeButtonWidget():Container(),
                   ],
                 ),
               ),

@@ -63,6 +63,27 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
       });
     });
   }
+  completed() {
+    updateBooking(widget.booking.docid,'Completed')
+        .then((value) {
+      setState(() {
+        widget.booking.status = 'Completed';
+        widget.booking.statusOn = DateTime.now();
+        buttonVisible=false;
+      });
+    });
+  }
+
+  Widget completeButtonWidget() {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MyButton(name:"Completed",
+          onPressed: () =>completed(),
+          ratio: 0.82,
+          color: Color(0xff86d76d)
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +223,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                   detailWidget(),
                   Divider(),
                   buildText(context),
-                  buttonVisible?buttonWidget():Container(),
+                  widget.booking.status!='Completed'?buttonVisible?buttonWidget():completeButtonWidget():Container(),
                 ],
               ),
             ),

@@ -76,6 +76,10 @@ class _AddServiceState extends State<AddService> {
   TextEditingController _equipmentDetail= TextEditingController();
   //TextEditingController _no_of_service= TextEditingController();
   TextEditingController _description= TextEditingController();
+  TextEditingController locality = TextEditingController();
+  TextEditingController distric= TextEditingController();
+  TextEditingController state= TextEditingController();
+  TextEditingController pincode= TextEditingController();
   //final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
@@ -118,6 +122,22 @@ class _AddServiceState extends State<AddService> {
               height: 20,
             ),
             descriptionTextField(),
+            SizedBox(
+              height: 20,
+            ),
+            namTextField(locality,"Locality"),
+            SizedBox(
+              height: 20,
+            ),
+            namTextField(distric,"Distric"),
+            SizedBox(
+              height: 20,
+            ),
+            namTextField(state,"State"),
+            SizedBox(
+              height: 20,
+            ),
+            numberTextField(pincode,"Pincode"),
             SizedBox(
               height: 20,
             ),
@@ -164,6 +184,69 @@ class _AddServiceState extends State<AddService> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget namTextField(TextEditingController name,String labelText) {
+    return TextFormField(
+      controller: name,
+      validator: (value) {
+        if (value.isEmpty) return "Field can't be empty";
+
+        return null;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        // prefixIcon: Icon(
+        //   Icons.agriculture,
+        //   color: Colors.green,
+        // ),
+        labelText: labelText,
+        // helperText: "Name can't be empty",
+      ),
+    );
+  }
+
+
+
+
+
+
+  Widget numberTextField(TextEditingController phone_no,String labelText) {
+    return TextFormField(
+      controller: phone_no,
+      keyboardType:TextInputType.number,
+      validator: (value) {
+        if (value.isEmpty) return "Field can't be empty";
+
+        return null;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        // prefixIcon: Icon(
+        //   Icons.person,
+        //   color: Colors.green,
+        // ),
+        labelText: labelText,
+        //helperText: "Enter in digits",
+
       ),
     );
   }

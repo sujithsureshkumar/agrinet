@@ -10,6 +10,11 @@ class FarmProvider extends ChangeNotifier {
   String _docid;
   String get docid => _docid;
 
+  void setDocid(String id){
+    _docid =id;
+    notifyListeners();
+  }
+
   List<String> _groupList=[];
   List<String> get groupList => _groupList;
 
@@ -107,6 +112,7 @@ class FarmProvider extends ChangeNotifier {
           location:snap.get('location'),
           imageUrl: List.from(snap.get("imageUrl")),
           createdOn: snap.get('createdOn').toDate(),
+          locationSet:snap.get('locationSet'),
         //serv_prov_name:
       );
 

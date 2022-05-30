@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:AgriNet/models/farm.dart';
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/screens/pages/addImageFarm.dart';
@@ -9,13 +10,14 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:AgriNet/services/addservice.dart';
 
-class AddFarm extends StatefulWidget {
-  AddFarm({Key key}) : super(key: key);
+class EditFarm extends StatefulWidget {
+  final Farm farm;
+  EditFarm({Key key,this.farm}) : super(key: key);
 
   @override
-  _AddFarmState createState() => _AddFarmState();
+  _EditFarmState createState() => _EditFarmState();
 }
-class _AddFarmState extends State<AddFarm> {
+class _EditFarmState extends State<EditFarm > {
 
   @override
   void initState () {
@@ -102,35 +104,35 @@ class _AddFarmState extends State<AddFarm> {
             ),
             InkWell(
               onTap: () async {
-                 if (_globalkey.currentState.validate()) {
-                   checkUsernameIsUnique(user.uid,_name.text).then((val) async {
-                     if(val)
-                     {
-                       setState(() {
-                         circular = true;
-                       });
-                       FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
-                       await farmProvider.farmer_addfarm(user.uid,_name.text, categoryValue,
-                         subCategoryValue, _landarea.text,).then((value) => {
-                         Navigator.of(context).pushReplacement(
-                           MaterialPageRoute(
-                             builder: (ctx) => AddImageFarm(),
-                           ),
-                         )
-                       });
-                     }
-                     else{
-                       setState(() {
-                         textBoxShow = true;
-                       });
-                     }
+                if (_globalkey.currentState.validate()) {
+                  checkUsernameIsUnique(user.uid,_name.text).then((val) async {
+                    if(val)
+                    {
+                      setState(() {
+                        circular = true;
+                      });
+                      FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
+                      await farmProvider.farmer_addfarm(user.uid,_name.text, categoryValue,
+                        subCategoryValue, _landarea.text,).then((value) => {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (ctx) => AddImageFarm(),
+                          ),
+                        )
+                      });
+                    }
+                    else{
+                      setState(() {
+                        textBoxShow = true;
+                      });
+                    }
 //username is taken
-                     });
+                  });
 
 
 
 
-                 }
+                }
               },
               child: Center(
                 child: Container(
@@ -164,7 +166,7 @@ class _AddFarmState extends State<AddFarm> {
   checkUsernameIsUnique(String uid,String name)async
   {
     QuerySnapshot querySnapshot;
-   /* setState(() {
+    /* setState(() {
       loading=true;
     });*/
     querySnapshot=await FirebaseFirestore.instance

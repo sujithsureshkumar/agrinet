@@ -32,15 +32,72 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
     }
   }
 
-  Widget buttonWidget() {
+  Widget completeButtonWidget() {
     return  Padding(
       padding: const EdgeInsets.all(8.0),
-      child: MyButton(name:"Cancel",
-          //onPressed: () =>cancel(),
+      child: MyButton(name:"Completed",
+          onPressed: () =>completed(),
           ratio: 0.82,
           color: Color(0xff86d76d)
       ),
     );
+  }
+  Widget cancelButtonWidget() {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MyButton(name:"Cancel",
+          onPressed: () =>cancel(),
+          ratio: 0.82,
+          color: Color(0xff86d76d)
+      ),
+    );
+  }
+  Widget buttonWidget() {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MyButton(name:"Cancel",
+          onPressed: () =>cancel(),
+          ratio: 0.82,
+          color: Color(0xff86d76d)
+      ),
+    );
+  }
+
+  Widget twoButtonWidgetCompleted() {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          MyButton(name:"Completed",
+            onPressed: () =>completed(),
+            ratio: 0.41,
+            color: Color(0xffd782d6),
+          ),
+
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: MyButton(name:"Cancel",
+                  onPressed: () =>cancel(),
+                  ratio: 0.41,
+                  color: Color(0xff86d76d)
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  completed() {
+    updateLaborHiring(widget.laborHiring.docid,'Completed')
+        .then((value) {
+      setState(() {
+        widget.laborHiring.status = 'Completed';
+        widget.laborHiring.statusOn = DateTime.now();
+        buttonVisible=false;
+      });
+    });
   }
 
   cancel() {
@@ -138,7 +195,10 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
                     SizedBox(
                       height:10,
                     ),
-                    !widget.laborHiring.isLaborPaymentDone?buttonVisible?buttonWidget():Container():Container(),
+                    //!widget.laborHiring.isLaborPaymentDone?buttonVisible?buttonWidget():Container():Container(),
+                    widget.laborHiring.status != 'Completed'?!widget.laborHiring.isLaborPaymentDone?
+                    widget.laborHiring.status == 'Accepted'?
+                    twoButtonWidgetCompleted():cancelButtonWidget():completeButtonWidget():Container(),
                   ],
                 ),
               ),

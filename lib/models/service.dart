@@ -20,6 +20,11 @@ class Service {
   List<String> reviewList;
   DateTime createdOn;
 
+  String locality;
+  String district;
+  String state;
+  String pincode;
+
 
   Service({
     @required this.name,
@@ -39,7 +44,12 @@ class Service {
     @required this.ifs_code,
     @required this.account_number,
     @required this.reviewList,
-    @required this.createdOn
+    @required this.createdOn,
+
+    @required this.locality,
+    @required this.district,
+    @required this.state,
+    @required this.pincode,
   });
 
 }

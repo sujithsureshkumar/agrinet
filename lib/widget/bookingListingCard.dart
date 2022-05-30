@@ -65,6 +65,16 @@ class _BookingListingCardState extends State<BookingListingCard> {
       });
     });
   }
+  completed() {
+    updateBooking(widget.booking.docid,'Completed')
+        .then((value) {
+      setState(() {
+        widget.booking.status = 'Completed';
+        widget.booking.statusOn = DateTime.now();
+        buttonVisible=false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +189,10 @@ class _BookingListingCardState extends State<BookingListingCard> {
                 detailWidget(),
                 Divider(),
                 buildText(context),
-                !widget.booking.isSpPaymentDone?buttonVisible?buttonWidget():Container():Container(),
+                //!widget.booking.isSpPaymentDone?buttonVisible?buttonWidget():Container():Container(),
+                widget.booking.status != 'Completed'?!widget.booking.isSpPaymentDone?
+                widget.booking.status == 'Accepted'?
+                twoButtonWidgetCompleted():cancelButtonWidget():completeButtonWidget():Container(),
               ],
             ),
           ),
@@ -189,6 +202,26 @@ class _BookingListingCardState extends State<BookingListingCard> {
   }
 
 
+  Widget completeButtonWidget() {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MyButton(name:"Completed",
+          onPressed: () =>completed(),
+          ratio: 0.82,
+          color: Color(0xff86d76d)
+      ),
+    );
+  }
+  Widget cancelButtonWidget() {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MyButton(name:"Cancel",
+          onPressed: () =>cancel(),
+          ratio: 0.82,
+          color: Color(0xff86d76d)
+      ),
+    );
+  }
   Widget buttonWidget() {
     return  Padding(
       padding: const EdgeInsets.all(8.0),
@@ -196,6 +229,32 @@ class _BookingListingCardState extends State<BookingListingCard> {
           onPressed: () =>cancel(),
           ratio: 0.82,
           color: Color(0xff86d76d)
+      ),
+    );
+  }
+
+  Widget twoButtonWidgetCompleted() {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          MyButton(name:"Completed",
+            onPressed: () =>completed(),
+            ratio: 0.41,
+            color: Color(0xffd782d6),
+          ),
+
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: MyButton(name:"Cancel",
+                  onPressed: () =>cancel(),
+                  ratio: 0.41,
+                  color: Color(0xff86d76d)
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

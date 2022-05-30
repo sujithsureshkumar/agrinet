@@ -7,6 +7,7 @@ class Farm {
   String subCategory;
   String landarea;
   GeoPoint location;
+  bool locationSet;
   List<String> imageUrl;
   DateTime createdOn;
   double lat,long;
@@ -18,6 +19,7 @@ class Farm {
     @required this.category,
     @required this.subCategory,
     @required this.location,
+    @required this.locationSet,
     @required this.landarea,
     @required this.imageUrl,
     @required this.createdOn,

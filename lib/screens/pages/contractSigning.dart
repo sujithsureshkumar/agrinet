@@ -97,6 +97,16 @@ class _ContractSigningState extends State<ContractSigning> {
     Toast.show("External Wallet");
   }
 
+  completed() {
+    updateBooking(widget.booking.docid,'Completed')
+        .then((value) {
+      setState(() {
+        widget.booking.status = 'Completed';
+        widget.booking.statusOn = DateTime.now();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,7 +147,7 @@ class _ContractSigningState extends State<ContractSigning> {
           ],
         ),
       ):null:null,
-    body:widget.booking.status == 'Accepted'?Padding(
+    body:widget.booking.status == 'Accepted' ?Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,6 +180,7 @@ class _ContractSigningState extends State<ContractSigning> {
             await updateContractSignInBookingSp(widget.booking.docid,widget.booking.contractSp);
           },
         ),
+
       HeaderLabel(
       headerText: "Service Details",
       ),
