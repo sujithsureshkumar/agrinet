@@ -263,8 +263,8 @@ class _AddImageFarmState extends State<AddImageFarm> {
                           elevation: 2,
                           backgroundColor: kLightColor),
                       onPressed: () => Navigator.of(context)
-                        ..pop()
-                        ..pop()
+                        ..pop(),
+                       // ..pop()
                     ),
                   ),
 
@@ -288,8 +288,8 @@ class _AddImageFarmState extends State<AddImageFarm> {
                               position.latitude,position.longitude)
                               .then((value) => {
                             Navigator.of(context)
-                              ..pop()
-                              ..pop()
+                              ..pop(),
+                              //..pop()
                           });
                         }
                       }),
