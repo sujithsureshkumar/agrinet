@@ -48,7 +48,7 @@ class _ServiceListingCardState extends State<ServiceListingCard> {
                             Text(widget.service.name,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: kFixPadding)),
-                            Text("Category",
+                            Text(widget.service.subCategory,
                                 style: TextStyle(
                                     fontSize: 12.0, color: kLightColor)),
                             Text(DateFormat.yMMMd().format(DateTime.now()),

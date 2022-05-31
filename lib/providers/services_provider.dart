@@ -231,15 +231,69 @@ class ServicesProvider extends ChangeNotifier {
     serviceList=_serviceSnapShot.docs.map((snap) {
       // final user = snap.data();
       return Service(
-          isLiked:wishlist.contains(snap.get('docid'))?true:false,
-          docid:snap.get('docid'),
-          name: snap.get('name'),
-          //imageUrl: snap.get('imageUrl'),
-          imageUrl: List.from(snap.get("imageUrl")),
-          price:snap.get('price'),
-          likeCount:snap.get('likecount'),
-          description:snap.get('description'),
-          serv_prov_id:snap.get('serv_prov_id')
+        isLiked:wishlist.contains(snap.get('docid'))?true:false,
+        docid:snap.get('docid'),
+        name: snap.get('name'),
+        //imageUrl: snap.get('imageUrl'),
+        imageUrl: List.from(snap.get("imageUrl")),
+        price:snap.get('price'),
+        category:snap.get('category'),
+        subCategory: snap.get('subCategory'),
+        equipmentDetail:snap.get('equipments') ,
+        likeCount:snap.get('likecount'),
+        description:snap.get('description'),
+        serv_prov_id:snap.get('serv_prov_id'),
+        spName:snap.get('spName'),
+        phone_number:snap.get('phone_number'),
+        account_holder_name:snap.get('account_holder_name'),
+        ifs_code:snap.get('ifs_code'),
+        account_number:snap.get('account_number'),
+        createdOn:snap.get('createdOn').toDate(),
+        reviewList: List.from(snap.get("reviewList")),
+        locality: snap.get('locality'),
+        district: snap.get('district'),
+        state: snap.get('state'),
+        pincode: snap.get('pincode'),
+      );
+
+    }).toList();
+    notifyListeners();
+  }
+
+
+  List<Service> recommendServiceList=[];
+  Future<void> getserviceRecomendation(String subCategory) async {
+    //List<Product> newList = [];
+    QuerySnapshot _serviceSnapShot = await FirebaseFirestore
+        .instance.collection('services')
+        .where('subCategory', isEqualTo: subCategory)
+        .get();
+    recommendServiceList=_serviceSnapShot.docs.map((snap) {
+      // final user = snap.data();
+      return Service(
+        isLiked:wishlist.contains(snap.get('docid'))?true:false,
+        docid:snap.get('docid'),
+        name: snap.get('name'),
+        //imageUrl: snap.get('imageUrl'),
+        imageUrl: List.from(snap.get("imageUrl")),
+        price:snap.get('price'),
+        category:snap.get('category'),
+        subCategory: snap.get('subCategory'),
+        equipmentDetail:snap.get('equipments') ,
+        likeCount:snap.get('likecount'),
+        description:snap.get('description'),
+        serv_prov_id:snap.get('serv_prov_id'),
+        spName:snap.get('spName'),
+        phone_number:snap.get('phone_number'),
+        account_holder_name:snap.get('account_holder_name'),
+        ifs_code:snap.get('ifs_code'),
+        account_number:snap.get('account_number'),
+        createdOn:snap.get('createdOn').toDate(),
+        reviewList: List.from(snap.get("reviewList")),
+        locality: snap.get('locality'),
+        district: snap.get('district'),
+        state: snap.get('state'),
+        pincode: snap.get('pincode'),
       );
 
     }).toList();

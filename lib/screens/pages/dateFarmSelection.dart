@@ -3,6 +3,7 @@ import 'package:AgriNet/models/service.dart';
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/providers/services_provider.dart';
+import 'package:AgriNet/screens/pages/bookingListing.dart';
 import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/date_range_picker_widget.dart';
@@ -282,8 +283,8 @@ class _DateFarmSelectionState extends State<DateFarmSelection> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => Success(
-                        onPressed: () => Navigator.of(context)
-                          ..pop(),
+                        onPressed: () => Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (ctx) => BookingListing())),
                         emptyMsg: "Successful !!",
                         subTitleText: 'Your Request was Sent successfully',
                       ),

@@ -60,6 +60,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
     servicesProvider.getReview(widget.service.docid);
     servicesProvider.editReviewShow=widget.service.reviewList.contains(user.uid);
+    servicesProvider.getserviceRecomendation(widget.service.subCategory);
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: DefaultAppBar(
@@ -456,35 +457,41 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-              child: RecommendedView(
-                direction: Axis.horizontal,
-                heights: 250.0,
-                widths: MediaQuery.of(context).size.width,
-                top: 0.0,
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                column: 1,
-                ratio: 1.8,
-                items: 6,
-                itemBuilder: (context, index) {
-                  return RecommendedItems(
-                    height: 150.0,
-                    radius: 8.0,
-                    top: 8.0,
-                    bottom: 8.0,
-                    left: 4.0,
-                    right: 4.0,
-                    image: recommendedList[index].image,
-                    title: recommendedList[index].title,
-                    price: recommendedList[index].price,
-                    rating: recommendedList[index].rating,
-                    sale: recommendedList[index].sale,
-                  );
-                },
-              ),
+            Consumer<ServicesProvider>(
+              builder: (context, servicesProvider, _) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                  child: RecommendedView(
+                    direction: Axis.horizontal,
+                    heights: 250.0,
+                    widths: MediaQuery.of(context).size.width,
+                    top: 0.0,
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    column: 1,
+                    ratio: 1.8,
+                    items: servicesProvider.recommendServiceList.length,
+                    itemBuilder: (context, index) {
+                      return RecommendedItems(
+                        height: 150.0,
+                        radius: 8.0,
+                        top: 8.0,
+                        bottom: 8.0,
+                        left: 4.0,
+                        right: 4.0,
+                        rating: 3.0,
+                       service: servicesProvider.recommendServiceList[index],
+                       /* image: recommendedList[index].image,
+                        title: recommendedList[index].title,
+                        price: recommendedList[index].price,
+
+                        sale: recommendedList[index].sale,*/
+                      );
+                    },
+                  ),
+                );
+              }
             ),
           ],
         ),

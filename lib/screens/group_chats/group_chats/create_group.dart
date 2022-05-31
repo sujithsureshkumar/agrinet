@@ -1,4 +1,5 @@
 
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -245,9 +246,7 @@ class _CreateGroupState extends State<CreateGroup> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Group Name"),
-      ),
+      appBar:DefaultAppBar(title: "Group Name"),
       body: isLoading
           ? Container(
         height: size.height,

@@ -248,8 +248,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
         ),
               ListTile(
                 onTap: () async{
-                  await _auth.signOut().then((value) => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx) => PaymentHistory())));
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (ctx) => PaymentHistory()));
                 },
                 leading: Icon(Icons.payments),
                 title: Text("Payment History"),
@@ -279,7 +279,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
     return Scaffold(
       drawer: _buildMyDrawer(),
       appBar: AppBar(
-        backgroundColor: Color(0xffa694a7),
+       backgroundColor: Color(0xffa694a7),
+       // backgroundColor: Color(0xffeae0ea),
         title: Padding(
           padding: EdgeInsets.only(top: 8.0),
           child:Text("AgriNet"),

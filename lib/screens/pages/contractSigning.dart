@@ -1,6 +1,7 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/booking.dart';
 import 'package:AgriNet/models/service.dart';
+import 'package:AgriNet/screens/pages/paymentHistory.dart';
 import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
@@ -78,8 +79,8 @@ class _ContractSigningState extends State<ContractSigning> {
     }).then((value) => Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => Success(
-          onPressed: () => Navigator.of(context)
-            ..pop(),
+          onPressed: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (ctx) => PaymentHistory())),
           emptyMsg: "Payment Success !!",
           subTitleText: 'Payment id:'+response.paymentId,
         ),

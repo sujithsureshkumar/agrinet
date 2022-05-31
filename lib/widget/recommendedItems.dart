@@ -1,23 +1,26 @@
 import 'package:AgriNet/constants/constant.dart';
+import 'package:AgriNet/models/service.dart';
 import 'package:flutter/material.dart';
 
 class RecommendedItems extends StatelessWidget {
-  final double height, price, rating, top, bottom, left, right, radius;
-  final String image, title;
-  final int sale;
+  final double height,  rating, top, bottom, left, right, radius;
+  //final String image, title,price,;
+ // final int sale;
+  final Service service;
   const RecommendedItems({
     Key key,
     this.height,
-    this.image,
-    this.price,
+    //this.image,
+    //this.price,
     this.rating,
-    this.title,
-    this.sale,
+    //this.title,
+    //this.sale,
     this.top,
     this.bottom,
     this.left,
     this.right,
     this.radius,
+    this.service
   }) : super(key: key);
 
   @override
@@ -41,7 +44,7 @@ class RecommendedItems extends StatelessWidget {
             height: height,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(image),
+                image: NetworkImage(service.imageUrl[0]),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.only(
@@ -57,7 +60,7 @@ class RecommendedItems extends StatelessWidget {
               left: kLessPadding,
             ),
             child: Text(
-              title,
+              service.name,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: kDarkColor.withOpacity(0.8),
@@ -69,7 +72,7 @@ class RecommendedItems extends StatelessWidget {
               right: kLessPadding,
               left: kLessPadding,
             ),
-            child: Text("\$ ${price.toString()}"),
+            child: Text("\$ ${service.price}"),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -100,12 +103,12 @@ class RecommendedItems extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
+               /* Text(
                   "${sale.toString()} Sale",
                   style: TextStyle(
                     color: kDarkColor.withOpacity(0.4),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

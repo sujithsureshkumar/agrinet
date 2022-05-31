@@ -5,6 +5,7 @@ import 'package:AgriNet/screens/pages/bookingSummary.dart';
 import 'package:AgriNet/screens/pages/dateFarmSelection.dart';
 import 'package:AgriNet/screens/pages/editService.dart';
 import 'package:AgriNet/screens/pages/farmerOnboarding.dart';
+import 'package:AgriNet/screens/pages/laborCatalog.dart';
 import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:AgriNet/screens/pages/service_catalog.dart';
@@ -309,12 +310,12 @@ class _FarmHomeState extends State<FarmHome> {
                                   onPressed: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (ctx) => ProfileSelection(),
+                                        builder: (ctx) => LaborCatalog(),
                                             //WishlistCatalog(),
                                       ),
                                     );
                                   },
-                                  icon: Icon(Icons.favorite,
+                                  icon: Icon(Icons.person_add,
                                     size: 33.0 ,
                                       color: Color(0xffedf1f0)
                                   ),
@@ -324,7 +325,7 @@ class _FarmHomeState extends State<FarmHome> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 2.0),
                                 child: Text(
-                                  "Fav",
+                                  "Hire Labor",
                                   style: TextStyle(
                                     color: Colors.yellow,
                                     fontWeight: FontWeight.bold,
