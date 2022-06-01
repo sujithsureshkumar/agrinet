@@ -1,4 +1,5 @@
 import 'package:AgriNet/providers/farm_provider.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -130,11 +131,7 @@ class _FarmerOnboardingState extends State<FarmerOnboarding> {
     final user = Provider.of<Users>(context);
     FarmProvider farmerData =Provider.of<FarmProvider>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Service Provider Onboarding '),
-
-        backgroundColor:Colors.green,
-      ),
+      appBar:DefaultAppBar(title: "Labor Onboarding"),
       body: Stepper(
         type: StepperType.horizontal,
         currentStep: _activeStepIndex,

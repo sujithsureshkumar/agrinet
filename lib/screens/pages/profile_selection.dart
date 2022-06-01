@@ -30,7 +30,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
     final user = Provider.of<Users>(context);
     ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
-      appBar:  DefaultAppBar(title: "Project Selection"),
+      appBar:  DefaultAppBar(title: "Profile Selection"),
       body: SafeArea(
         child: Container(
           child: Column(

@@ -1,4 +1,5 @@
 import 'package:AgriNet/providers/profile_data.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -159,11 +160,7 @@ class _SPOnBoardingState extends State<SPOnBoarding> {
     final user = Provider.of<Users>(context);
     ProfileData profile =Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Service Provider Onboarding '),
-
-        backgroundColor:Colors.green,
-      ),
+      appBar:DefaultAppBar(title: 'Service Provider Onboarding '),
       body: Stepper(
         type: StepperType.horizontal,
         currentStep: _activeStepIndex,

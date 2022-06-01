@@ -30,6 +30,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
   @override
   void initState () {
     super.initState();
+    GetAddressFromLatLong(widget.booking.farmLocation);
     if(widget.booking.status=='Accepted' || widget.booking.status=='Rejected' || widget.booking.status=='Cancelled'){
       setState(() {
         buttonVisible=false;
@@ -100,7 +101,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
 
   @override
   Widget build(BuildContext context) {
-    GetAddressFromLatLong(widget.booking.farmLocation);
+   // GetAddressFromLatLong(widget.booking.farmLocation);
     print(DateFormat.yMMMd().format(DateTime.now()));
 
     print(DateFormat.yMMMMd('en_US').format(DateTime.now()));
@@ -167,7 +168,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                 children: [
                                   Row(
                                     children: [
-                                      Expanded(
+                                      /*Expanded(
                                         child: Align(
                                           alignment: Alignment.centerRight,
                                           child: Text(
@@ -180,14 +181,16 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Text(
-                                        widget.booking.serviceName,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xff528090),
+                                      ),*/
+                                      Expanded(
+                                        child: Text(
+                                          widget.booking.serviceName,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff528090),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -209,13 +212,15 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                                           ),
                                         ),
                                       ),
-                                      Text(
-                                        "${widget.booking.price} Rs",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xff528090),
+                                      Expanded(
+                                        child: Text(
+                                          "${widget.booking.price} Rs",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff528090),
+                                          ),
                                         ),
                                       ),
                                     ],

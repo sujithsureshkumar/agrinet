@@ -149,7 +149,7 @@ class _LaborContractSignState extends State<LaborContractSign> {
 
               widget.laborHiring.isOtherPartyPaymentDone?Container():ListTile(
                 title: Text(
-                  'Is Contract Sign needed From Service Provider Side',
+                  'Is Contract Sign needed From Opposite Side',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                   ),
