@@ -14,6 +14,7 @@ class FarmArrangingNew extends StatefulWidget {
 
 class _FarmArrangingNewState extends State<FarmArrangingNew> {
   double totalDistance;
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   double calculateDistance(lat1, lon1, lat2, lon2){
     var p = 0.017453292519943295;
@@ -33,6 +34,33 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
           widget.memberList[i+1]['location'].latitude, widget.memberList[i+1]['location'].longitude);
     }
     print(totalDistance);
+  }
+
+  int farmAttachCount(List farmList){
+    int count=0;
+    for (var i = 0; i < farmList.length; i++) {
+      if(farmList[i]['isFarmSet']){
+        count++;
+      }
+    }
+   return count;
+}
+
+  snackBarMsg(BuildContext context, String msg) {
+    final now = DateTime.now();
+
+    var sb = SnackBar(
+      elevation: kRadius,
+      content: Text(msg+now.microsecondsSinceEpoch.toString()),
+      backgroundColor: kAccentColor,
+      duration: Duration(seconds: 2),
+      action: SnackBarAction(
+        textColor: kWhiteColor,
+        label: 'OK',
+        onPressed: () {},
+      ),
+    );
+    scaffoldKey.currentState.showSnackBar(sb);
   }
 
   Widget buidFarmList(int index,List farmList){
@@ -70,7 +98,7 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                         Text(
                           farmList[index]['myFarm'],
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.amber,
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold
                           ),
@@ -81,7 +109,7 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                         Text(
                           farmList[index]['name'],
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.deepOrange,
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold
                           ),
@@ -93,6 +121,13 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                           alignment: Alignment.centerRight,
                           child: Column(
                             children: [
+                              Text( "From",
+                                style: TextStyle(
+                                    color: Colors.cyan,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
                               Icon( Icons.expand_less, ),
 
                               Text(
@@ -100,15 +135,23 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                                   calculateDistance(
                                       farmList[index]['location'].latitude, farmList[index]['location'].longitude,
                                       farmList[(index+1)%farmList.length]['location'].latitude, farmList[(index+1)%farmList.length]['location'].longitude)
-                                      .toString(),
+                                      .toStringAsFixed(0) + " KM",
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.purpleAccent,
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold
                                 ),
                               ),
 
                               Icon( Icons.expand_more, ),
+
+                              Text( "To",
+                                style: TextStyle(
+                                    color: Colors.cyan,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
                             ],
                           )),
                     ),
@@ -227,11 +270,17 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                       elevation: 2,
                       backgroundColor: kPrimaryColor,
                     ),
-                    onPressed: () async =>  Navigator.of(context).push(
+                    onPressed: () async {
+                      if(farmAttachCount(widget.memberList)==widget.memberList.length){
+
+                      }
+                      return snackBarMsg(context,  'msg');
+                    }
+                     /*   Navigator.of(context).push(
                       MaterialPageRoute(
                         //builder: (context) => DeliveryAddress(),
                       ),
-                    ),
+                    ),*/
                   ),
                 ),
                 SizedBox(

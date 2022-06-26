@@ -190,7 +190,8 @@ class _BookingListingCardState extends State<BookingListingCard> {
                 Divider(),
                 buildText(context),
                 //!widget.booking.isSpPaymentDone?buttonVisible?buttonWidget():Container():Container(),
-                widget.booking.status != 'Completed'?!widget.booking.isSpPaymentDone?
+                widget.booking.status != 'Completed' && widget.booking.status != 'Cancelled'?
+                !widget.booking.isSpPaymentDone?
                 widget.booking.status == 'Accepted'?
                 twoButtonWidgetCompleted():cancelButtonWidget():completeButtonWidget():Container(),
               ],

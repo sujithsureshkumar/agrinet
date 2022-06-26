@@ -56,6 +56,7 @@ class _CreateGroupState extends State<CreateGroup> {
             "id": groupId,
             "name": _groupName.text,
             'farmSetCount':0,
+            'farmScore':'NA',
           });
 
           for (int i = 0; i < widget.membersList.length; i++) {

@@ -4,6 +4,7 @@ class Service {
   String name;
   List<String> imageUrl;
   String price;
+  String priceUnit;
   String category;
   String subCategory;
   String equipmentDetail;
@@ -29,6 +30,7 @@ class Service {
     @required this.name,
     @required this.imageUrl,
     @required this.price,
+    @required this.priceUnit,
     @required this.category,
     @required this.subCategory,
     @required this.equipmentDetail,

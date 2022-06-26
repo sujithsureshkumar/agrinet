@@ -1,3 +1,4 @@
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,14 +40,15 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: DefaultAppBar(title: 'Add New Service'),
+     /* AppBar(
         leading: IconButton(
             icon: Icon(FontAwesomeIcons.arrowLeft),
             onPressed: () {
               Navigator.pop(context);
             }),
         title: Text('Edit Profile'),
-      ),
+      ),*/
       body: Builder(
         builder: (context) =>  Container(
           child: Column(

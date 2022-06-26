@@ -242,7 +242,8 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
                   detailWidget(),
                   Divider(),
                   buildText(context),
-                  widget.booking.status!='Completed'?buttonVisible?buttonWidget():completeButtonWidget():Container(),
+                  widget.booking.status!='Completed' && widget.booking.status!='Cancelled'?
+                  buttonVisible?buttonWidget():completeButtonWidget():Container(),
                 ],
               ),
             ),

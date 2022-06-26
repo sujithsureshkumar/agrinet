@@ -26,7 +26,7 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: kWhiteColor,
-      appBar: DefaultAppBar(title: "My Profile"),
+      appBar: DefaultAppBar(title: "Attach Farm"),
       bottomNavigationBar: Material(
         elevation: kLess,
         color: kWhiteColor,

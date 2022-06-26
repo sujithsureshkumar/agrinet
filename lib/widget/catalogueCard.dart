@@ -79,7 +79,7 @@ class CatalogueCard extends StatelessWidget {
 
 
                             Expanded(
-                              child: Text("Price: "+service.price,
+                              child: Text("Price: ${service.price} Rs/${service.priceUnit}",
                                 style: TextStyle (
                                     color: Color(0xffe57008),
                                     fontSize: 12

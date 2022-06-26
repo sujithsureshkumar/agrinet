@@ -1,5 +1,6 @@
 import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/screens/pages/home.dart';
+import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/profile.dart';
@@ -61,11 +62,7 @@ class _DrawerprofileSelectionState extends State<DrawerprofileSelection> {
   Widget build(BuildContext context) {
     ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile Selection"),
-        centerTitle: true,
-        backgroundColor: Colors.green[700],
-      ),
+      appBar: DefaultAppBar(title: "Profile Selection"),
       body: SafeArea(
         child: Container(
           child: Column(

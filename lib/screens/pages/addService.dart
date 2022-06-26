@@ -36,9 +36,11 @@ class _AddServiceState extends State<AddService> {
   List<String> catList=[];
   Map<String, dynamic> CategoryList;
   String categoryValue = '';
+  String unitValue;
   String subCategoryValue;
   List<String> subCategory;
   List<String> _tempList=[];
+  List<String> priceUnit;
   _asyncMethod() async {
     DocumentSnapshot categorySnapShot =
     await FirebaseFirestore.instance
@@ -52,6 +54,16 @@ class _AddServiceState extends State<AddService> {
     categoryValue = catList[0];
     print(CategoryList);
     print(catList);
+
+   DocumentSnapshot priceUnitSnapShot =
+    await FirebaseFirestore.instance
+        .collection('Category')
+        .doc('servicePriceUnit')
+        .get();
+
+   priceUnit = List.from(priceUnitSnapShot.get("Units"));
+    unitValue=priceUnit[0];
+    //priceUnit=['Hour','cvd','ddd'];
 
     setState((){});
   }
@@ -109,14 +121,20 @@ class _AddServiceState extends State<AddService> {
             SizedBox(
               height: 20,
             ),
-            priceField(),
-            /*SizedBox(
-              height: 20,
+            Row(
+              children: [
+                Expanded(child: priceField()),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(child: priceUnitTextField()),
+              ],
             ),
-            titleTextField(),*/
+
             SizedBox(
               height: 20,
             ),
+
             equipmentDetailsField(),
             SizedBox(
               height: 20,
@@ -150,7 +168,7 @@ class _AddServiceState extends State<AddService> {
                   });
                   ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
                 await servicesProvider.sp_addservice(user.uid,_servicename.text,categoryValue, subCategoryValue,
-                      _price.text, _description.text,
+                      _price.text,unitValue, _description.text,
                     imgProvider.imageUrlList.length>0?imgProvider.imageUrlList:imageUrlList,
                     _equipmentDetail.text,servicesProvider.serviceProvModel,
                     locality.text,
@@ -306,8 +324,8 @@ class _AddServiceState extends State<AddService> {
           Icons.attach_money,
           color: Colors.green,
         ),
-        labelText: "Price Per Unit",
-        helperText: "Provide price of single service ",
+        labelText: "Pricing",
+       // helperText: "Provide price of single service ",
 
       ),
     );
@@ -342,8 +360,7 @@ class _AddServiceState extends State<AddService> {
           _newGetList();
         });
       },
-      items: catList
-          .map<DropdownMenuItem<String>>((String value) {
+      items: catList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -386,6 +403,44 @@ class _AddServiceState extends State<AddService> {
           child: Text(value),
         );
       })?.toList(),
+    );
+  }
+
+  Widget priceUnitTextField() {
+    return DropdownButtonFormField(
+      value: unitValue,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+        prefixIcon: Icon(
+          Icons.category,
+          color: Colors.green,
+        ),
+      ),
+      icon: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Icon(Icons.keyboard_arrow_down)),
+      style: const TextStyle(color: Colors.teal, fontSize: 16),
+      isExpanded: true,
+      onChanged: (newValue) {
+        setState(() {
+          unitValue = newValue;
+        });
+      },
+      items: priceUnit?.map<DropdownMenuItem<String>>((item) {
+        return DropdownMenuItem<String>(
+          value: item,
+          child: Text(item),
+        );
+      })?.toList()??
+          [],
     );
   }
 

@@ -67,6 +67,7 @@ class ServicesProvider extends ChangeNotifier {
         //imageUrl: snap.get('imageUrl'),
         imageUrl: List.from(snap.get("imageUrl")),
         price:snap.get('price'),
+        priceUnit:snap.get('priceUnit') ,
         category:snap.get('category'),
         subCategory: snap.get('subCategory'),
         equipmentDetail:snap.get('equipments') ,
@@ -107,6 +108,7 @@ class ServicesProvider extends ChangeNotifier {
           //imageUrl: snap.get('imageUrl'),
           imageUrl: List.from(snap.get("imageUrl")),
           price:snap.get('price'),
+          priceUnit:snap.get('priceUnit') ,
           category:snap.get('category'),
           subCategory: snap.get('subCategory'),
           equipmentDetail:snap.get('equipments') ,
@@ -181,7 +183,7 @@ class ServicesProvider extends ChangeNotifier {
     }).toList();*/
 
   Future sp_addservice(String uid,String service_name,String category,String subCategory,
-      String price_per_unit,String description ,List<String> imageurl,String equipments ,ServiceProvModel spData,
+      String price_per_unit,String priceUnit,String description ,List<String> imageurl,String equipments ,ServiceProvModel spData,
       String _locality,
       String _district,String _state,String pincode) async {
     _docid = Uuid().v1();
@@ -195,6 +197,7 @@ class ServicesProvider extends ChangeNotifier {
       'category': category,
       'subCategory': subCategory,
       'price':price_per_unit,
+      'priceUnit':priceUnit,
       //'no_of_service':no_of_service,
       'description':description,
       'imageUrl':imageurl,

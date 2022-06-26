@@ -601,6 +601,18 @@ Future updatePaymentInBookingSp(String docid,String sp_payment_id,String sp_orde
       .then((value) => print("Updated Payment in Booking"))
       .catchError((error) => print("Failed to Updated Payment in Booking: $error"));
 }
+
+
+Future updateFarmScore(String groupId,String score) async {
+  await FirebaseFirestore.instance.collection('groups')
+      .doc(groupId)
+      .update({
+    'farmScore':score,
+    //'imageUrl':FieldValue.arrayUnion(["imageurlList"]),
+  })
+      .then((value) => print("Updated Farm Score"))
+      .catchError((error) => print("Failed to Farm Score: $error"));
+}
 /// Check If Document Exists
 
 
