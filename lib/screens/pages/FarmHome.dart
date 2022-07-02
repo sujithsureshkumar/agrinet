@@ -1,4 +1,5 @@
 import 'package:AgriNet/providers/farm_provider.dart';
+import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/screens/pages/addfarm.dart';
 import 'package:AgriNet/screens/pages/bookingListing.dart';
 import 'package:AgriNet/screens/pages/bookingSummary.dart';
@@ -28,14 +29,18 @@ class FarmHome extends StatefulWidget {
 }
 
 class _FarmHomeState extends State<FarmHome> {
+  ProfileData profile;
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
-    FarmProvider farmerData =Provider.of<FarmProvider>(context, listen: false);
-    farmerData.spFormFillCheck(user.uid);
-    return Consumer<FarmProvider>(
-      builder: (context, farmProvider, _) {
-        return farmProvider.profileStatus ?Center(
+    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
+    profile =Provider.of<ProfileData>(context, listen: false);
+    profile.FarmerFormFillCheck(user.uid);
+    return Consumer<ProfileData>(
+      builder: (context, profileData, _) {
+        profileData.profileStatus ?null:farmProvider.getFarmerDetails(user.uid);
+        return profileData.farmerProfileStatus ?Center(
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: GestureDetector(
@@ -310,7 +315,7 @@ class _FarmHomeState extends State<FarmHome> {
                                   onPressed: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (ctx) =>LaborCatalog(),
+                                        builder: (ctx) =>LaborCatalog(hirer:"farmer",),
                                             //WishlistCatalog(),
                                       ),
                                     );

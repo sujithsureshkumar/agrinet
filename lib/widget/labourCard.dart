@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 
 class LabourCard extends StatefulWidget {
   final Labor labor;
-  LabourCard({this.labor,Key key}) : super(key: key);
+  final String hirer;
+  LabourCard({this.labor,this.hirer,Key key}) : super(key: key);
 
   @override
   _LabourCardState createState() => _LabourCardState();
@@ -82,7 +83,7 @@ class _LabourCardState extends State<LabourCard> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (ctx) => LaborHireAddressDateForm(labor: widget.labor,),
+                        builder: (ctx) => LaborHireAddressDateForm(labor: widget.labor,hirer: widget.hirer,),
                       ),
                     );
 

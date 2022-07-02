@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LaborCatalog extends StatefulWidget {
-  LaborCatalog({Key key}) : super(key: key);
+  final String hirer;
+  LaborCatalog({this.hirer,Key key}) : super(key: key);
 
   @override
   _LaborCatalogState createState() => _LaborCatalogState();
@@ -34,6 +35,7 @@ class _LaborCatalogState extends State<LaborCatalog> {
                           children: laborProvider.laborList.map((p) {
                             return LabourCard(
                               labor: p,
+                              hirer: widget.hirer ,
                             );
                           }).toList()
                       ),

@@ -143,7 +143,7 @@ class _ServiceProviderHomeState extends State<ServiceProviderHome> {
 
                 Positioned(
                 bottom:20,
-                child:NavigationServiceProvider()
+                child:NavigationServiceProvider(hirer: "service provider",)
                 ),
               ],
             );

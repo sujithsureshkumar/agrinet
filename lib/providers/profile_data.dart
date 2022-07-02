@@ -132,6 +132,18 @@ class ProfileData extends ChangeNotifier{
     notifyListeners();
   }
 
+  bool _farmerProfileStatus = false;
+  bool get farmerProfileStatus => _farmerProfileStatus;
+  Future<bool> FarmerFormFillCheck(String uid) async {
+    DocumentSnapshot featureSnapShot =
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .get();
+    _profileStatus = featureSnapShot.get("farmerFormFill");
+    notifyListeners();
+  }
+
   Future<bool> checkIfDocExists(String docId) async {
     print("2.1");
     _loading2=true;

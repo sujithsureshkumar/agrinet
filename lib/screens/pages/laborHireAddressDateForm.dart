@@ -18,7 +18,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LaborHireAddressDateForm extends StatefulWidget {
   final Labor labor;
-  LaborHireAddressDateForm({this.labor,Key key}) : super(key: key);
+  final String hirer;
+  LaborHireAddressDateForm({this.labor,this.hirer,Key key}) : super(key: key);
 
   @override
   _LaborHireAddressDateFormState createState() => _LaborHireAddressDateFormState();
@@ -34,6 +35,7 @@ class _LaborHireAddressDateFormState extends State<LaborHireAddressDateForm> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
+    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
     ServicesProvider servicesProvider = Provider.of<ServicesProvider >(context, listen: false);
     return Scaffold(
       appBar: DefaultAppBar(title: "More Details"),
@@ -71,9 +73,19 @@ class _LaborHireAddressDateFormState extends State<LaborHireAddressDateForm> {
                 if (_globalkey.currentState.validate()&& servicesProvider.startTimeStamp!=null
                     && servicesProvider.endTimeStamp!=null) {
                   final now = DateTime.now();
+                  String hiringType;
+                  String hirerName;
                   String hiringId=now.microsecondsSinceEpoch.toString();
+                  if(widget.hirer=="farmer"){
+                    hiringType=widget.hirer;
+                    hirerName=farmProvider.farmer.name;
+                  }
+                  else{
+                    hiringType=widget.hirer;
+                    hirerName=servicesProvider.serviceProvModel.name;
+                  }
                   await addLaborHiring(widget.labor, user,hiringId,
-                      "hiringType","hirerName",_locality.text,
+                      hiringType,hirerName,_locality.text,
                       _district.text,_state.text,_pincode.text,"hirerPhone_number"
                       ,servicesProvider.startTimeStamp,servicesProvider.endTimeStamp)
                       .then((value) =>  Navigator.of(context).push(

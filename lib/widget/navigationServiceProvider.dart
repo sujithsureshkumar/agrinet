@@ -7,6 +7,8 @@ import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:flutter/material.dart';
 
 class NavigationServiceProvider extends StatelessWidget {
+  final String hirer;
+  NavigationServiceProvider({this.hirer,Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -185,7 +187,7 @@ class NavigationServiceProvider extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (ctx) => LaborCatalog(),
+                              builder: (ctx) => LaborCatalog(hirer: hirer,),
                             ),
                           );
                         },

@@ -1,4 +1,5 @@
 import 'package:AgriNet/models/farm.dart';
+import 'package:AgriNet/models/farmer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:AgriNet/services/firebase_api.dart';
 import 'package:flutter/material.dart';
@@ -203,6 +204,27 @@ class FarmProvider extends ChangeNotifier {
         .doc(uid)
         .get();
     _profileStatus = featureSnapShot.get("farmerFormFill");
+    notifyListeners();
+  }
+
+  Farmer _farmer;
+  Farmer get farmer => _farmer;
+
+  Future<bool> getFarmerDetails(String docid) async {
+    DocumentSnapshot spSnapShot =
+    await FirebaseFirestore.instance
+        .collection('service_providers')
+        .doc(docid)
+        .get();
+    //_serviceProviderName = spSnapShot.get('service_provider_name');
+    _farmer=Farmer(
+      name: spSnapShot.get('name'),
+      phone_no: spSnapShot.get('phone_number'),
+      bankName: spSnapShot.get('bank_name'),
+      accountHolderName: spSnapShot.get('account_holder_name'),
+      ifsc_code: spSnapShot.get('ifs_code'),
+      accountNumber: spSnapShot.get('account_number'),
+    );
     notifyListeners();
   }
 
