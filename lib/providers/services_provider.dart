@@ -240,6 +240,7 @@ class ServicesProvider extends ChangeNotifier {
         //imageUrl: snap.get('imageUrl'),
         imageUrl: List.from(snap.get("imageUrl")),
         price:snap.get('price'),
+        priceUnit:snap.get('priceUnit') ,
         category:snap.get('category'),
         subCategory: snap.get('subCategory'),
         equipmentDetail:snap.get('equipments') ,
@@ -385,6 +386,7 @@ class ServicesProvider extends ChangeNotifier {
     bookingList = [];
     QuerySnapshot _bookingSnapShot = await FirebaseFirestore.instance
         .collection('Bookings')
+        .orderBy("createdOn", descending: true)
         .where(firestoreField, isEqualTo: uid)
         .get();
     bookingList=_bookingSnapShot.docs.map((snap) {

@@ -69,13 +69,13 @@ class _LabourCardState extends State<LabourCard> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                 child: TextButton(
-                  child: Text("Request", style: TextStyle(fontSize: 18.0)),
+                  child: Text("Request", style: TextStyle(fontSize: 16.0,color: Colors.white)),
                   style:  ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.red)
+                              side: BorderSide(color: Colors.cyan)
                           )
                         )
                     ),

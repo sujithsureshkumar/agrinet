@@ -28,6 +28,7 @@ class GroupInfoPage extends StatefulWidget {
 
 class _GroupInfoPageState extends State<GroupInfoPage> {
   List membersList = [];
+  String farmScore;
   bool isLoading = true;
 
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -47,6 +48,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
         .get()
         .then((chatMap) {
       membersList = chatMap['members'];
+      farmScore=chatMap['farmScore'];
       print(membersList);
       isLoading = false;
       setState(() {});
@@ -315,6 +317,8 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                         MaterialPageRoute(
                           builder: (ctx) => FarmArrangingNew(
                             memberList:membersList,
+                              groupId:widget.groupId,
+                            farmScore: farmScore,
                           ),
                         ),
                       );

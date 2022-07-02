@@ -32,6 +32,7 @@ class _DateFarmSelectionState extends State<DateFarmSelection> {
 
   List<String> items=['Item 1', 'Item 2' , 'Item 3'];
   String selectedItem = 'Item 1';
+  bool isLoading=false;
 
   List<String> statesList;
   String _myState;
@@ -65,6 +66,7 @@ class _DateFarmSelectionState extends State<DateFarmSelection> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     print("null for date");
     //final user = Provider.of<Users>(context);
     //FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
@@ -76,7 +78,14 @@ class _DateFarmSelectionState extends State<DateFarmSelection> {
         title: "More Details",
         child: DefaultBackButton(),
       ),
-      body: Form(
+      body: isLoading
+          ? Container(
+        height: size.height,
+        width: size.width,
+        alignment: Alignment.center,
+        child: CircularProgressIndicator(),
+      )
+          :Form(
         key: _globalkey,
         child: SingleChildScrollView(
           child: Column(
@@ -272,14 +281,25 @@ class _DateFarmSelectionState extends State<DateFarmSelection> {
                   if (_globalkey.currentState.validate()
                       && servicesProvider.startTimeStamp!=null
                       && servicesProvider.endTimeStamp!=null) {
+                    isLoading=true;
 
               getFarmDetails(_myState,widget.user.uid,_myStateList).then((value) async {
                 final now = DateTime.now();
+                String farmScore="IDV";
                 String bookingId=now.microsecondsSinceEpoch.toString();
                 Map<String, dynamic> farmMap = value.docs[0].data();
+
+                if(_myState=='Groups'){
+                 await getFarmDetailsFromGroupCollection(farmMap['id'])
+                      .then((value) async {
+                   //Map<String, dynamic> groupMap= value.docs[0].data();
+                   farmScore=value.get('farmScore');
+                      });
+                }
+
                 await addBooking(widget.service,widget.user,bookingId,_myState,_myStateList,farmMap['category'],
                     farmMap['subcategory'],servicesProvider.startTimeStamp,servicesProvider.endTimeStamp
-                ,farmMap['location']).then((value) => {
+                ,farmMap['location'],farmScore).then((value) => {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => Success(

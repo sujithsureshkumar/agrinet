@@ -213,7 +213,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                    height: 10,
                     ),
               Text(
-                    'Name',
+                    'George',
                   style: GoogleFonts.sanchez(
                   fontSize: 15,
                 color: Colors.black,
@@ -224,7 +224,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                   height: 5,
                   ),
                 Text(
-                    'abc@def.com',
+                    'george@gmail.com',
                   style: GoogleFonts.sanchez(
                   fontSize: 10,
                 color: Colors.black,

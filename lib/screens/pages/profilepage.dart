@@ -1,3 +1,4 @@
+import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     return Scaffold(
-      appBar: DefaultAppBar(title: 'Add New Service'),
+      appBar: DefaultAppBar(title: 'My Profile'),
      /* AppBar(
         leading: IconButton(
             icon: Icon(FontAwesomeIcons.arrowLeft),
@@ -53,6 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context) =>  Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
                 height: 20.0,
@@ -64,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     alignment: Alignment.center,
                     child: CircleAvatar(
                       radius: 100,
-                      backgroundColor: Color(0xff476cfb),
+                      backgroundColor:kPrimaryColor,
                       child: ClipOval(
                         child: new SizedBox(
                           width: 180.0,
@@ -73,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             image,
                             fit: BoxFit.fill,
                           ):Image.network(
-                            "https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sa_II3GuTyXT0EGyW7sKvep9GTL1lmIZW2RjO98L8DgGeZ4iD4ussfCcQgW22FiFnMo&usqp=CAU",
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -86,6 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       icon: Icon(
                         FontAwesomeIcons.camera,
                         size: 30.0,
+                          color: kPrimaryColor,
                       ),
                       onPressed: () {
                         pickImage();
@@ -98,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 20.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Align(
                     alignment: Alignment.centerLeft,
@@ -113,9 +116,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('Agrinet User',
+                            child: Text('George',
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: kPrimaryColor,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold)),
                           ),
@@ -123,12 +126,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
                       child: Icon(
                         FontAwesomeIcons.pen,
-                        color: Color(0xff476cfb),
+                        color: kPrimaryColor,
                       ),
                     ),
                   ),
@@ -138,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 20.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Align(
                     alignment: Alignment.centerLeft,
@@ -147,15 +153,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: <Widget>[
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('Birthday',
+                            child: Text('Phone no.',
                                 style: TextStyle(
                                     color: Colors.blueGrey, fontSize: 18.0)),
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('1st April, 2000',
+                            child: Text('7518445511',
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: kPrimaryColor,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold)),
                           ),
@@ -163,12 +169,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
                       child: Icon(
                         FontAwesomeIcons.pen,
-                        color: Color(0xff476cfb),
+                        color: kPrimaryColor,
                       ),
                     ),
                   ),
@@ -177,8 +186,8 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 20.0,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+             Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Align(
                     alignment: Alignment.centerLeft,
@@ -187,15 +196,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: <Widget>[
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('Location',
+                            child: Text('Email id',
                                 style: TextStyle(
                                     color: Colors.blueGrey, fontSize: 18.0)),
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('Thalapuzha, Wayanad',
+                            child: Text('george@gmail.com',
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: kPrimaryColor,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold)),
                           ),
@@ -203,18 +212,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
                       child: Icon(
                         FontAwesomeIcons.pen,
-                        color: Color(0xff476cfb),
+                        color: kPrimaryColor,
                       ),
                     ),
                   ),
                 ],
               ),
-              Container(
+              /*Container(
                 margin: EdgeInsets.all(20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -223,14 +235,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         style:
                         TextStyle(color: Colors.blueGrey, fontSize: 18.0)),
                     SizedBox(width: 20.0),
-                    Text('agriuser@gmail.com',
+                    Text('george@gmail.com',
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold)),
                   ],
                 ),
-              ),
+              ),*/
               SizedBox(
                 height: 20.0,
               ),
@@ -247,7 +259,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.of(context).pop();
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
+                        backgroundColor: MaterialStateProperty.all(kPrimaryColor),
                         elevation: MaterialStateProperty.all(4),)
 
                   ),
@@ -261,7 +273,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       uploadPic(context);
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      backgroundColor: MaterialStateProperty.all(kPrimaryColor),
                       elevation: MaterialStateProperty.all(4),),
 
                   ),

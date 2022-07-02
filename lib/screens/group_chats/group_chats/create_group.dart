@@ -75,6 +75,7 @@ class _CreateGroupState extends State<CreateGroup> {
               'myFarm':'No farm attached',
               'myFarmId':'',
               'isFarmSet':false,
+              'farmScore':'NA',
             });
           }
 

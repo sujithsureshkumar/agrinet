@@ -54,7 +54,7 @@ class _ServiceListingCardState extends State<ServiceListingCard> {
                             Text(DateFormat.yMMMd().format(DateTime.now()),
                                 style: TextStyle(
                                     fontSize: 12.0, color: Color(0xFF90C440))),
-                            Text(" ${widget.service.price} Rs"),
+                            Text("${widget.service.price} Rs/${widget.service.priceUnit}"),
                           ],
                         ),
                       ),

@@ -1,19 +1,32 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/farm.dart';
+import 'package:AgriNet/screens/group_chats/group_chat_screen.dart';
+import 'package:AgriNet/screens/pages/success.dart';
+import 'package:AgriNet/services/firebase_api_methods.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
 import 'dart:math' show cos, sqrt, asin;
 
+import 'bookingListing.dart';
+
 class FarmArrangingNew extends StatefulWidget {
   final List memberList;
-  FarmArrangingNew({this.memberList,Key key}) : super(key: key);
+  final String groupId;
+  String farmScore;
+  FarmArrangingNew({this.memberList,this.groupId,this.farmScore,Key key}) : super(key: key);
   @override
   _FarmArrangingNewState createState() => _FarmArrangingNewState();
 }
 
 class _FarmArrangingNewState extends State<FarmArrangingNew> {
-  double totalDistance;
+
+  @override
+  void initState () {
+    super.initState();
+
+  }
+  double totalDistance=0,farmScore=0;
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   double calculateDistance(lat1, lon1, lat2, lon2){
@@ -34,6 +47,10 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
           widget.memberList[i+1]['location'].latitude, widget.memberList[i+1]['location'].longitude);
     }
     print(totalDistance);
+    farmScore=widget.memberList.length/ totalDistance;
+    setState(() {
+      widget.farmScore=farmScore.toStringAsFixed(2);
+    });
   }
 
   int farmAttachCount(List farmList){
@@ -135,7 +152,7 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                                   calculateDistance(
                                       farmList[index]['location'].latitude, farmList[index]['location'].longitude,
                                       farmList[(index+1)%farmList.length]['location'].latitude, farmList[(index+1)%farmList.length]['location'].longitude)
-                                      .toStringAsFixed(0) + " KM",
+                                      .toStringAsFixed(2) + " KM",
                                 style: TextStyle(
                                     color: Colors.purpleAccent,
                                     fontSize: 18.0,
@@ -214,14 +231,15 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    return Scaffold(
   appBar: DefaultAppBar(title: "Farm Arranging"),
 
     bottomNavigationBar: BottomAppBar(
       elevation: kLess,
       color: kWhiteColor,
       child: Container(
-        height: 130,
+        height: 180,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -230,10 +248,18 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: textField("Total Distance:${totalDistance.toString()}"),
+            child: textField("Total Distance:"+ totalDistance.toStringAsFixed(2) + "KM"),
           )
         ]
         ),
+            Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: textField("Farm Score:"+ widget.farmScore),
+                  )
+                ]
+            ),
             Row(
               children: [
                 SizedBox(
@@ -270,12 +296,24 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                       elevation: 2,
                       backgroundColor: kPrimaryColor,
                     ),
-                    onPressed: () async {
+                   onPressed: () async {
                       if(farmAttachCount(widget.memberList)==widget.memberList.length){
-
+                        updateFarmScore(widget.groupId,farmScore.toStringAsFixed(0))
+                            .then((value) => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (ctx) =>Success(
+                                  onPressed: () => Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(builder: (ctx) => BookingListing())),
+                                  emptyMsg: "Successful ",
+                                  subTitleText: 'Your Request was Sent successfully',
+                                ),
+                            )
+                        ),
+                        );
                       }
-                      return snackBarMsg(context,  'msg');
+
                     }
+
                      /*   Navigator.of(context).push(
                       MaterialPageRoute(
                         //builder: (context) => DeliveryAddress(),
@@ -309,5 +347,6 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
       },
     ),
   );
+  }
 
 }

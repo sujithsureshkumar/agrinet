@@ -152,7 +152,7 @@ Future sp_updateService(String docid,String service_name,String category,String 
 Future addBooking(Service service, Users user,String bookingId,
     String farmType,String farmName,String serviceCategory,
     String serviceSubCategory,Timestamp startTime,Timestamp endTime
-    ,farmLocation) async {
+    ,farmLocation,farmScore) async {
   String _docid = Uuid().v1();
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Bookings');
@@ -189,6 +189,7 @@ Future addBooking(Service service, Users user,String bookingId,
     "Sp_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d",
 
     "farmLocation":farmLocation,
+    "farmScore":farmScore,
 
 
   })
@@ -253,6 +254,13 @@ Future getFarmDetails(String farmType,String uid,String name) async {
   }
 }
 
+Future getFarmDetailsFromGroupCollection(String docid) async {
+    return await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(docid)
+        .get();
+
+}
 
 Future deleteService(String docid) async {
   await FirebaseFirestore.instance.collection('services')
@@ -612,6 +620,7 @@ Future updateFarmScore(String groupId,String score) async {
   })
       .then((value) => print("Updated Farm Score"))
       .catchError((error) => print("Failed to Farm Score: $error"));
+
 }
 /// Check If Document Exists
 
