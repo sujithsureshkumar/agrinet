@@ -30,14 +30,30 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
   TabController _tabController;
 
   @override
-  void initState() {
+  Future<void> initState(){
     _selectedTab = getTabs();
     _selectedWidgets =getWidgets();
     _tabController = getTabController();
+
     //_selectedTab = getTabs();
     //_selectedWidgets =getWidgets();
     //_tabController = getTabController();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final user = Provider.of<Users>(context);
+    ProfileData provider =Provider.of<ProfileData>(context, listen: false);
+    provider.fetchFirebaseProfile(user.uid).then((value) {
+
+      _selectedTab = getTabs();
+      _selectedWidgets =getWidgets();
+      _tabController = getTabController();
+      setState(() {});
+    });
+
+    super.didChangeDependencies();
   }
 
 

@@ -1,4 +1,5 @@
 
+import 'package:AgriNet/screens/pages/profile_selection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,8 @@ class Authenticate extends StatelessWidget {
     print(user);
     if (user != null) {
       return Home();
+        //ProfileSelection();
+        //Home();
     } else {
       return LoginScreen();
     }

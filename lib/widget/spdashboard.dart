@@ -1,6 +1,7 @@
 import 'package:AgriNet/screens/pages/bookingSummary.dart';
 import 'package:AgriNet/screens/pages/laborCatalog.dart';
 import 'package:AgriNet/screens/pages/laborRequestHistory.dart';
+import 'package:AgriNet/screens/pages/paymentHistory.dart';
 import 'package:AgriNet/screens/pages/serviceListing.dart';
 import 'package:flutter/material.dart';
 import 'package:AgriNet/widget/customCard.dart';
@@ -23,9 +24,14 @@ class SpDashboard extends StatelessWidget {
                       height: 175.0,
                       width: MediaQuery.of(context).size.width,
                       child: customCard(
-                        "View Your Profile", "Come Back!", Icons.remove_red_eye,
+                        "Service requests", "Happy To Serve", Icons.hourglass_bottom,
                             () {
-                        },
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (ctx) => BookingSummary()
+                                ),
+                              );
+                            },
                       )),
                 ],
               ),
@@ -69,12 +75,12 @@ class SpDashboard extends StatelessWidget {
                                 () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                        builder: (ctx) => LaborCatalog()
+                                        builder: (ctx) => LaborCatalog(hirer:"farmer",)
                                     ),
                                   );
                             },
                           )),
-                      Container(
+                     Container(
                           height: ((MediaQuery.of(context).size.height) -
                               appBarHeight -
                               navBarHeight -
@@ -83,13 +89,13 @@ class SpDashboard extends StatelessWidget {
                               .45,
                           width: MediaQuery.of(context).size.width * .5,
                           child: customCard(
-                            "Service requests", "Happy To Serve", Icons.hourglass_bottom,
+                            "Labor Request History", "Check Now", Icons.history,
                                 () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (ctx) => BookingSummary()
-                                    ),
-                                  );
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (ctx) => laborRequestHistory()
+                                ),
+                              );
                             },
                           )),
                     ],
@@ -105,13 +111,13 @@ class SpDashboard extends StatelessWidget {
                       height: 175.0,
                       width: MediaQuery.of(context).size.width,
                       child: customCard(
-                        "Labor Request History", "Check Now", Icons.history,
+                        "Payment History", "Check Now", Icons.access_alarm,
                             () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (ctx) => laborRequestHistory()
-                                ),
-                              );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (ctx) => PaymentHistory()
+                            ),
+                          );
                         },
                       )),
                 ],

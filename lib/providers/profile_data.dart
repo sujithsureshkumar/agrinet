@@ -81,18 +81,18 @@ class ProfileData extends ChangeNotifier{
     }
 
   Future<void> fetchFirebaseProfile(String uid) async {
-    print("1.1");
-    _loading=true;
+    //print("1.1");
+   // _loading=true;
     DocumentSnapshot featureSnapShot =
     await FirebaseFirestore.instance
         .collection('Users')
         .doc(uid)
         .get();
-     print("1.2");
+    // print("1.2");
     _profiles[0].isSelected=featureSnapShot.get("farmer");
     _profiles[1].isSelected=featureSnapShot.get("serviceProvider");
     _profiles[2].isSelected=featureSnapShot.get("labour");
-     _loading=false;
+    // _loading=false;
     //notifyListeners();
    }
 

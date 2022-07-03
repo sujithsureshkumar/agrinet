@@ -386,9 +386,11 @@ class ServicesProvider extends ChangeNotifier {
     bookingList = [];
     QuerySnapshot _bookingSnapShot = await FirebaseFirestore.instance
         .collection('Bookings')
-        .orderBy("createdOn", descending: true)
         .where(firestoreField, isEqualTo: uid)
+        //.orderBy("createdOn", )
         .get();
+    //descending: true
+    //QuerySnapshot
     bookingList=_bookingSnapShot.docs.map((snap) {
       // final user = snap.data();
       return Booking(
@@ -422,6 +424,7 @@ class ServicesProvider extends ChangeNotifier {
         sp_order_id:snap.get('Sp_order_id'),
         sp_signature:snap.get('Sp_signature'),
         farmLocation: snap.get('farmLocation'),
+        farmScore:  snap.get('farmScore'),
       );
 
     }).toList();

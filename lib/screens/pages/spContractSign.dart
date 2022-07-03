@@ -196,6 +196,7 @@ class _SpContractSignState extends State<SpContractSign> {
                 ),
               ),
 
+
               SizedBox(
                 height: kDefaultPadding,
               ),
@@ -209,7 +210,7 @@ class _SpContractSignState extends State<SpContractSign> {
                 height: kDefaultPadding,
               ),
 
-              Text("Farm Type: ${widget.booking.farmType}",
+              Text("Farm Score: ${widget.booking.farmScore}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18
@@ -299,7 +300,7 @@ class _SpContractSignState extends State<SpContractSign> {
                 height: kDefaultPadding,
               ),
 
-              Text("Farm Type: ${widget.booking.farmType}",
+              Text("Farm Score: ${widget.booking.farmScore}",
                 style: TextStyle (
                     color: kLightColor,
                     fontSize: 18

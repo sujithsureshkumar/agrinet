@@ -62,6 +62,16 @@ class _LabourCardState extends State<LabourCard> {
                             color: Colors.grey,
                         ),
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
+
+                      Text(
+                        widget.labor.locality ,
+                        style: TextStyle(
+                          color: Colors.blue ,
+                        ),
+                      ),
                     ],
                   )
                 ],

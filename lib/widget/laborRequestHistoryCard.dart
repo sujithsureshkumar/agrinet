@@ -135,6 +135,12 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
                     SizedBox(
                       height:10,
                     ),
+                    Text("Status                  :   "+widget.laborHiring.status ,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 17.0)),
+                    SizedBox(
+                      height:10,
+                    ),
                     Text("Labor Name        :   "+widget.laborHiring.laborName,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 17.0)),
@@ -196,7 +202,8 @@ class _LaborRequestHistoryCardState extends State<LaborRequestHistoryCard> {
                       height:10,
                     ),
                     //!widget.laborHiring.isLaborPaymentDone?buttonVisible?buttonWidget():Container():Container(),
-                    widget.laborHiring.status != 'Completed'?!widget.laborHiring.isLaborPaymentDone?
+                    widget.laborHiring.status != 'Completed' && widget.laborHiring.status != 'Cancelled'?
+                    !widget.laborHiring.isLaborPaymentDone?
                     widget.laborHiring.status == 'Accepted'?
                     twoButtonWidgetCompleted():cancelButtonWidget():completeButtonWidget():Container(),
                   ],

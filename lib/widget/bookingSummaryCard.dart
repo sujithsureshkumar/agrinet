@@ -399,7 +399,7 @@ class _BookingSummaryCardState extends State<BookingSummaryCard> {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            ' Request date:${DateFormat.yMMMd().format(widget.booking.createdOn)}\nService Period:${DateFormat.yMMMd().format(widget.booking.Startdate)} to ${DateFormat.yMMMd().format(widget.booking.Enddate)}',
+            'Farm Score:${widget.booking.farmScore}\n Request date:${DateFormat.yMMMd().format(widget.booking.createdOn)}\nService Period:${DateFormat.yMMMd().format(widget.booking.Startdate)} to ${DateFormat.yMMMd().format(widget.booking.Enddate)}',
             style: TextStyle(fontSize: 13, height: 1.4),
           ),
         ),

@@ -124,6 +124,12 @@ class _LaborRequestSummaryCardState extends State<LaborRequestSummaryCard> {
                     SizedBox(
                       height:10,
                     ),
+                    Text("Status            :   "+widget.laborHiring.status,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 17.0)),
+                    SizedBox(
+                      height:10,
+                    ),
                     Text("Hirer Name        :   "+widget.laborHiring.hirerName,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 17.0)),
@@ -185,7 +191,8 @@ class _LaborRequestSummaryCardState extends State<LaborRequestSummaryCard> {
                       height:20,
                     ),
                    // buttonVisible?buttonWidget():Container(),
-                    widget.laborHiring.status!='Completed'?buttonVisible?buttonWidget():completeButtonWidget():Container(),
+                    widget.laborHiring.status!='Completed' && widget.laborHiring.status!='Cancelled'?buttonVisible?
+                    buttonWidget():completeButtonWidget():Container(),
                   ],
                 ),
               ),

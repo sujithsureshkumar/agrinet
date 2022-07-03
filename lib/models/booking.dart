@@ -31,6 +31,7 @@ class Booking {
   String sp_order_id;
   String sp_signature;
   GeoPoint farmLocation;
+  String farmScore;
 
   Booking({
     @required this.docid,
@@ -63,6 +64,7 @@ class Booking {
     @required this.sp_order_id,
     @required this.sp_signature,
     @required this.farmLocation,
+    @required this.farmScore,
   });
 
   Booking.fromJson(Map<String, dynamic> json) {

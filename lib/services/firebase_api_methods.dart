@@ -41,16 +41,15 @@ Future<void> updateFirebaseProfileFillStatus(String uid, bool formStatus) async 
     'spFormFill': formStatus,
   });
 }
-Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour,bool spFormFill) async {
+Future setUserProfile(String uid,bool farmer,bool serviceProvider,bool labour) async {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final CollectionReference serviceProvidersCollectionReference = firebaseFirestore.collection('Users');
   serviceProvidersCollectionReference
       .doc(uid)
       .update({
     'farmer': farmer,
-    'labour': serviceProvider,
-    'serviceProvider': labour,
-    'spFormFill': spFormFill,
+    'serviceProvider': serviceProvider,
+    'labour': labour,
   });
 }
 
