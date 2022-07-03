@@ -305,7 +305,7 @@ class _FarmArrangingNewState extends State<FarmArrangingNew> {
                                   onPressed: () => Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(builder: (ctx) => BookingListing())),
                                   emptyMsg: "Successful ",
-                                  subTitleText: 'Your Request was Sent successfully',
+                                  subTitleText: 'Your Farm Score updated Successfuly ' ,
                                 ),
                             )
                         ),

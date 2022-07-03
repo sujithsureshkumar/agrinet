@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:AgriNet/providers/imgProvider.dart';
 import 'package:AgriNet/screens/pages/addImageService.dart';
+import 'package:AgriNet/screens/pages/serviceListing.dart';
+import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/widget/addImageCard.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
@@ -174,8 +176,18 @@ class _AddServiceState extends State<AddService> {
                     locality.text,
                     distric.text,state.text,pincode.text
                 ).then((value) => {
-                     Navigator.of(context)
-                    ..pop()
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) =>Success(
+                          onPressed: () => Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (ctx) => ServiceListing())),
+                          emptyMsg: "Successful ",
+                          subTitleText: 'Your Service Addedd Successfuly ' ,
+                        ),
+                      )
+                  ),
+                     /*Navigator.of(context)
+                    ..pop()*/
                   });
 
                 }
@@ -419,10 +431,10 @@ class _AddServiceState extends State<AddService> {
               color: Colors.orange,
               width: 2,
             )),
-        prefixIcon: Icon(
+        /*prefixIcon: Icon(
           Icons.category,
           color: Colors.green,
-        ),
+        ),*/
       ),
       icon: Padding(
           padding: EdgeInsets.only(left: 20),

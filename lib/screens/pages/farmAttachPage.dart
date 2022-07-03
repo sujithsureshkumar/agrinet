@@ -1,6 +1,8 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/models/users.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
+import 'package:AgriNet/screens/group_chats/group_chat_screen.dart';
+import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,10 +47,20 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
                   farmProvider.updateFarmGroup(widget.groupId, user.uid, widget.memberList, _dropdownvalue,
                       value[0],value[1])
                       .then((value) => {
-                       Navigator.of(context)
-                      ..pop()
-                  }).then((value) => setState(() {
-                  }));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) =>Success(
+                            onPressed: () => Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (ctx) => GroupChatHomeScreen())),
+                            emptyMsg: "Successful ",
+                            subTitleText: 'Your Farm Attaching Successful' ,
+                          ),
+                        )
+                    ),
+                       //Navigator.of(context)
+                      //..pop()
+                  });
+                      //.then((value) => setState(() {}));
                 });
               }
             },

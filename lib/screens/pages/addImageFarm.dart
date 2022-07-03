@@ -1,6 +1,8 @@
 import 'package:AgriNet/constants/constant.dart';
 import 'package:AgriNet/providers/farm_provider.dart';
 import 'package:AgriNet/providers/users_provider.dart';
+import 'package:AgriNet/screens/pages/farmListing.dart';
+import 'package:AgriNet/screens/pages/success.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -262,8 +264,18 @@ class _AddImageFarmState extends State<AddImageFarm> {
                           primary: kWhiteColor,
                           elevation: 2,
                           backgroundColor: kLightColor),
-                      onPressed: () => Navigator.of(context)
-                        ..pop(),
+                      onPressed: () =>  Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) =>Success(
+                              onPressed: () => Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (ctx) => FarmListing())),
+                              emptyMsg: "Successful ",
+                              subTitleText: 'Your Farm Added Successfuly ' ,
+                            ),
+                          )
+                      ),
+                          //Navigator.of(context)
+                        //..pop(),
                        // ..pop()
                     ),
                   ),
@@ -287,8 +299,18 @@ class _AddImageFarmState extends State<AddImageFarm> {
                           await UpdateImageFarmAdd(imgProvider.imageUrlList,user.uid,farmProvider.docid,
                               position.latitude,position.longitude)
                               .then((value) => {
-                            Navigator.of(context)
-                              ..pop(),
+                            Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (ctx) =>Success(
+                                    onPressed: () => Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(builder: (ctx) => FarmListing())),
+                                    emptyMsg: "Successful ",
+                                    subTitleText: 'Your Farm Added Successfuly ' ,
+                                  ),
+                                )
+                            ),
+                            //Navigator.of(context)
+                             // ..pop(),
                               //..pop()
                           });
                         }
