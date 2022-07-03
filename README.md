@@ -37,3 +37,4 @@ basic version 5 checkout
 basic version 6 checkout
 version 1.1.1 checkout
 version 1.1.2 checkout
+version 1.1.3 checkout
