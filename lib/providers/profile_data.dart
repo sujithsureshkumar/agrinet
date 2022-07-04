@@ -140,7 +140,7 @@ class ProfileData extends ChangeNotifier{
         .collection('Users')
         .doc(uid)
         .get();
-    _profileStatus = featureSnapShot.get("farmerFormFill");
+    _farmerProfileStatus = featureSnapShot.get("farmerFormFill");
     notifyListeners();
   }
 

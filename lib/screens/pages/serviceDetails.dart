@@ -36,7 +36,6 @@ class _ServiceDetailsState extends State<ServiceDetails> {
   bool isMore = false;
 
 
-  List<String> productSize = ["S", "M", "L", "XL"];
 
   List<Color> productColors = [
     kPrimaryColor,
@@ -185,7 +184,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               child: Row(
                 children: [
                   Text(
-                    "\$ ${widget.service.price}",
+                    "Rs ${widget.service.price}/${widget.service.priceUnit}",
                     style: TextStyle(fontSize: 20.0),
                   ),
                   SizedBox(
@@ -303,7 +302,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   ),
                   Expanded(
                     child: Text(
-                      "Thalapuzha, Manandavady,wayanad",
+                      //"Thalapuzha, Manandavady,wayanad",
+                      widget.service.locality,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 10,

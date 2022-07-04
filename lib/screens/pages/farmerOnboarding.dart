@@ -1,4 +1,5 @@
 import 'package:AgriNet/providers/farm_provider.dart';
+import 'package:AgriNet/providers/profile_data.dart';
 import 'package:AgriNet/widget/defaultAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -130,8 +131,10 @@ class _FarmerOnboardingState extends State<FarmerOnboarding> {
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
     FarmProvider farmerData =Provider.of<FarmProvider>(context, listen: false);
+
+    ProfileData  profile =Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
-      appBar:DefaultAppBar(title: "Labor Onboarding"),
+      appBar:DefaultAppBar(title: "Farmer Onboarding"),
       body: Stepper(
         type: StepperType.horizontal,
         currentStep: _activeStepIndex,
@@ -144,7 +147,7 @@ class _FarmerOnboardingState extends State<FarmerOnboarding> {
           } else {
             farmer_onboarding(user.uid,name.text,
                 phone_number.text,holder_name.text,acc_number.text,ifs_code.text,bank_name.text,false)
-                .then((value) => farmerData.spFormFillCheck(user.uid))
+                .then((value) => profile.FarmerFormFillCheck(user.uid))
                 .then((value) => {
               Navigator.pop(context)
             });

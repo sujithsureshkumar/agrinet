@@ -76,7 +76,7 @@ class _ProfileSelectionState extends State<ProfileSelection > {
                           profileProvider.profileSelect[0].isSelected,
                           profileProvider.profileSelect[1].isSelected,
                           profileProvider.profileSelect[2].isSelected,
-                      ).then((value) => Navigator.of(context).push(
+                      ).then((value) => Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (ctx) => Home())));
 //Replacement
                       //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => Wrapper()));

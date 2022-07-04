@@ -213,7 +213,7 @@ class FarmProvider extends ChangeNotifier {
   Future<bool> getFarmerDetails(String docid) async {
     DocumentSnapshot spSnapShot =
     await FirebaseFirestore.instance
-        .collection('service_providers')
+        .collection('farmUser')
         .doc(docid)
         .get();
     //_serviceProviderName = spSnapShot.get('service_provider_name');

@@ -72,7 +72,7 @@ class RecommendedItems extends StatelessWidget {
               right: kLessPadding,
               left: kLessPadding,
             ),
-            child: Text("\$ ${service.price}"),
+            child: Text("Rs ${service.price}/${service.priceUnit}"),
           ),
           Padding(
             padding: const EdgeInsets.only(

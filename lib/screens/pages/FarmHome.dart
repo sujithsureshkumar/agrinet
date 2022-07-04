@@ -39,7 +39,7 @@ class _FarmHomeState extends State<FarmHome> {
     profile.FarmerFormFillCheck(user.uid);
     return Consumer<ProfileData>(
       builder: (context, profileData, _) {
-        profileData.profileStatus ?null:farmProvider.getFarmerDetails(user.uid);
+        profileData.farmerProfileStatus ?null:farmProvider.getFarmerDetails(user.uid);
         return profileData.farmerProfileStatus ?Center(
           child: Padding(
             padding: const EdgeInsets.all(30.0),
