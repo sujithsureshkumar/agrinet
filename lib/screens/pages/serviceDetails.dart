@@ -22,20 +22,20 @@ class ServiceDetails extends StatefulWidget {
   final Service service;
   final Users user;
 
-  ServiceDetails({Key key,@required this.service,
-    @required this.user,}) : super(key: key);
+  ServiceDetails({
+    Key key,
+    @required this.service,
+    @required this.user,
+  }) : super(key: key);
 
   @override
   _ServiceDetailsState createState() => _ServiceDetailsState();
 }
 
 class _ServiceDetailsState extends State<ServiceDetails> {
-
   int currentIndex = 0;
   PageController pageController = PageController(initialPage: 0);
   bool isMore = false;
-
-
 
   List<Color> productColors = [
     kPrimaryColor,
@@ -50,15 +50,14 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     "ahttps://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/folderName%2FimageName?alt=media&token=77b4fba1-5afd-4c85-a86a-d4c44f3f0ecf",
   ];
 
-
-
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
-    ServicesProvider servicesProvider = Provider.of<ServicesProvider>(context, listen: false);
+    ServicesProvider servicesProvider =
+        Provider.of<ServicesProvider>(context, listen: false);
     servicesProvider.getReview(widget.service.docid);
-    servicesProvider.editReviewShow=widget.service.reviewList.contains(user.uid);
+    servicesProvider.editReviewShow =
+        widget.service.reviewList.contains(user.uid);
     servicesProvider.getserviceRecomendation(widget.service.subCategory);
     return Scaffold(
       backgroundColor: kWhiteColor,
@@ -82,11 +81,11 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   onPressed: () async {
                     String telephoneNumber = widget.service.phone_number;
                     String telephoneUrl = "tel:$telephoneNumber";
-                    launchUrl (Uri.parse(telephoneUrl));
+                    launchUrl(Uri.parse(telephoneUrl));
                   },
                 ),
               ),
-             /* Container(
+              /* Container(
                 margin: EdgeInsets.only(right: 8.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: kPrimaryColor, width: 2.0),
@@ -106,15 +105,12 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   decoration: BoxDecoration(
                     border: Border.all(color: kPrimaryColor, width: 2.0),
                   ),
-                  child: FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: kLessPadding),
-                    color: kPrimaryColor,
-                    textColor: kWhiteColor,
+                  child: ElevatedButton(
                     child: Text("Proceed", style: TextStyle(fontSize: 18.0)),
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => DateFarmSelection(
-                          service:widget.service,
+                          service: widget.service,
                           user: widget.user,
                         ),
                       ),
@@ -142,7 +138,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                       });
                     },
                     //itemCount: detailImages.length,
-                      itemCount:widget.service.imageUrl.length,
+                    itemCount: widget.service.imageUrl.length,
                     itemBuilder: (context, index) {
                       return Image.network(
                         //detailImages[index],
@@ -161,7 +157,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
                       detailImages.length,
-                          (index) => AnimatedContainer(
+                      (index) => AnimatedContainer(
                         duration: Duration(milliseconds: 400),
                         height: 8.0,
                         width: currentIndex == index ? 24.0 : 8.0,
@@ -193,9 +189,10 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: LikeButtonWidget(isLiked:widget.service.isLiked,
-                        likeCount:widget.service.likeCount,
-                        docid:widget.service.docid,
+                      child: LikeButtonWidget(
+                        isLiked: widget.service.isLiked,
+                        likeCount: widget.service.likeCount,
+                        docid: widget.service.docid,
                         userid: widget.user.uid,
                       ),
                     ),
@@ -254,7 +251,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             kSmallDivider,
             // for shirt or Other Products who has the Size
             Padding(
-              padding: EdgeInsets.fromLTRB(kDefaultPadding,20,0,0),
+              padding: EdgeInsets.fromLTRB(kDefaultPadding, 20, 0, 0),
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(
@@ -276,14 +273,13 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                     SizedBox(
                       width: 5,
                     ),
-                    Icon( Icons.link, ),
-
+                    Icon(
+                      Icons.link,
+                    ),
                     Text(
                       "Click here for service Provider Details",
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.amberAccent
-                      ),
+                      style:
+                          TextStyle(fontSize: 15.0, color: Colors.amberAccent),
                     ),
                   ],
                 ),
@@ -355,15 +351,15 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   top: kLessPadding),
               child: isMore
                   ? Text(
-                widget.service.description,
-                style: kSubTextStyle,
-              )
+                      widget.service.description,
+                      style: kSubTextStyle,
+                    )
                   : Text(
-                widget.service.description,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-                style: kSubTextStyle,
-              ),
+                      widget.service.description,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: kSubTextStyle,
+                    ),
             ),
             GestureDetector(
               onTap: () => setState(() {
@@ -395,24 +391,24 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   child: Padding(
                     padding: const EdgeInsets.only(right: kDefaultPadding),
                     child:
-                    StickyLabel(text: "View All", textColor: kPrimaryColor),
+                        StickyLabel(text: "View All", textColor: kPrimaryColor),
                   ),
                 ),
               ],
             ),
 
-            Consumer<ServicesProvider>(
-                 builder: (context, servicesProvider, _) {
-                   return servicesProvider.reviewList==[] ?SizedBox(height: kLessPadding)
-                       :ListView.separated(
+            Consumer<ServicesProvider>(builder: (context, servicesProvider, _) {
+              return servicesProvider.reviewList == []
+                  ? SizedBox(height: kLessPadding)
+                  : ListView.separated(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
                       itemCount: servicesProvider.reviewList.length,
-                        //itemCount:1,
+                      //itemCount:1,
                       itemBuilder: (context, index) {
                         return ReviewUI(
-                          serviceReview:servicesProvider.reviewList[index],
+                          serviceReview: servicesProvider.reviewList[index],
                           onPressed: () => print("More Action $index"),
                           onTap: () => setState(() {
                             isMore = !isMore;
@@ -427,17 +423,16 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                         );
                       },
                     );
-                 }
-               ),
+            }),
 
             kSmallDivider,
-            Consumer<ServicesProvider>(
-                builder: (context, servicesProvider, _) {
-                return
-                  servicesProvider.editReviewShow?
-                Container():ReviewEditUI(service: widget.service,);
-              }
-            ),
+            Consumer<ServicesProvider>(builder: (context, servicesProvider, _) {
+              return servicesProvider.editReviewShow
+                  ? Container()
+                  : ReviewEditUI(
+                      service: widget.service,
+                    );
+            }),
             kSmallDivider,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -446,53 +441,51 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      //builder: (context) => Products(true),
-                    ),
+                        //builder: (context) => Products(true),
+                        ),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(right: kDefaultPadding),
                     child:
-                    StickyLabel(text: "View All", textColor: kPrimaryColor),
+                        StickyLabel(text: "View All", textColor: kPrimaryColor),
                   ),
                 ),
               ],
             ),
-            Consumer<ServicesProvider>(
-              builder: (context, servicesProvider, _) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                  child: RecommendedView(
-                    direction: Axis.horizontal,
-                    heights: 250.0,
-                    widths: MediaQuery.of(context).size.width,
-                    top: 0.0,
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    column: 1,
-                    ratio: 1.8,
-                    items: servicesProvider.recommendServiceList.length,
-                    itemBuilder: (context, index) {
-                      return RecommendedItems(
-                        height: 150.0,
-                        radius: 8.0,
-                        top: 8.0,
-                        bottom: 8.0,
-                        left: 4.0,
-                        right: 4.0,
-                        rating: 3.0,
-                       service: servicesProvider.recommendServiceList[index],
-                       /* image: recommendedList[index].image,
+            Consumer<ServicesProvider>(builder: (context, servicesProvider, _) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                child: RecommendedView(
+                  direction: Axis.horizontal,
+                  heights: 250.0,
+                  widths: MediaQuery.of(context).size.width,
+                  top: 0.0,
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  column: 1,
+                  ratio: 1.8,
+                  items: servicesProvider.recommendServiceList.length,
+                  itemBuilder: (context, index) {
+                    return RecommendedItems(
+                      height: 150.0,
+                      radius: 8.0,
+                      top: 8.0,
+                      bottom: 8.0,
+                      left: 4.0,
+                      right: 4.0,
+                      rating: 3.0,
+                      service: servicesProvider.recommendServiceList[index],
+                      /* image: recommendedList[index].image,
                         title: recommendedList[index].title,
                         price: recommendedList[index].price,
 
                         sale: recommendedList[index].sale,*/
-                      );
-                    },
-                  ),
-                );
-              }
-            ),
+                    );
+                  },
+                ),
+              );
+            }),
           ],
         ),
       ),

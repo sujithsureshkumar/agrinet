@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FarmAttachPage extends StatefulWidget {
-  final String category,subCategory,groupId;
+  final String category, subCategory, groupId;
   final List memberList;
-  FarmAttachPage({this.category,this.subCategory,this.groupId,this.memberList,Key key}) : super(key: key);
+  FarmAttachPage(
+      {this.category, this.subCategory, this.groupId, this.memberList, Key key})
+      : super(key: key);
 
   @override
   _FarmAttachPageState createState() => _FarmAttachPageState();
@@ -23,8 +25,9 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
-    FarmProvider farmProvider = Provider.of<FarmProvider>(context, listen: false);
-    farmProvider.fetchUserFarmWithInfo(user.uid,widget.subCategory);
+    FarmProvider farmProvider =
+        Provider.of<FarmProvider>(context, listen: false);
+    farmProvider.fetchUserFarmWithInfo(user.uid, widget.subCategory);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: kWhiteColor,
@@ -32,41 +35,47 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
       bottomNavigationBar: Material(
         elevation: kLess,
         color: kWhiteColor,
-        child:Padding(
-          padding: EdgeInsets.only(left: 10,right: 10),
-          child:TextButton(
-            child: Text("Attach Farm", style: TextStyle(fontSize: 18.0)),
-            style: TextButton.styleFrom(
-                primary: kWhiteColor,
-                elevation: 2,
-                backgroundColor: kPrimaryColor),
-            onPressed: () async {
-
-              if (_globalkey.currentState.validate()){
-                farmProvider.selectedUserFarmDocid(_dropdownvalue).then((value) async {
-                  farmProvider.updateFarmGroup(widget.groupId, user.uid, widget.memberList, _dropdownvalue,
-                      value[0],value[1])
-                      .then((value) => {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (ctx) =>Success(
-                            onPressed: () => Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (ctx) => GroupChatHomeScreen())),
-                            emptyMsg: "Successful ",
-                            subTitleText: 'Your Farm Attaching Successful' ,
-                          ),
-                        )
-                    ),
-                       //Navigator.of(context)
-                      //..pop()
+        child: Padding(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: TextButton(
+              child: Text("Attach Farm", style: TextStyle(fontSize: 18.0)),
+              style: TextButton.styleFrom(
+                  primary: kWhiteColor,
+                  elevation: 2,
+                  backgroundColor: kPrimaryColor),
+              onPressed: () async {
+                if (_globalkey.currentState.validate()) {
+                  farmProvider
+                      .selectedUserFarmDocid(_dropdownvalue)
+                      .then((value) async {
+                    farmProvider
+                        .updateFarmGroup(
+                            widget.groupId,
+                            user.uid,
+                            widget.memberList,
+                            _dropdownvalue,
+                            value[0],
+                            value[1])
+                        .then((value) => {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => Success(
+                                  onPressed: () => Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(
+                                          builder: (ctx) =>
+                                              GroupChatHomeScreen())),
+                                  emptyMsg: "Successful ",
+                                  subTitleText:
+                                      'Your Farm Attaching Successful',
+                                ),
+                              )),
+                              //Navigator.of(context)
+                              //..pop()
+                            });
+                    //.then((value) => setState(() {}));
                   });
-                      //.then((value) => setState(() {}));
-                });
-              }
-            },
-          )
-        ),
-
+                }
+              },
+            )),
       ),
       body: Column(
         children: [
@@ -81,64 +90,62 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
                     height: 30,
                   ),
                   categoryTextField(widget.subCategory),
-
-             Consumer<FarmProvider>(
-                builder: (context, farmProvider, _) {
-                 return Container(
-                    //padding: EdgeInsets.only(left: 15, right: 15, top: 5),
-                    //color: Colors.white,
-                    margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(kShape)),
-                      color: kAccentColor,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: DropdownButtonHideUnderline(
-                            child: ButtonTheme(
-                              alignedDropdown: true,
-                              child: DropdownButtonFormField<String>(
-                                value: _dropdownvalue,
-                                iconSize: 30,
-                                icon: (null),
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 16,
+                  Consumer<FarmProvider>(builder: (context, farmProvider, _) {
+                    return Container(
+                      //padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+                      //color: Colors.white,
+                      margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(kShape)),
+                        color: kAccentColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: DropdownButtonHideUnderline(
+                              child: ButtonTheme(
+                                alignedDropdown: true,
+                                child: DropdownButtonFormField<String>(
+                                  value: _dropdownvalue,
+                                  iconSize: 30,
+                                  icon: (null),
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 16,
+                                  ),
+                                  hint: Text('Select Farm'),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      _dropdownvalue = newValue;
+                                      print(_dropdownvalue);
+                                    });
+                                  },
+                                  items:
+                                      farmProvider.groupNameList?.map((item) {
+                                            return new DropdownMenuItem(
+                                              child: new Text(item),
+                                              value: item,
+                                            );
+                                          })?.toList() ??
+                                          [],
+                                  validator: (value) => value == null
+                                      ? 'Please select an option'
+                                      : null,
                                 ),
-                                hint: Text('Select Farm'),
-                                onChanged: (String newValue) {
-                                  setState(() {
-                                    _dropdownvalue = newValue;
-                                    print(_dropdownvalue);
-                                  });
-                                },
-                                items: farmProvider.groupNameList?.map((item) {
-                                  return new DropdownMenuItem(
-                                    child: new Text(item),
-                                    value: item,
-                                  );
-                                })?.toList() ??
-                                    [],
-
-                                validator: (value) => value == null
-                                    ? 'Please select an option' : null,
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-               )
+                        ],
+                      ),
+                    );
+                  })
                 ],
               ),
             ),
           ),
-
         ],
       ),
     );
@@ -155,13 +162,13 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
         onPressed: () {},
       ),
     );
-    scaffoldKey.currentState.showSnackBar(sb);
+    ScaffoldMessenger.of(context).showSnackBar(sb);
   }
 
   Widget categoryTextField(String name) {
     return Container(
       height: 50,
-      width: MediaQuery.of(context).size.width*0.9,
+      width: MediaQuery.of(context).size.width * 0.9,
       child: Align(
         alignment: Alignment.centerLeft,
         child: Padding(
@@ -175,7 +182,7 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border:  Border(
+        border: Border(
           left: BorderSide(
             color: Colors.green,
             width: 3,
@@ -198,9 +205,4 @@ class _FarmAttachPageState extends State<FarmAttachPage> {
       ),
     );
   }
-
-
-
-
-
 }

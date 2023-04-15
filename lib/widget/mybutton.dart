@@ -5,19 +5,18 @@ class MyButton extends StatelessWidget {
   final String name;
   final double ratio;
   final Color color;
-  MyButton({this.name, this.onPressed,this.ratio,this.color});
+  MyButton({this.name, this.onPressed, this.ratio, this.color});
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 38,
       //width: double.infinity,
-      width: MediaQuery.of(context).size.width*ratio,
-      child: RaisedButton(
+      width: MediaQuery.of(context).size.width * ratio,
+      child: ElevatedButton(
         child: Text(
           name,
           style: TextStyle(color: Colors.white),
         ),
-        color: color,
         onPressed: onPressed,
       ),
     );

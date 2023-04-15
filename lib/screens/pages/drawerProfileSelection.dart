@@ -14,7 +14,6 @@ class DrawerprofileSelection extends StatefulWidget {
 }
 
 class _DrawerprofileSelectionState extends State<DrawerprofileSelection> {
-
   Widget ProfileItem(Profile data) {
     final user = Provider.of<Users>(context);
     return ListTile(
@@ -26,41 +25,43 @@ class _DrawerprofileSelectionState extends State<DrawerprofileSelection> {
       ),
       trailing: data.isSelected
           ? Icon(
-        Icons.check_circle,
-        color: Colors.green[700],
-      )
+              Icons.check_circle,
+              color: Colors.green[700],
+            )
           : Icon(
-        Icons.check_circle_outline,
-        color: Colors.grey,
-      ),
+              Icons.check_circle_outline,
+              color: Colors.grey,
+            ),
       onTap: () {
-        ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
+        ProfileData profileProvider =
+            Provider.of<ProfileData>(context, listen: false);
 
         setState(() {
           profileProvider.getProfileSetCount();
-          if (profileProvider.profileSetCount<2){
+          if (profileProvider.profileSetCount < 2) {
             data.isSelected = true;
-            profileProvider.updateFirebaseProfile(user.uid,
+            profileProvider.updateFirebaseProfile(
+                user.uid,
                 profileProvider.profiles[0].isSelected,
                 profileProvider.profiles[1].isSelected,
-                profileProvider.profiles[2].isSelected
-            );
-          }else{
+                profileProvider.profiles[2].isSelected);
+          } else {
             data.isSelected = !data.isSelected;
-            profileProvider.updateFirebaseProfile(user.uid,
+            profileProvider.updateFirebaseProfile(
+                user.uid,
                 profileProvider.profiles[0].isSelected,
                 profileProvider.profiles[1].isSelected,
-                profileProvider.profiles[2].isSelected
-            );
+                profileProvider.profiles[2].isSelected);
           }
-
         });
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
-    ProfileData profileProvider =Provider.of<ProfileData>(context, listen: false);
+    ProfileData profileProvider =
+        Provider.of<ProfileData>(context, listen: false);
     return Scaffold(
       appBar: DefaultAppBar(title: "Profile Selection"),
       body: SafeArea(
@@ -72,20 +73,17 @@ class _DrawerprofileSelectionState extends State<DrawerprofileSelection> {
                     itemCount: profileProvider.profiles.length,
                     itemBuilder: (BuildContext context, int index) {
                       // return item
-                      return ProfileItem(
-                          profileProvider.profiles[index]
-                      );
+                      return ProfileItem(profileProvider.profiles[index]);
                     }),
               ),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 25,
                   vertical: 10,
                 ),
                 child: SizedBox(
                   width: double.infinity,
-                  child: RaisedButton(
-                    color: Colors.green[700],
+                  child: ElevatedButton(
                     child: Text(
                       "Save",
                       style: TextStyle(

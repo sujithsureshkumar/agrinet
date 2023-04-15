@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DynamicTab extends StatefulWidget {
-
   @override
   _DynamicTabState createState() => _DynamicTabState();
 }
-
-
 
 class _DynamicTabState extends State<DynamicTab> with TickerProviderStateMixin {
   final int _startingTabCount = 4;
@@ -61,10 +58,13 @@ class _DynamicTabState extends State<DynamicTab> with TickerProviderStateMixin {
             children: <Widget>[
               if (!isFirstPage())
                 Expanded(
-                  child: RaisedButton(child: Text("Back"), onPressed: goToPreviousPage),
+                  child: ElevatedButton(
+                      child: Text("Back"), onPressed: goToPreviousPage),
                 ),
               Expanded(
-                child: RaisedButton(child: Text(isLastPage() ? "Finish" : "Next"), onPressed: goToNextPage),
+                child: ElevatedButton(
+                    child: Text(isLastPage() ? "Finish" : "Next"),
+                    onPressed: goToNextPage),
               )
             ],
           )
@@ -74,7 +74,8 @@ class _DynamicTabState extends State<DynamicTab> with TickerProviderStateMixin {
   }
 
   TabController getTabController() {
-    return TabController(length: _tabs.length, vsync: this)..addListener(_updatePage);
+    return TabController(length: _tabs.length, vsync: this)
+      ..addListener(_updatePage);
   }
 
   Tab getTab(int widgetNumber) {
@@ -148,9 +149,10 @@ class _DynamicTabState extends State<DynamicTab> with TickerProviderStateMixin {
   void goToNextPage() {
     isLastPage()
         ? showDialog(
-        context: context,
-        builder: (context) =>
-            AlertDialog(title: Text("End reached"), content: Text("Thank you for playing around!")))
+            context: context,
+            builder: (context) => AlertDialog(
+                title: Text("End reached"),
+                content: Text("Thank you for playing around!")))
         : _tabController.animateTo(_tabController.index + 1);
   }
 
@@ -158,17 +160,18 @@ class _DynamicTabState extends State<DynamicTab> with TickerProviderStateMixin {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Cannot add more tabs"),
-          content: Text("Let's avoid crashing, shall we?"),
-          actions: <Widget>[
-            FlatButton(
-                child: Text("Crash it!"),
-                onPressed: () {
-                  _addAnotherTab();
-                  Navigator.pop(context);
-                }),
-            FlatButton(child: Text("Ok"), onPressed: () => Navigator.pop(context))
-          ],
-        ));
+              title: Text("Cannot add more tabs"),
+              content: Text("Let's avoid crashing, shall we?"),
+              actions: <Widget>[
+                ElevatedButton(
+                    child: Text("Crash it!"),
+                    onPressed: () {
+                      _addAnotherTab();
+                      Navigator.pop(context);
+                    }),
+                ElevatedButton(
+                    child: Text("Ok"), onPressed: () => Navigator.pop(context))
+              ],
+            ));
   }
 }

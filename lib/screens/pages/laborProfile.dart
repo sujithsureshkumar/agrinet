@@ -13,17 +13,17 @@ class LaborProfile extends StatefulWidget {
 }
 
 class _LaborProfileState extends State<LaborProfile> {
-
   @override
   void initState() {
     super.initState();
-    ProfileData profileData =Provider.of<ProfileData>(context, listen: false);
+    ProfileData profileData = Provider.of<ProfileData>(context, listen: false);
     setState(() {
-      _phone.text=profileData.laborDetails.phone_number;
-      _mainSkill.text=profileData.laborDetails.skill;
-      _name.text=profileData.laborDetails.name;
+      _phone.text = profileData.laborDetails.phone_number;
+      _mainSkill.text = profileData.laborDetails.skill;
+      _name.text = profileData.laborDetails.name;
     });
   }
+
   final _globalkey = GlobalKey<FormState>();
   var scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController _phone = TextEditingController();
@@ -33,46 +33,47 @@ class _LaborProfileState extends State<LaborProfile> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Consumer<ProfileData>(
-      builder: (context, profileData, _) {
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: kWhiteColor,
-          appBar: DefaultAppBar(title: "My Profile"),
-        bottomNavigationBar:profileData.isloading? Container(): Material(
-              elevation: kLess,
-              color: kWhiteColor,
-              child:Padding(
-                padding: EdgeInsets.only(left: 10,right: 10),
-                child:TextButton(
-                  child: Text("Update", style: TextStyle(fontSize: 18.0)),
-                  style: TextButton.styleFrom(
-                      primary: kWhiteColor,
-                      elevation: 2,
-                      backgroundColor: kPrimaryColor),
-                  onPressed: () =>snackBarMsg(context,  'msg')
+    return Consumer<ProfileData>(builder: (context, profileData, _) {
+      return Scaffold(
+        key: scaffoldKey,
+        backgroundColor: kWhiteColor,
+        appBar: DefaultAppBar(title: "My Profile"),
+        bottomNavigationBar: profileData.isloading
+            ? Container()
+            : Material(
+                elevation: kLess,
+                color: kWhiteColor,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextButton(
+                      child: Text("Update", style: TextStyle(fontSize: 18.0)),
+                      style: TextButton.styleFrom(
+                          primary: kWhiteColor,
+                          elevation: 2,
+                          backgroundColor: kPrimaryColor),
+                      onPressed: () => snackBarMsg(context, 'msg')),
                 ),
               ),
-
-                ),
-          body:profileData.isloading? Container(
-            height: size.height,
-            width: size.width,
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(),
-          )
-              :SingleChildScrollView(
+        body: profileData.isloading
+            ? Container(
+                height: size.height,
+                width: size.width,
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
                 child: Column(
                   children: [
                     Stack(
-                     // overflow: Overflow.visible,
+                      // overflow: Overflow.visible,
                       clipBehavior: Clip.none,
                       alignment: Alignment.center,
                       children: [
                         Container(
                           height: 250.0,
                           child: Image(
-                            image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2FbannerImage.jpg?alt=media&token=4f72866b-917a-4d3f-aecd-c991fc13e666"),
+                            image: NetworkImage(
+                                "https://firebasestorage.googleapis.com/v0/b/agrinet-66009.appspot.com/o/Required%20files%2FbannerImage.jpg?alt=media&token=4f72866b-917a-4d3f-aecd-c991fc13e666"),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -88,7 +89,8 @@ class _LaborProfileState extends State<LaborProfile> {
                                 width: kLess,
                               ),
                               image: DecorationImage(
-                                image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sa_II3GuTyXT0EGyW7sKvep9GTL1lmIZW2RjO98L8DgGeZ4iD4ussfCcQgW22FiFnMo&usqp=CAU"),
+                                image: NetworkImage(
+                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sa_II3GuTyXT0EGyW7sKvep9GTL1lmIZW2RjO98L8DgGeZ4iD4ussfCcQgW22FiFnMo&usqp=CAU"),
                               ),
                             ),
                           ),
@@ -103,32 +105,33 @@ class _LaborProfileState extends State<LaborProfile> {
                         ),
                       ],
                     ),
-                Form(
-                  key: _globalkey,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 108.0,left: 10,right: 10),
-                        child:nameTextField(),
+                    Form(
+                      key: _globalkey,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 108.0, left: 10, right: 10),
+                            child: nameTextField(),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 30.0, left: 10, right: 10),
+                            child: phoneField(),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 30.0, left: 10, right: 10),
+                            child: skillTextField(),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 30.0,left: 10,right: 10),
-                        child:phoneField(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 30.0,left: 10,right: 10),
-                        child:skillTextField(),
-                      ),
-                    ],
-                  ),
-                ),
-
+                    ),
                   ],
                 ),
               ),
-        );
-      }
-    );
+      );
+    });
   }
 
   snackBarMsg(BuildContext context, String msg) {
@@ -136,7 +139,7 @@ class _LaborProfileState extends State<LaborProfile> {
 
     var sb = SnackBar(
       elevation: kRadius,
-      content: Text(msg+now.microsecondsSinceEpoch.toString()),
+      content: Text(msg + now.microsecondsSinceEpoch.toString()),
       backgroundColor: kAccentColor,
       duration: Duration(seconds: 2),
       action: SnackBarAction(
@@ -145,13 +148,13 @@ class _LaborProfileState extends State<LaborProfile> {
         onPressed: () {},
       ),
     );
-    scaffoldKey.currentState.showSnackBar(sb);
+    ScaffoldMessenger.of(context).showSnackBar(sb);
   }
 
   Widget phoneField() {
     return TextFormField(
       controller: _phone,
-      keyboardType:TextInputType.number,
+      keyboardType: TextInputType.number,
       validator: (value) {
         if (value.isEmpty) return "price can't be empty";
 
@@ -160,13 +163,13 @@ class _LaborProfileState extends State<LaborProfile> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.phone,
           color: Colors.green,
@@ -188,13 +191,13 @@ class _LaborProfileState extends State<LaborProfile> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.agriculture,
           color: Colors.green,
@@ -216,13 +219,13 @@ class _LaborProfileState extends State<LaborProfile> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         prefixIcon: Icon(
           Icons.person,
           color: Colors.green,

@@ -16,21 +16,24 @@ class LocationDetails extends StatefulWidget {
   final String distric;
   final String state;
   final String pincode;
-  LocationDetails({Key key,this.locality,this.distric,this.state,this.pincode}) : super(key: key);
+  LocationDetails(
+      {Key key, this.locality, this.distric, this.state, this.pincode})
+      : super(key: key);
 
   @override
   _LocationDetailsState createState() => _LocationDetailsState();
 }
+
 class _LocationDetailsState extends State<LocationDetails> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  void initState () {
+  void initState() {
     super.initState();
-    locality.text=widget.locality;
-    distric.text=widget.distric;
-    state.text=widget.state;
-    pincode.text=widget.pincode;
+    locality.text = widget.locality;
+    distric.text = widget.distric;
+    state.text = widget.state;
+    pincode.text = widget.pincode;
   }
 
   snackBarMsg(BuildContext context, String msg) {
@@ -45,83 +48,72 @@ class _LocationDetailsState extends State<LocationDetails> {
         onPressed: () {},
       ),
     );
-    scaffoldKey.currentState.showSnackBar(sb);
+    ScaffoldMessenger.of(context).showSnackBar(sb);
   }
 
-
-
-  bool textBoxShow=false;
+  bool textBoxShow = false;
   bool circular = false;
   final _globalkey = GlobalKey<FormState>();
   TextEditingController locality = TextEditingController();
-  TextEditingController distric= TextEditingController();
-  TextEditingController state= TextEditingController();
-  TextEditingController pincode= TextEditingController();
+  TextEditingController distric = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController pincode = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
     return Scaffold(
       appBar: DefaultAppBar(title: "Location Details"),
-
       bottomNavigationBar: Material(
         elevation: kLess,
         color: kWhiteColor,
-        child:Padding(
-          padding: EdgeInsets.only(left: 10,right: 10),
-          child:TextButton(
-            child: Text("Update", style: TextStyle(fontSize: 18.0)),
-            style: TextButton.styleFrom(
-                primary: kWhiteColor,
-                elevation: 2,
-                backgroundColor: kPrimaryColor),
-            onPressed: () async {
-              if (_globalkey.currentState.validate()) {
-                updatelocation('labor',user.uid,locality.text,
-                    distric.text,
-                    state.text,
-                    pincode.text).then((value) => snackBarMsg(context, "Success"));
-              }
-            }
-          ),
+        child: Padding(
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: TextButton(
+              child: Text("Update", style: TextStyle(fontSize: 18.0)),
+              style: TextButton.styleFrom(
+                  primary: kWhiteColor,
+                  elevation: 2,
+                  backgroundColor: kPrimaryColor),
+              onPressed: () async {
+                if (_globalkey.currentState.validate()) {
+                  updatelocation('labor', user.uid, locality.text, distric.text,
+                          state.text, pincode.text)
+                      .then((value) => snackBarMsg(context, "Success"));
+                }
+              }),
         ),
-
       ),
       body: Form(
         key: _globalkey,
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           children: <Widget>[
-
             SizedBox(
               height: 20,
             ),
-            nameTextField(locality,"Locality"),
+            nameTextField(locality, "Locality"),
             SizedBox(
               height: 20,
             ),
-            nameTextField(distric,"Distric"),
+            nameTextField(distric, "Distric"),
             SizedBox(
               height: 20,
             ),
-            nameTextField(state,"State"),
+            nameTextField(state, "State"),
             SizedBox(
               height: 20,
             ),
-            numberTextField(pincode,"Pincode"),
+            numberTextField(pincode, "Pincode"),
             SizedBox(
               height: 20,
             ),
-
           ],
         ),
       ),
     );
   }
 
-
-
-
-  Widget nameTextField(TextEditingController name,String labelText) {
+  Widget nameTextField(TextEditingController name, String labelText) {
     return TextFormField(
       controller: name,
       validator: (value) {
@@ -132,13 +124,13 @@ class _LocationDetailsState extends State<LocationDetails> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         // prefixIcon: Icon(
         //   Icons.agriculture,
         //   color: Colors.green,
@@ -149,15 +141,10 @@ class _LocationDetailsState extends State<LocationDetails> {
     );
   }
 
-
-
-
-
-
-  Widget numberTextField(TextEditingController phone_no,String labelText) {
+  Widget numberTextField(TextEditingController phone_no, String labelText) {
     return TextFormField(
       controller: phone_no,
-      keyboardType:TextInputType.number,
+      keyboardType: TextInputType.number,
       validator: (value) {
         if (value.isEmpty) return "Field can't be empty";
 
@@ -166,24 +153,20 @@ class _LocationDetailsState extends State<LocationDetails> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
-            )),
+          color: Colors.teal,
+        )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
+          color: Colors.orange,
+          width: 2,
+        )),
         // prefixIcon: Icon(
         //   Icons.person,
         //   color: Colors.green,
         // ),
         labelText: labelText,
         //helperText: "Enter in digits",
-
       ),
     );
   }
-
-
-
 }

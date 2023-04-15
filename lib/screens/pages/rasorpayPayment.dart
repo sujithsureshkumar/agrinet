@@ -11,7 +11,6 @@ class RasorpayPayment extends StatefulWidget {
 }
 
 class _RasorpayPaymentState extends State<RasorpayPayment> {
-
   Razorpay razorpay;
   TextEditingController textEditingController = new TextEditingController();
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -45,50 +44,43 @@ class _RasorpayPaymentState extends State<RasorpayPayment> {
         onPressed: () {},
       ),
     );
-    scaffoldKey.currentState.showSnackBar(sb);
+    ScaffoldMessenger.of(context).showSnackBar(sb);
   }
 
-  void openCheckout(){
+  void openCheckout() {
     var options = {
-      "key" : "rzp_test_balglISzQZ6UwH",
-      "amount" : num.parse(textEditingController.text)*100,
-      "name" : "Sample App",
-      "description" : "Payment for the some random Services",
-      "prefill" : {
-        "contact" : "2323232323",
-        "email" : "shdjsdh@gmail.com"
-      },
-      "external" : {
-        "wallets" : ["paytm"]
+      "key": "rzp_test_balglISzQZ6UwH",
+      "amount": num.parse(textEditingController.text) * 100,
+      "name": "Sample App",
+      "description": "Payment for the some random Services",
+      "prefill": {"contact": "2323232323", "email": "shdjsdh@gmail.com"},
+      "external": {
+        "wallets": ["paytm"]
       }
     };
 
-    try{
+    try {
       razorpay.open(options);
-
-    }catch(e){
+    } catch (e) {
       print(e.toString());
     }
-
   }
 
-  void handlerPaymentSuccess(PaymentSuccessResponse response){
-    print("Pament success"+response.paymentId);
+  void handlerPaymentSuccess(PaymentSuccessResponse response) {
+    print("Pament success" + response.paymentId);
     //Toast.show("Pament success"+response.paymentId);
     //snackBarMsg(context, response.paymentId);
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => Success()
-      ),
+      MaterialPageRoute(builder: (ctx) => Success()),
     );
   }
 
-  void handlerErrorFailure(){
+  void handlerErrorFailure() {
     print("Pament error");
     Toast.show("Pament error");
   }
 
-  void handlerExternalWallet(){
+  void handlerExternalWallet() {
     print("External Wallet");
     Toast.show("External Wallet");
   }
@@ -96,24 +88,24 @@ class _RasorpayPaymentState extends State<RasorpayPayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:DefaultAppBar(title: "RazorPay"),
+      appBar: DefaultAppBar(title: "RazorPay"),
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
           children: [
             TextField(
               controller: textEditingController,
-              decoration: InputDecoration(
-                  hintText: "amount to pay"
-              ),
+              decoration: InputDecoration(hintText: "amount to pay"),
             ),
-            SizedBox(height: 12,),
-            RaisedButton(
-              color: Colors.blue,
-              child: Text("Pay Now", style: TextStyle(
-                  color: Colors.white
-              ),),
-              onPressed: (){
+            SizedBox(
+              height: 12,
+            ),
+            ElevatedButton(
+              child: Text(
+                "Pay Now",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
                 openCheckout();
               },
             )
